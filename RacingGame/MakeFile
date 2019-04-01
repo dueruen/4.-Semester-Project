@@ -1,0 +1,7 @@
+# To use type:
+# make r
+run:
+	mvn install pax:provision
+
+build:
+	mvn clean install

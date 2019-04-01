@@ -3,6 +3,3 @@ run:
 
 build:
 	mvn clean install
-
-say_hello:
-	@echo "Hello World"

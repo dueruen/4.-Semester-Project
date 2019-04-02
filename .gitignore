@@ -2,3 +2,4 @@
 *runner/
 .project
 .settings
+*test/

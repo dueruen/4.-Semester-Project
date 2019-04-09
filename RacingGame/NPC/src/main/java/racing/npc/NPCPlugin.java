@@ -14,15 +14,40 @@ import racing.common.services.IGamePluginService;
  * @author Victor Gram
  */
 public class NPCPlugin implements IGamePluginService {
+    /**
+     * ID identifying the specicfic NPC instance in the world
+     */
+    private String NPCID;
 
+    /**
+     * Creates an NPC and adds it to the world 
+     * @param gameData
+     * @param world
+     */
     @Override
     public void start(GameData gameData, World world) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Entity npc = createNPC(gameData);
+        NPCID = world.addEntity(npc);
+        
     }
 
+    /**
+     * Removes specific NPC from the world, using NPCID
+     * @param gameData 
+     * @param world
+     */
     @Override
     public void stop(GameData gameData, World world) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        world.removeEntity(NPCID);
+    }
+
+    /**
+     * Creates Entity of the type NPC
+     * @param gameData
+     * @return created NPC instance
+     */
+    private Entity createNPC (GameData gameData) { 
+        //TODO
     }
     
 }

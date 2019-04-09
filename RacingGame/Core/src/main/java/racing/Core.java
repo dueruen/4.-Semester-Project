@@ -25,9 +25,9 @@ import racing.core.screen.*;
 
 public class Core extends Game {
 
-    private static OrthographicCamera cam;
-    private ShapeRenderer sr;
-    private final GameData gameData = new GameData();
+    public static OrthographicCamera cam;
+    public ShapeRenderer sr;
+    public final GameData gameData = new GameData();
     private static World world = new World();
     private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
@@ -47,9 +47,7 @@ public class Core extends Game {
 
         SkinParameter p = new SkinParameter("skin/uiskin.atlas");
         assetManager.load("skin/uiskin.json", Skin.class, p);
-        init();
-        
-        
+        init();  
     }
 
     public void init() {
@@ -85,12 +83,12 @@ public class Core extends Game {
 //        String pathLocal = Gdx.files.getLocalStoragePath();
 //        String pathExternal = Gdx.files.getExternalStoragePath();
 //        throw new UnsupportedOperationException("pathLocal: " + pathLocal + " pathExternal: " + pathExternal); //To change body of generated methods, choose Tools | Templates.
-        //loadingScreen = new LoadingScreen(this);
-        //setScreen(loadingScreen);
+        loadingScreen = new LoadingScreen(this);
+        setScreen(loadingScreen);
 //        OrthographicCamera camera = new OrthographicCamera();
 //		camera.setToOrtho(false);
-        menuScreen = new MenuScreen(this);
-        setScreen(menuScreen);
+//        menuScreen = new MenuScreen(this);
+//        setScreen(menuScreen);
 //        gameData.setDisplayWidth(Gdx.graphics.getWidth());
 //        gameData.setDisplayHeight(Gdx.graphics.getHeight());
 //
@@ -118,7 +116,7 @@ public class Core extends Game {
 //        draw();
     }
 
-    private void update() {
+    public void update() {
         // Update
         for (IEntityProcessingService entityProcessorService : entityProcessorList) {
             entityProcessorService.process(gameData, world);
@@ -130,7 +128,7 @@ public class Core extends Game {
         }
     }
 
-    private void draw() {
+    public void draw() {
         for (Entity entity : world.getEntities()) {
             sr.setColor(1, 1, 1, 1);
 

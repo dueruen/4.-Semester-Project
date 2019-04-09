@@ -40,10 +40,9 @@ public class MenuScreen implements Screen {
     public void show() {
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
+        //table.setDebug(true);
         stage.addActor(table);
 
-        //Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton newGame = new TextButton("New Game", skin);
         TextButton exit = new TextButton("Exit", skin);
 
@@ -51,6 +50,13 @@ public class MenuScreen implements Screen {
         table.row().pad(10, 0, 10, 0);
         table.add(exit).fillX().uniformX();
 
+         newGame.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                parent.changeScreen(Core.APPLICATION);
+            }
+        });       
+        
         exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {

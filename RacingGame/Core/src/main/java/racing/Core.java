@@ -1,6 +1,7 @@
 package racing;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -16,8 +17,9 @@ import racing.common.services.IPostEntityProcessingService;
 import racing.core.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import racing.core.screen.*;
 
-public class Game implements ApplicationListener {
+public class Core extends Game {
 
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
@@ -27,7 +29,15 @@ public class Game implements ApplicationListener {
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
-    public Game(){
+    private LoadingScreen loadingScreen;
+    private MenuScreen menuScreen;
+    private MainScreen mainScreen;
+
+    public final static int MENU = 0;
+    public final static int APPLICATION = 2;
+    public final static int ENDGAME = 3;
+
+    public Core() {
         init();
     }
 
@@ -39,35 +49,57 @@ public class Game implements ApplicationListener {
         cfg.useGL30 = false;
         cfg.resizable = false;
 
+        //new LwjglApplication(this, cfg);
         new LwjglApplication(this, cfg);
+    }
+
+    public void changeScreen(int screen) {
+        switch (screen) {
+            case MENU:
+                if (menuScreen == null) {
+                    menuScreen = new MenuScreen(this);
+                }
+                this.setScreen(menuScreen);
+                break;
+            case APPLICATION:
+                if (mainScreen == null) {
+                    mainScreen = new MainScreen(this);
+                }
+                this.setScreen(mainScreen);
+                break;
+        }
     }
 
     @Override
     public void create() {
-        gameData.setDisplayWidth(Gdx.graphics.getWidth());
-        gameData.setDisplayHeight(Gdx.graphics.getHeight());
-
-        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
-        cam.update();
-
-        sr = new ShapeRenderer();
-
-        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+        //loadingScreen = new LoadingScreen(this);
+        //setScreen(loadingScreen);
+        menuScreen = new MenuScreen(this);
+        setScreen(menuScreen);
+//        gameData.setDisplayWidth(Gdx.graphics.getWidth());
+//        gameData.setDisplayHeight(Gdx.graphics.getHeight());
+//
+//        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+//        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
+//        cam.update();
+//
+//        sr = new ShapeRenderer();
+//
+//        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
     }
 
     @Override
     public void render() {
-        // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        gameData.setDelta(Gdx.graphics.getDeltaTime());
-        gameData.getKeys().update();
-
-        update();
-        draw();
+//        // clear screen to black
+//        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//
+//        gameData.setDelta(Gdx.graphics.getDeltaTime());
+//        gameData.getKeys().update();
+//
+//        update();
+//        draw();
     }
 
     private void update() {
@@ -144,5 +176,4 @@ public class Game implements ApplicationListener {
         this.gamePluginList.remove(plugin);
         plugin.stop(gameData, world);
     }
-
 }

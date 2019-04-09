@@ -3,11 +3,15 @@ package racing;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.assets.loaders.SkinLoader.SkinParameter;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.World;
@@ -29,6 +33,8 @@ public class Core extends Game {
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
+    public AssetManager assetManager = new AssetManager();
+
     private LoadingScreen loadingScreen;
     private MenuScreen menuScreen;
     private MainScreen mainScreen;
@@ -38,7 +44,12 @@ public class Core extends Game {
     public final static int ENDGAME = 3;
 
     public Core() {
+
+        SkinParameter p = new SkinParameter("skin/uiskin.atlas");
+        assetManager.load("skin/uiskin.json", Skin.class, p);
         init();
+        
+        
     }
 
     public void init() {
@@ -49,7 +60,6 @@ public class Core extends Game {
         cfg.useGL30 = false;
         cfg.resizable = false;
 
-        //new LwjglApplication(this, cfg);
         new LwjglApplication(this, cfg);
     }
 
@@ -72,8 +82,13 @@ public class Core extends Game {
 
     @Override
     public void create() {
+//        String pathLocal = Gdx.files.getLocalStoragePath();
+//        String pathExternal = Gdx.files.getExternalStoragePath();
+//        throw new UnsupportedOperationException("pathLocal: " + pathLocal + " pathExternal: " + pathExternal); //To change body of generated methods, choose Tools | Templates.
         //loadingScreen = new LoadingScreen(this);
         //setScreen(loadingScreen);
+//        OrthographicCamera camera = new OrthographicCamera();
+//		camera.setToOrtho(false);
         menuScreen = new MenuScreen(this);
         setScreen(menuScreen);
 //        gameData.setDisplayWidth(Gdx.graphics.getWidth());
@@ -91,6 +106,7 @@ public class Core extends Game {
 
     @Override
     public void render() {
+        super.render();
 //        // clear screen to black
 //        Gdx.gl.glClearColor(0, 0, 0, 1);
 //        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

@@ -1,12 +1,17 @@
 package racing;
 
 import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.assets.loaders.SkinLoader.SkinParameter;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.World;
@@ -16,19 +21,45 @@ import racing.common.services.IPostEntityProcessingService;
 import racing.core.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import racing.common.map.MapSPI;
+import racing.core.screen.*;
 
-public class Game implements ApplicationListener {
+public class Core extends Game {
 
-    private static OrthographicCamera cam;
-    private ShapeRenderer sr;
-    private final GameData gameData = new GameData();
+    public static OrthographicCamera cam;
+    public ShapeRenderer sr;
+    public final GameData gameData = new GameData();
     private static World world = new World();
     private static final List<IEntityProcessingService> entityProcessorList = new CopyOnWriteArrayList<>();
     private static final List<IGamePluginService> gamePluginList = new CopyOnWriteArrayList<>();
     private static List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
-    public Game(){
-        init();
+    public AssetManager assetManager = new AssetManager();
+
+    private LoadingScreen loadingScreen;
+    private MenuScreen menuScreen;
+    private MainScreen mainScreen;
+
+    public final static int MENU = 0;
+    public final static int APPLICATION = 2;
+    public final static int ENDGAME = 3;
+    
+    public MapSPI map;
+    
+        //TODO: Dependency injection via Declarative Services
+    public void setMapService(MapSPI map) {
+        this.map = map;
+    }
+
+    public void removeMapService() {
+        this.map = null;
+    }
+
+    public Core() {
+
+        SkinParameter p = new SkinParameter("skin/uiskin.atlas");
+        assetManager.load("skin/uiskin.json", Skin.class, p);
+        init();  
     }
 
     public void init() {
@@ -42,35 +73,62 @@ public class Game implements ApplicationListener {
         new LwjglApplication(this, cfg);
     }
 
+    public void changeScreen(int screen) {
+        switch (screen) {
+            case MENU:
+                if (menuScreen == null) {
+                    menuScreen = new MenuScreen(this);
+                }
+                this.setScreen(menuScreen);
+                break;
+            case APPLICATION:
+                if (mainScreen == null) {
+                    mainScreen = new MainScreen(this);
+                }
+                this.setScreen(mainScreen);
+                break;
+        }
+    }
+
     @Override
     public void create() {
-        gameData.setDisplayWidth(Gdx.graphics.getWidth());
-        gameData.setDisplayHeight(Gdx.graphics.getHeight());
-
-        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
-        cam.update();
-
-        sr = new ShapeRenderer();
-
-        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
+//        String pathLocal = Gdx.files.getLocalStoragePath();
+//        String pathExternal = Gdx.files.getExternalStoragePath();
+//        throw new UnsupportedOperationException("pathLocal: " + pathLocal + " pathExternal: " + pathExternal); //To change body of generated methods, choose Tools | Templates.
+        loadingScreen = new LoadingScreen(this);
+        setScreen(loadingScreen);
+//        OrthographicCamera camera = new OrthographicCamera();
+//		camera.setToOrtho(false);
+//        menuScreen = new MenuScreen(this);
+//        setScreen(menuScreen);
+//        gameData.setDisplayWidth(Gdx.graphics.getWidth());
+//        gameData.setDisplayHeight(Gdx.graphics.getHeight());
+//
+//        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+//        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
+//        cam.update();
+//
+//        sr = new ShapeRenderer();
+//
+//        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
 
     }
 
     @Override
     public void render() {
-        // clear screen to black
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        gameData.setDelta(Gdx.graphics.getDeltaTime());
-        gameData.getKeys().update();
-
-        update();
-        draw();
+        super.render();
+//        // clear screen to black
+//        Gdx.gl.glClearColor(0, 0, 0, 1);
+//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+//
+//        gameData.setDelta(Gdx.graphics.getDeltaTime());
+//        gameData.getKeys().update();
+//
+//        update();
+//        draw();
     }
 
-    private void update() {
+    public void update() {
         // Update
         for (IEntityProcessingService entityProcessorService : entityProcessorList) {
             entityProcessorService.process(gameData, world);
@@ -82,7 +140,7 @@ public class Game implements ApplicationListener {
         }
     }
 
-    private void draw() {
+    public void draw() {
         for (Entity entity : world.getEntities()) {
             sr.setColor(1, 1, 1, 1);
 
@@ -144,5 +202,4 @@ public class Game implements ApplicationListener {
         this.gamePluginList.remove(plugin);
         plugin.stop(gameData, world);
     }
-
 }

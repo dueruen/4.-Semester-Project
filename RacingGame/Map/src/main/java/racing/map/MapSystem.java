@@ -19,6 +19,7 @@ public class MapSystem implements IEntityProcessingService, MapSPI {
         for (Tile t : tiles.values()) {
             t.setShape();
         }
+        //throw new AbstractMethodError("HERE " + tiles.size());
     }
 
     @Override

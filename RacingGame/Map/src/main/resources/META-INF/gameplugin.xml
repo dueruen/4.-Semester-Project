@@ -3,5 +3,6 @@
     <implementation class="racing.map.MapPlugin"/>
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
+        <provide interface="racing.common.map.MapSPI"/>
     </service>
 </scr:component>

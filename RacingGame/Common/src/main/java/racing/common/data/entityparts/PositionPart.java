@@ -43,6 +43,12 @@ public class PositionPart implements EntityPart {
     public void setRadians(float radians) {
         this.radians = radians;
     }
+    
+    public double distance(PositionPart p2) {
+        double x = Math.pow(p2.x - this.x, 2);
+        double y = Math.pow(p2.y - this.y, 2);
+        return Math.sqrt(x + y);
+    }
 
     @Override
     public void process(GameData gameData, Entity entity) {

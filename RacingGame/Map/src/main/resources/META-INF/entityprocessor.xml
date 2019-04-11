@@ -3,6 +3,5 @@
     <implementation class="racing.map.MapSystem"/>
     <service>
         <provide interface="racing.common.services.IEntityProcessingService"/>
-        <provide interface="racing.common.map.MapSPI"/>
     </service>
 </scr:component>

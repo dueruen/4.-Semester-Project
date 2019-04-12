@@ -7,11 +7,9 @@ package racing.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import racing.Core;
 import racing.common.data.TileType;
@@ -25,7 +23,6 @@ public class MainScreen implements Screen {
 
     private Core parent;
     BitmapFont font = new BitmapFont();
-//    private MapSPI map;
     
     public MainScreen(Core parent) {
         this.parent = parent;
@@ -60,10 +57,7 @@ public class MainScreen implements Screen {
 
         parent.gameData.setDelta(Gdx.graphics.getDeltaTime());
         parent.gameData.getKeys().update();
-//        batch.begin();
-//        font.setColor(Color.WHITE);
-//        font.draw(batch, "GAME VIEW ", 100, 100);
-//        batch.end();
+
         parent.update();
         parent.draw();
     }
@@ -92,12 +86,4 @@ public class MainScreen implements Screen {
     public void dispose() {
 
     }
-//    //TODO: Dependency injection via Declarative Services
-//    public void setMapService(MapSPI map) {
-//        this.map = map;
-//    }
-//
-//    public void removeMapService() {
-//        this.map = null;
-//    }
 }

@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.map;
 
 import racing.common.data.Entity;
 import racing.common.data.GameData;
+import racing.common.data.GameImage;
 import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.TilePart;
@@ -16,14 +12,13 @@ import racing.common.data.TileType;
 import racing.common.services.IGamePluginService;
 
 /**
+ * Plugin used to control the map
  *
- * @author yodamaster42
  */
 public class MapPlugin implements IGamePluginService, MapSPI {
 
     @Override
     public void start(GameData gameData, World world) {
-        //world.addEntity(new Map());
     }
 
     @Override
@@ -33,19 +28,24 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         }
     }
 
+    /**
+     * Finds the tile weight for the tile closed to the entity  
+     * @param p the entity
+     * @param world the world
+     * @return the weight of the closed tile
+     */
     @Override
-    public double getPositionWeight(PositionPart p, World world) {
+    public double getPositionWeight(Entity p, World world) {
         Entity closedTile = null;
         double shortestDistance = Double.MAX_VALUE;
         for (Entity tile : world.getEntities(Tile.class)) {
             if (closedTile == null) {
                 closedTile = tile;
-                shortestDistance = p.distance(tile.getPart(PositionPart.class));
+                shortestDistance = distance(p, tile);
                 continue;
             }
 
-            PositionPart positionNext = tile.getPart(PositionPart.class);
-            double nextDistance = p.distance(positionNext);
+            double nextDistance = distance(p, tile);
             if (nextDistance < shortestDistance) {
                 closedTile = tile;
                 shortestDistance = nextDistance;
@@ -55,6 +55,31 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         return tp.getType().getWeight();
     }
 
+    /**
+     * Calculates the distance between to entities based center of the image
+     * @param t1 entity one
+     * @param t2 entity two
+     * @return the distance between the centers of the two entities
+     */
+    public double distance(Entity t1, Entity t2) {
+        PositionPart p1 = t1.getPart(PositionPart.class);
+        PositionPart p2 = t2.getPart(PositionPart.class);
+        
+        GameImage i1 = t1.getImage();
+        GameImage i2 = t2.getImage();
+        
+        double x = Math.pow((p2.getX() + (i2.getWidth() / 2)) - (p1.getX() + (i1.getWidth() / 2)), 2);
+        double y = Math.pow((p2.getY() + (i2.getHeight()/ 2)) - (p1.getY() + (i1.getHeight()/ 2)), 2);
+        return Math.sqrt(x + y);
+    }
+
+    /**
+     * Creates a new map based on the input arguments
+     *
+     * @param d a two dimensional array with integers representing the TileType
+     * @param gameData the GameData
+     * @param world the World
+     */
     @Override
     public void createMap(int[][] d, GameData gameData, World world) {
         TileType[][] tmpTiles = new TileType[d.length][d[0].length];
@@ -66,49 +91,28 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         createMap(tmpTiles, gameData, world);
     }
 
+    /**
+     * Creates a new map based on the input arguments
+     *
+     * @param d a two dimensional array with TileTypes
+     * @param gameData the GameData
+     * @param world the World
+     */
     @Override
     public void createMap(TileType[][] d, GameData gameData, World world) {
         float tileHeight = gameData.getDisplayHeight() / d.length;
         float tileWeight = gameData.getDisplayWidth() / d[0].length;
-        
-        //throw new AbstractMethodError("width: " + tileWeight + ", " + gameData.getDisplayWidth() + " height: " + tileHeight + ", " + gameData.getDisplayHeight());
+
+        int rOffSet = d.length - 1;
         for (int r = 0; r < d.length; r++) {
             for (int c = 0; c < d[r].length; c++) {
-                //Tile t = new Tile(d[r][c]);
                 Tile t = new Tile();
-                //PositionPart p = new PositionPart(c * d.length, r * d[0].length, 0);
-                PositionPart p = new PositionPart(c * tileWeight, r * tileHeight, 0);
+                PositionPart p = new PositionPart(c * tileWeight, (r + rOffSet) * tileHeight, 0);
                 t.add(p);
-                t.setImagePath(d[r][c].getImagePath());
-//                setShape(t, tileWeight, tileHeight);
+                t.setImage(new GameImage(d[r][c].getImagePath(), tileWeight, tileHeight));
                 world.addEntity(t);
             }
+            rOffSet -= 2;
         }
     }
-
-//    private void setShape(Tile tile, float width, float height) {
-//        float[] shapex = tile.getShapeX();
-//        float[] shapey = tile.getShapeY();
-//        PositionPart positionPart = tile.getPart(PositionPart.class);
-//        float x = positionPart.getX();
-//        float y = positionPart.getY();
-//        float radians = positionPart.getRadians();
-//
-//        shapex[0] = x;
-//        shapey[0] = y;
-//
-//        shapex[1] = x;
-//        shapey[1] = y + height;
-//
-//        shapex[2] = x + width;
-//        shapey[2] = y + height;
-//
-//        shapex[3] = x + width;
-//        shapey[3] = y;
-//
-//        tile.setShapeX(shapex);
-//        tile.setShapeY(shapey);
-//        
-//        //throw new AbstractMethodError("x: " + x + " y: " + y + " width: " + width + " height: " + height);
-//    }
 }

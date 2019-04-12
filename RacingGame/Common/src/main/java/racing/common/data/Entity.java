@@ -2,7 +2,6 @@ package racing.common.data;
 
 import racing.common.data.entityparts.EntityPart;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,9 +10,7 @@ public class Entity implements Serializable {
 
     private final UUID ID = UUID.randomUUID();
 
-//    private float[] shapeX = new float[4];
-//    private float[] shapeY = new float[4];
-    private String imagePath = "default.png";
+    private GameImage image;
     private float radius;
     private Map<Class, EntityPart> parts;
 
@@ -45,27 +42,11 @@ public class Entity implements Serializable {
         return ID.toString();
     }
 
-    public String getImagePath() {
-        return imagePath;
+    public GameImage getImage() {
+        return image;
     }
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public void setImage(GameImage image) {
+        this.image = image;
     }
-
-//    public float[] getShapeX() {
-//        return shapeX;
-//    }
-//
-//    public void setShapeX(float[] shapeX) {
-//        this.shapeX = shapeX;
-//    }
-//
-//    public float[] getShapeY() {
-//        return shapeY;
-//    }
-//
-//    public void setShapeY(float[] shapeY) {
-//        this.shapeY = shapeY;
-//    }
 }

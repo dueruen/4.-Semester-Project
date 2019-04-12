@@ -25,6 +25,7 @@ import racing.common.services.IPostEntityProcessingService;
 import racing.core.managers.GameInputProcessor;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import racing.common.data.GameImage;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.map.MapSPI;
 import racing.core.screen.*;
@@ -102,40 +103,13 @@ public class Core extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-//        String pathLocal = Gdx.files.getLocalStoragePath();
-//        String pathExternal = Gdx.files.getExternalStoragePath();
-//        throw new UnsupportedOperationException("pathLocal: " + pathLocal + " pathExternal: " + pathExternal); //To change body of generated methods, choose Tools | Templates.
         loadingScreen = new LoadingScreen(this);
         setScreen(loadingScreen);
-//        OrthographicCamera camera = new OrthographicCamera();
-//		camera.setToOrtho(false);
-//        menuScreen = new MenuScreen(this);
-//        setScreen(menuScreen);
-//        gameData.setDisplayWidth(Gdx.graphics.getWidth());
-//        gameData.setDisplayHeight(Gdx.graphics.getHeight());
-//
-//        cam = new OrthographicCamera(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-//        cam.translate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2);
-//        cam.update();
-//
-//        sr = new ShapeRenderer();
-//
-//        Gdx.input.setInputProcessor(new GameInputProcessor(gameData));
-
     }
 
     @Override
     public void render() {
         super.render();
-//        // clear screen to black
-//        Gdx.gl.glClearColor(0, 0, 0, 1);
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//
-//        gameData.setDelta(Gdx.graphics.getDeltaTime());
-//        gameData.getKeys().update();
-//
-//        update();
-//        draw();
     }
 
     public void update() {
@@ -153,25 +127,12 @@ public class Core extends Game {
     public void draw() {
         batch.begin();
         for (Entity entity : world.getEntities()) {
-            Texture tex = assetManager.get(entity.getImagePath(), Texture.class);
+            GameImage image = entity.getImage();
+            Texture tex = assetManager.get(image.getImagePath(), Texture.class);
             PositionPart p = entity.getPart(PositionPart.class);
             Sprite sprite = new Sprite(tex);
-            batch.draw(sprite, 0, 0, p.getX() + 300, p.getY() + 100);
-//            sr.setColor(1, 1, 1, 1);
-//
-//            sr.begin(ShapeRenderer.ShapeType.Line);
-//
-//            float[] shapex = entity.getShapeX();
-//            float[] shapey = entity.getShapeY();
-//            sr.setColor(Color.RED);
-//            for (int i = 0, j = shapex.length - 1;
-//                    i < shapex.length;
-//                    j = i++) {
-//
-//                sr.line(shapex[i], shapey[i], shapex[j], shapey[j]);
-//            }
-//
-//            sr.end();
+            
+            batch.draw(sprite, p.getX(), p.getY(), image.getWidth(), image.getHeight());
         }
         batch.end();
     }

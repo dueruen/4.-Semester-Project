@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.common.data.entityparts;
 
 import racing.common.data.Entity;
@@ -10,11 +5,14 @@ import racing.common.data.GameData;
 import racing.common.data.TileType;
 
 /**
- *
- * @author yodamaster42
+ * Object containing information about a tile 
+ * 
  */
 public class TilePart implements EntityPart {
 
+    /**
+     * The tile type
+     */
     private TileType type;
 
     public TilePart(TileType type) {

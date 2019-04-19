@@ -1,53 +1,41 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.core.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import racing.Core;
 import racing.common.data.TileType;
 import racing.core.managers.GameInputProcessor;
 
 /**
+ * The main screen
  *
- * @author yodamaster42
  */
-public class MainScreen implements Screen {
+public class MainScreen extends BasicScreen{
 
-    private Core parent;
-    BitmapFont font = new BitmapFont();
-    
     public MainScreen(Core parent) {
-        this.parent = parent;
+        super(parent);
         TileType[][] tiles = {
-            {TileType.GRASS,TileType.GRASS,TileType.GRASS},  
-            {TileType.ROAD,TileType.ROAD,TileType.ROAD},
-            {TileType.ROAD,TileType.WATER,TileType.ROAD},
-            {TileType.ROAD,TileType.FINISHLINE,TileType.ROAD},
-            {TileType.GRASS,TileType.GRASS,TileType.GRASS},
-        };
-        parent.map.createMap(tiles, parent.gameData, parent.world);
+            {TileType.GRASS, TileType.GRASS, TileType.GRASS},
+            {TileType.ROAD, TileType.ROAD, TileType.ROAD},
+            {TileType.ROAD, TileType.WATER, TileType.ROAD},
+            {TileType.ROAD, TileType.FINISHLINE, TileType.ROAD},
+            {TileType.GRASS, TileType.GRASS, TileType.GRASS},};
+        parent.map.createMap(tiles, parent.getGameData(), parent.getWorld());
     }
 
     @Override
     public void show() {
-        parent.gameData.setDisplayWidth(Gdx.graphics.getWidth());
-        parent.gameData.setDisplayHeight(Gdx.graphics.getHeight());
+        parent.getGameData().setDisplayWidth(Gdx.graphics.getWidth());
+        parent.getGameData().setDisplayHeight(Gdx.graphics.getHeight());
 
-        parent.cam = new OrthographicCamera(parent.gameData.getDisplayWidth(), parent.gameData.getDisplayHeight());
-        parent.cam.translate(parent.gameData.getDisplayWidth() / 2, parent.gameData.getDisplayHeight() / 2);
-        parent.cam.update();
+        OrthographicCamera c = new OrthographicCamera(parent.getGameData().getDisplayWidth(), parent.getGameData().getDisplayHeight());
+        c.translate(parent.getGameData().getDisplayWidth() / 2, parent.getGameData().getDisplayHeight() / 2);
+        c.update();
+        parent.setCam(c);
 
-        parent.sr = new ShapeRenderer();
-
-        Gdx.input.setInputProcessor(new GameInputProcessor(parent.gameData));
+        Gdx.input.setInputProcessor(new GameInputProcessor(parent.getGameData()));
     }
 
     @Override
@@ -55,35 +43,10 @@ public class MainScreen implements Screen {
         Gdx.gl.glClearColor(255, 255, 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        parent.gameData.setDelta(Gdx.graphics.getDeltaTime());
-        parent.gameData.getKeys().update();
+        parent.getGameData().setDelta(Gdx.graphics.getDeltaTime());
+        parent.getGameData().getKeys().update();
 
         parent.update();
         parent.draw();
-    }
-
-    @Override
-    public void resize(int i, int i1) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
-    }
-
-    @Override
-    public void dispose() {
-
     }
 }

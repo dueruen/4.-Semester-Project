@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.core.screen;
 
 import com.badlogic.gdx.Gdx;
@@ -19,16 +14,14 @@ import racing.Core;
 
 /**
  *
- * @author yodamaster42
+ * 
  */
-public class MenuScreen implements Screen {
-
-    private Core parent;
+public class MenuScreen extends BasicScreen{
     private Stage stage;
     private Skin skin;
 
     public MenuScreen(Core parent) {
-        this.parent = parent;
+        super(parent);
         parent.assetManager.finishLoading();
         skin = parent.assetManager.get("skin/uiskin.json");
 
@@ -71,26 +64,6 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-    }
-
-    @Override
-    public void resize(int i, int i1) {
-        stage.getViewport().update(i, i1, true);
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
     }
 
     @Override

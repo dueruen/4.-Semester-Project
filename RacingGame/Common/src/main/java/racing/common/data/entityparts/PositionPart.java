@@ -3,10 +3,25 @@ package racing.common.data.entityparts;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 
+/**
+ * Object containing information about a position, based on a 2D 
+ * 
+ */
 public class PositionPart implements EntityPart {
 
+    /**
+     * The x
+     */
     private float x;
+    
+    /**
+     * The y
+     */
     private float y;
+    
+    /**
+     * The rotation
+     */
     private float radians;
 
     public PositionPart(float x, float y, float radians) {

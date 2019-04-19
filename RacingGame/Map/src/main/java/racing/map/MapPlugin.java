@@ -41,11 +41,11 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         for (Entity tile : world.getEntities(Tile.class)) {
             if (closedTile == null) {
                 closedTile = tile;
-                shortestDistance = distance(p, tile);
+                shortestDistance = calculateDistance(p, tile);
                 continue;
             }
 
-            double nextDistance = distance(p, tile);
+            double nextDistance = calculateDistance(p, tile);
             if (nextDistance < shortestDistance) {
                 closedTile = tile;
                 shortestDistance = nextDistance;
@@ -61,7 +61,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
      * @param t2 entity two
      * @return the distance between the centers of the two entities
      */
-    public double distance(Entity t1, Entity t2) {
+    private double calculateDistance(Entity t1, Entity t2) {
         PositionPart p1 = t1.getPart(PositionPart.class);
         PositionPart p2 = t2.getPart(PositionPart.class);
         

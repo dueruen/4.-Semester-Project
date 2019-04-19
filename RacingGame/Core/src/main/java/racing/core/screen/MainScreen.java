@@ -1,28 +1,29 @@
 package racing.core.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import racing.Core;
 import racing.common.data.TileType;
+import racing.common.map.MapSPI;
 import racing.core.managers.GameInputProcessor;
 
 /**
  * The main screen
  *
  */
-public class MainScreen extends BasicScreen{
+public class MainScreen extends BasicScreen {
 
     public MainScreen(Core parent) {
         super(parent);
-        TileType[][] tiles = {
-            {TileType.GRASS, TileType.GRASS, TileType.GRASS},
-            {TileType.ROAD, TileType.ROAD, TileType.ROAD},
-            {TileType.ROAD, TileType.WATER, TileType.ROAD},
-            {TileType.ROAD, TileType.FINISHLINE, TileType.ROAD},
-            {TileType.GRASS, TileType.GRASS, TileType.GRASS},};
-        parent.map.createMap(tiles, parent.getGameData(), parent.getWorld());
+//        TileType[][] tiles = {
+//            {TileType.GRASS, TileType.GRASS, TileType.GRASS},
+//            {TileType.ROAD, TileType.ROAD, TileType.ROAD},
+//            {TileType.ROAD, TileType.WATER, TileType.ROAD},
+//            {TileType.ROAD, TileType.FINISHLINE, TileType.ROAD},
+//            {TileType.GRASS, TileType.GRASS, TileType.GRASS},};
+//        parent.map.createMap(tiles, parent.getGameData(), parent.getWorld());
+    parent.map.loadFromFile("maps/map1.txt", parent.getGameData(), parent.getWorld());
     }
 
     @Override

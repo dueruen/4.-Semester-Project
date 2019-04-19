@@ -65,7 +65,14 @@ public class Core extends Game {
      */
     public AssetManager assetManager = new AssetManager();
 
+    /**
+     * Menu screen
+     */
     private MenuScreen menuScreen;
+    
+    /**
+     * Main screen
+     */
     private MainScreen mainScreen;
 
     public final static int MENU = 0;
@@ -74,6 +81,7 @@ public class Core extends Game {
     public MapSPI map;
     private SpriteBatch batch;
     private BitmapFont font;
+    private Skin skin;
 
     public void setMapService(MapSPI map) {
         this.map = map;
@@ -124,6 +132,8 @@ public class Core extends Game {
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
+        assetManager.finishLoading();
+        skin = assetManager.get("skin/uiskin.json");
         menuScreen = new MenuScreen(this);
         setScreen(menuScreen);
     }
@@ -236,5 +246,9 @@ public class Core extends Game {
 
     public void setCam(OrthographicCamera cam) {
         this.cam = cam;
+    }
+
+    public Skin getSkin() {
+        return skin;
     }
 }

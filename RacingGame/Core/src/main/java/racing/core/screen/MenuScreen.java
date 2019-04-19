@@ -13,17 +13,17 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import racing.Core;
 
 /**
- *
+ * The menu screen
  * 
  */
 public class MenuScreen extends BasicScreen{
+    /**
+     * The stage
+     */
     private Stage stage;
-    private Skin skin;
 
     public MenuScreen(Core parent) {
         super(parent);
-        parent.assetManager.finishLoading();
-        skin = parent.assetManager.get("skin/uiskin.json");
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -36,8 +36,8 @@ public class MenuScreen extends BasicScreen{
         //table.setDebug(true);
         stage.addActor(table);
 
-        TextButton newGame = new TextButton("New Game", skin);
-        TextButton exit = new TextButton("Exit", skin);
+        TextButton newGame = new TextButton("New Game", parent.getSkin());
+        TextButton exit = new TextButton("Exit", parent.getSkin());
 
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);

@@ -12,6 +12,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class Entity implements Serializable {
 
+    /**
+     * Id used to distinguish entities
+     */
     private final UUID ID = UUID.randomUUID();
 
     /**

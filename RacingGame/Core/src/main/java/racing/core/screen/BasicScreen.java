@@ -4,16 +4,21 @@ import com.badlogic.gdx.Screen;
 import racing.Core;
 
 /**
- * Basic game screen
- * 
+ * Basic game screen, extended by other screens to simplify there look
+ *
  */
-public class BasicScreen implements Screen{
+public abstract class BasicScreen implements Screen {
 
+    /**
+     * Reference to core
+     */
     protected Core parent;
 
     public BasicScreen(Core parent) {
         this.parent = parent;
     }
+
+    //The following methods are LibGDX specific
     
     @Override
     public void show() {

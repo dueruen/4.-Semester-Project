@@ -69,24 +69,54 @@ public class Core extends Game {
      * Menu screen
      */
     private MenuScreen menuScreen;
-    
+
     /**
      * Main screen
      */
     private MainScreen mainScreen;
 
+    /**
+     * Constance used by gui
+     */
     public final static int MENU = 0;
+
+    /**
+     * Constance used by gui
+     */
     public final static int APPLICATION = 2;
 
+    /**
+     * MapSPI instate
+     */
     public MapSPI map;
+
+    /**
+     * Sprite batch
+     */
     private SpriteBatch batch;
+
+    /**
+     * Bitmap font
+     */
     private BitmapFont font;
+
+    /**
+     * Skin
+     */
     private Skin skin;
 
+    /**
+     * Declarative service set map service
+     *
+     * @param map map service
+     */
     public void setMapService(MapSPI map) {
         this.map = map;
     }
 
+    /**
+     * Declarative service remove map service
+     */
     public void removeMapService() {
         this.map = null;
     }
@@ -98,6 +128,9 @@ public class Core extends Game {
         init();
     }
 
+    /**
+     * Instantiates the game
+     */
     public void init() {
         gameData.setDisplayHeight(600);
         gameData.setDisplayWidth(800);
@@ -111,6 +144,10 @@ public class Core extends Game {
         new LwjglApplication(this, cfg);
     }
 
+    /**
+     * Change screen
+     * @param screen value representing the screen 
+     */
     public void changeScreen(int screen) {
         switch (screen) {
             case MENU:
@@ -143,6 +180,9 @@ public class Core extends Game {
         super.render();
     }
 
+    /**
+     * Updates the game
+     */
     public void update() {
         // Update
         for (IEntityProcessingService entityProcessorService : entityProcessorList) {
@@ -155,6 +195,9 @@ public class Core extends Game {
         }
     }
 
+    /**
+     * Draw the game
+     */
     public void draw() {
         batch.begin();
         for (Entity entity : world.getEntities()) {

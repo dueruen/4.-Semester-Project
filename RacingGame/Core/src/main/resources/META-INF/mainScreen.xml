@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.core.screen.MainScreen">
+    <implementation class="racing.core.screen.MainScreen"/>
+    
+        <reference bind="setMapService" cardinality="1..1"
+                   interface="racing.common.map.MapSPI"
+                   name="MapService" policy="dynamic" unbind="removeMapService"/>
+</scr:component>

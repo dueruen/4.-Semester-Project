@@ -39,5 +39,10 @@
             <artifactId>OSGiLibGDX</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonMap</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

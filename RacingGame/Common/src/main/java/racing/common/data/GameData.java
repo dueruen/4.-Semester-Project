@@ -5,12 +5,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Class containing game data
+ * 
+ */
 public class GameData {
 
+    /**
+     * Time between the start of previous and current call to render
+     */
     private float delta;
+    
+    /**
+     * Display width
+     */
     private int displayWidth;
+    
+    /**
+     * Display height
+     */
     private int displayHeight;
+   
+    /**
+     * Instance of gamekeys
+     */
     private final GameKeys keys = new GameKeys();
+    
+    /**
+     * List of events
+     */
     private List<Event> events = new CopyOnWriteArrayList<>();
 
     public void addEvent(Event e) {

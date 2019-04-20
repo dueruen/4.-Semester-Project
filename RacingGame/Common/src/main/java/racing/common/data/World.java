@@ -6,8 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Class containing world data
+ * 
+ */
 public class World {
 
+    /**
+     * Map of all added entities
+     */
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
 
     public String addEntity(Entity entity) {

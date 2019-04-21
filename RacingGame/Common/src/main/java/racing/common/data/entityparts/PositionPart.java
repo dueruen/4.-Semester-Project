@@ -4,8 +4,8 @@ import racing.common.data.Entity;
 import racing.common.data.GameData;
 
 /**
- * Object containing information about a position, based on a 2D 
- * 
+ * Object containing information about a position, based on a 2D
+ *
  */
 public class PositionPart implements EntityPart {
 
@@ -13,12 +13,12 @@ public class PositionPart implements EntityPart {
      * The x
      */
     private float x;
-    
+
     /**
      * The y
      */
     private float y;
-    
+
     /**
      * The rotation
      */
@@ -41,11 +41,11 @@ public class PositionPart implements EntityPart {
     public float getRadians() {
         return radians;
     }
-    
+
     public void setX(float newX) {
         this.x = newX;
     }
-    
+
     public void setY(float newY) {
         this.y = newY;
     }
@@ -61,5 +61,5 @@ public class PositionPart implements EntityPart {
 
     @Override
     public void process(GameData gameData, Entity entity) {
-    }    
+    }
 }

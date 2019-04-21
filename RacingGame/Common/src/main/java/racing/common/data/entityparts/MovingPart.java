@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.common.data.entityparts;
 
 import racing.common.data.Entity;
@@ -14,10 +9,6 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
 
-/**
- *
- * @author Alexander
- */
 public class MovingPart
         implements EntityPart {
 
@@ -91,7 +82,7 @@ public class MovingPart
             radians -= rotationSpeed * dt;
         }
 
-        // accelerating            
+        // accelerating
         if (up) {
             dx += cos(radians) * acceleration * dt;
             dy += sin(radians) * acceleration * dt;

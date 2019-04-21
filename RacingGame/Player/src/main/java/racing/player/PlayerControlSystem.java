@@ -17,19 +17,13 @@ public class PlayerControlSystem implements IEntityProcessingService {
         for (Entity player : world.getEntities(Player.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);
-            ShootingPart shootingPart = player.getPart(ShootingPart.class);
-            LifePart lifePart = player.getPart(LifePart.class);
 
             movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));
             movingPart.setUp(gameData.getKeys().isDown(GameKeys.UP));
 
-            shootingPart.setIsShooting(gameData.getKeys().isDown(GameKeys.SPACE));
-
             movingPart.process(gameData, player);
             positionPart.process(gameData, player);
-            shootingPart.process(gameData, player);
-            lifePart.process(gameData, player);
 
             updateShape(player);
 

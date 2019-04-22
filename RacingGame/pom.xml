@@ -25,6 +25,7 @@
     <module>OSGiLibGDX</module>
     <module>CommonMap</module>
     <module>Map</module>
+    <module>NPC</module>
   </modules>
 
   <build>

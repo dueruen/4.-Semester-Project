@@ -6,6 +6,7 @@
 package racing.npc;
 
 import racing.common.data.GameData;
+import racing.common.data.Entity;
 import racing.common.data.World;
 import racing.common.services.IGamePluginService;
 
@@ -47,7 +48,8 @@ public class NPCPlugin implements IGamePluginService {
      * @return created NPC instance
      */
     private Entity createNPC (GameData gameData) { 
-        
+        //TODO
+        return null;
     }
     
 }

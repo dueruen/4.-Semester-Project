@@ -1,5 +1,9 @@
 package racing.common.data;
 
+/**
+ * Class containing the keys supported in the game
+ * 
+ */
 public class GameKeys {
 
     private static boolean[] keys;

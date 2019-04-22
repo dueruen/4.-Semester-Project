@@ -1,0 +1,3 @@
+Bundle-SymbolicName: Map
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/gameplugin.xml 

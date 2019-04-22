@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.Game">
-    <implementation class="racing.Game"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.Core">
+    <implementation class="racing.Core"/>
 
     <reference bind="addPostEntityProcessingService" cardinality="0..n"
                interface="racing.common.services.IPostEntityProcessingService"
@@ -13,4 +13,8 @@
     <reference bind="addGamePluginService" cardinality="0..n"
                interface="racing.common.services.IGamePluginService"
                name="IGamePluginService" policy="dynamic" unbind="removeGamePluginService"/>
+
+    <reference bind="setMapService" cardinality="1..1"
+                   interface="racing.common.map.MapSPI"
+                   name="MapService" policy="dynamic" unbind="removeMapService"/>
 </scr:component>

@@ -7,20 +7,20 @@ package racing.npc;
 
 import racing.common.data.GameData;
 import racing.common.data.Entity;
-import racing.commonnpc.NPC;
 import racing.common.data.World;
 import racing.common.services.IGamePluginService;
+import racing.commonnpc.NPCSPI;
 
 /**
  *
  * @author Victor Gram
  */
-public class NPCPlugin implements IGamePluginService {
+public class NPCPlugin implements IGamePluginService, NPCSPI {
     /**
      * ID identifying the specicfic NPC instance in the world
      */
     private String NPCID;
-
+    
     /**
      * Creates an NPC and adds it to the world 
      * @param gameData

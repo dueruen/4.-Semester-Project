@@ -3,5 +3,6 @@
     <implementation class="racing.npc.NPCPlugin"/>
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
+        <provide interface="racing.commonnpc.NPCSPI"/>
     </service>
 </scr:component>

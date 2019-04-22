@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package racing.npc;
-
-import racing.common.data.Entity;
+package racing.commonnpc;
 
 /**
  *
  * @author Victor Gram
  */
-public class NPC extends Entity {
+public interface NPCSPI {
     
 }

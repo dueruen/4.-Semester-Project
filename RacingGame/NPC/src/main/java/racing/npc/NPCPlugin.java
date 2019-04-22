@@ -7,6 +7,7 @@ package racing.npc;
 
 import racing.common.data.GameData;
 import racing.common.data.Entity;
+import racing.commonnpc.NPC;
 import racing.common.data.World;
 import racing.common.services.IGamePluginService;
 

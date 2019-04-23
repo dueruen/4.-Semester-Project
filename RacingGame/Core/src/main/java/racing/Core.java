@@ -221,6 +221,13 @@ public class Core extends Game {
         batch.end();
     }
 
+    /**
+     * Draw the sprite
+     * 
+     * @param s the sprite
+     * @param image the image
+     * @param p the positionPart
+     */
     private void drawSprite(Sprite s, GameImage image, PositionPart p) {
         s.setOrigin(image.getWidth() / 2, image.getHeight() / 2);
         s.rotate((float) Math.toDegrees(p.getRadians()));

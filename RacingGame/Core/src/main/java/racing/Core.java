@@ -207,9 +207,7 @@ public class Core extends Game {
                 GameImage image = entity.getImage();
                 Texture tex = assetManager.get(image.getImagePath(), Texture.class);
                 PositionPart p = entity.getPart(PositionPart.class);
-                Sprite sprite = new Sprite(tex);
-
-                batch.draw(sprite, p.getX(), p.getY(), image.getWidth(), image.getHeight());
+                drawSprite(new Sprite(tex), image, p);
             }
         }
         for (Entity entity : world.getEntities()) {
@@ -217,12 +215,19 @@ public class Core extends Game {
                 GameImage image = entity.getImage();
                 Texture tex = assetManager.get(image.getImagePath(), Texture.class);
                 PositionPart p = entity.getPart(PositionPart.class);
-                Sprite sprite = new Sprite(tex);
-
-                batch.draw(sprite, p.getX(), p.getY(), image.getWidth(), image.getHeight());
+                drawSprite(new Sprite(tex), image, p);
             }
         }
         batch.end();
+    }
+
+    private void drawSprite(Sprite s, GameImage image, PositionPart p) {
+        s.setOrigin(image.getWidth() / 2, image.getHeight() / 2);
+        s.rotate((float) Math.toDegrees(p.getRadians()));
+        s.setX(p.getX());
+        s.setY(p.getY());
+        s.setSize(image.getWidth(), image.getHeight());
+        s.draw(batch);
     }
 
     @Override

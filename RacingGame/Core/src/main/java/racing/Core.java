@@ -263,6 +263,7 @@ public class Core extends Game {
 
         //TILES
         assetManager.load("tiles/road.png", Texture.class);
+        assetManager.load("tiles/start.png", Texture.class);
         assetManager.load("tiles/grass.png", Texture.class);
         assetManager.load("tiles/water.png", Texture.class);
         assetManager.load("tiles/goal.png", Texture.class);

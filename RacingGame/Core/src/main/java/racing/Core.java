@@ -22,6 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import racing.common.data.GameImage;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.map.MapSPI;
+import racing.common.map.Tile;
 import racing.core.screen.*;
 
 /**
@@ -146,7 +147,8 @@ public class Core extends Game {
 
     /**
      * Change screen
-     * @param screen value representing the screen 
+     *
+     * @param screen value representing the screen
      */
     public void changeScreen(int screen) {
         switch (screen) {
@@ -201,12 +203,24 @@ public class Core extends Game {
     public void draw() {
         batch.begin();
         for (Entity entity : world.getEntities()) {
-            GameImage image = entity.getImage();
-            Texture tex = assetManager.get(image.getImagePath(), Texture.class);
-            PositionPart p = entity.getPart(PositionPart.class);
-            Sprite sprite = new Sprite(tex);
+            if (entity instanceof Tile) {
+                GameImage image = entity.getImage();
+                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
+                PositionPart p = entity.getPart(PositionPart.class);
+                Sprite sprite = new Sprite(tex);
 
-            batch.draw(sprite, p.getX(), p.getY(), image.getWidth(), image.getHeight());
+                batch.draw(sprite, p.getX(), p.getY(), image.getWidth(), image.getHeight());
+            }
+        }
+        for (Entity entity : world.getEntities()) {
+            if (!(entity instanceof Tile)) {
+                GameImage image = entity.getImage();
+                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
+                PositionPart p = entity.getPart(PositionPart.class);
+                Sprite sprite = new Sprite(tex);
+
+                batch.draw(sprite, p.getX(), p.getY(), image.getWidth(), image.getHeight());
+            }
         }
         batch.end();
     }

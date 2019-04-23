@@ -5,10 +5,15 @@
  */
 package racing.npc;
 
+import java.util.Random;
 import racing.common.data.GameData;
 import racing.common.data.Entity;
+import racing.common.data.GameImage;
 import racing.common.data.World;
+import racing.common.data.entityparts.MovingPart;
+import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
+import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
 
 /**
@@ -49,8 +54,26 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      * @return created NPC instance
      */
     private Entity createNPC (GameData gameData) { 
-        //TODO
-        return null;
+        float deacceleration = 10;
+        float acceleration = 150;
+        float maxSpeed = 200;
+        float rotationSpeed = 5;
+        float x = new Random().nextFloat() * gameData.getDisplayWidth();
+        float y = new Random().nextFloat() * gameData.getDisplayHeight();
+        float radians = 3.1415f / 2;
+
+        float[] colour = new float[4];
+        colour[0] = 1.0f;
+        colour[1] = 0.0f;
+        colour[2] = 0.0f;
+        colour[3] = 1.0f;
+
+        Entity enemyShip = new NPC();
+        enemyShip.setImage(new GameImage("testresource/testnpc.png", 100, 100));
+        enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
+        enemyShip.add(new PositionPart(x, y, radians));
+ 
+        return enemyShip;
     }
     
 }

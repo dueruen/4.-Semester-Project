@@ -259,6 +259,7 @@ public class Core extends Game {
      */
     private void loadImages() {
         assetManager.load("default.png", Texture.class);
+        assetManager.load("testresource/testnpc.png", Texture.class);
 
         //TILES
         assetManager.load("tiles/road.png", Texture.class);

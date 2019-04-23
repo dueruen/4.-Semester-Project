@@ -33,7 +33,7 @@ public class PlayerPlugin implements IGamePluginService {
         float y = gameData.getDisplayHeight() / 2;
         float radians = 3.1415f / 2;
         Entity playerCar = new Player();
-        GameImage img = new GameImage("car.png", 100, 50);
+        GameImage img = new GameImage("cars/car.png", 100, 50);
         playerCar.setImage(img);
         playerCar.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerCar.add(new PositionPart(x, y, radians));

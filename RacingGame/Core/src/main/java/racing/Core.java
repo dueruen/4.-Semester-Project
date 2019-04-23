@@ -223,7 +223,7 @@ public class Core extends Game {
 
     /**
      * Draw the sprite
-     * 
+     *
      * @param s the sprite
      * @param image the image
      * @param p the positionPart
@@ -285,6 +285,8 @@ public class Core extends Game {
      */
     private void loadImages() {
         assetManager.load("default.png", Texture.class);
+
+        assetManager.load("cars/car.png", Texture.class);
 
         //TILES
         assetManager.load("tiles/road.png", Texture.class);

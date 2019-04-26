@@ -28,6 +28,8 @@ import racing.common.services.IGamePluginService;
  */
 public class MapPlugin implements IGamePluginService, MapSPI {
 
+    Tile[][] map;
+    
     @Override
     public void start(GameData gameData, World world) {
     }
@@ -127,6 +129,8 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         float tileHeight = gameData.getDisplayHeight() / d.length;
         float tileWeight = gameData.getDisplayWidth() / d[0].length;
 
+        map = new Tile[d.length][d[0].length];
+        
         int rOffSet = d.length - 1;
         for (int r = 0; r < d.length; r++) {
             for (int c = 0; c < d[r].length; c++) {
@@ -135,6 +139,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
                 t.add(p);
                 t.setImage(new GameImage(d[r][c].getImagePath(), tileWeight, tileHeight));
                 world.addEntity(t);
+                map[r][c] = t;
             }
             rOffSet -= 2;
         }
@@ -155,5 +160,10 @@ public class MapPlugin implements IGamePluginService, MapSPI {
             }
         }
         createMap(tmpTiles, gameData, world);
+    }
+
+    @Override
+    public Tile[][] getLoadedMap() {
+        return map;
     }
 }

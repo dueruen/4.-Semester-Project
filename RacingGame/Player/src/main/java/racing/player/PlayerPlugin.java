@@ -9,14 +9,20 @@ import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
 import java.util.UUID;
 
-
 public class PlayerPlugin implements IGamePluginService {
 
+    /**
+     * Player
+     */
     private Entity player;
 
-    public PlayerPlugin() {
-    }
-
+    /**
+     * Start the plugin, initilize a new player and add it to the world of
+     * entities
+     *
+     * @param gameData
+     * @param world
+     */
     @Override
     public void start(GameData gameData, World world) {
         // Add entities to the world
@@ -24,6 +30,11 @@ public class PlayerPlugin implements IGamePluginService {
         world.addEntity(player);
     }
 
+    /**
+     * Helper method to create a new player car
+     * @param  gameData
+     * @return player
+     */
     private Entity createPlayerCar(GameData gameData) {
         float deacceleration = 10;
         float acceleration = 200;
@@ -42,6 +53,11 @@ public class PlayerPlugin implements IGamePluginService {
         return playerCar;
     }
 
+    /**
+     * Remove entity from the world if the bundle is removed
+     * @param gameData
+     * @param world
+     */
     @Override
     public void stop(GameData gameData, World world) {
         // Remove entities

@@ -10,6 +10,11 @@ import racing.common.services.IEntityProcessingService;
 
 public class PlayerControlSystem implements IEntityProcessingService {
 
+    /**
+     * Process the player behaviour on every render tick
+     * @param gameData
+     * @param world
+     */
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player : world.getEntities(Player.class)) {

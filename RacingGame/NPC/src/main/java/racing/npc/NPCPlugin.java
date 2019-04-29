@@ -10,8 +10,10 @@ import racing.common.data.GameData;
 import racing.common.data.Entity;
 import racing.common.data.GameImage;
 import racing.common.data.World;
+import racing.common.data.entityparts.AStarPart;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
+import racing.common.map.MapSPI;
 import racing.common.services.IGamePluginService;
 import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
@@ -27,14 +29,22 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     private String NPCID;
     
     /**
-     * Creates an NPC and adds it to the world 
+     * MapSPI
+     */
+    private MapSPI map;
+    
+    /**
+     * Creates a number of NPCs and adds it to the world 
      * @param gameData
      * @param world
      */
     @Override
     public void start(GameData gameData, World world) {
+        int NPCCount = 5;
+        for (int i = 0; i < NPCCount; i++) {
         Entity npc = createNPC(gameData);
         NPCID = world.addEntity(npc);
+        }
         
     }
 
@@ -46,6 +56,26 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     @Override
     public void stop(GameData gameData, World world) {
         world.removeEntity(NPCID);
+    }
+    
+
+
+    /**
+     * Declarative service set map service
+     *
+     * @param map map service
+     */
+    public void setMapService(MapSPI map) {
+        this.map = map;
+    }
+
+    /**
+     * Declarative service remove map service
+     *
+     * @param map map service
+     */
+    public void removeMapService(MapSPI map) {
+        this.map = null;
     }
 
     /**
@@ -72,6 +102,10 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         enemyShip.setImage(new GameImage("testresource/testnpc.png", 100, 100));
         enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         enemyShip.add(new PositionPart(x, y, radians));
+        
+        //for(Tile t: map.)
+        
+        //enemyShip.add(new AStarPart());
  
         return enemyShip;
     }

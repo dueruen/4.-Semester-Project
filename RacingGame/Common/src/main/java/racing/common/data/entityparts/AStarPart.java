@@ -1,8 +1,10 @@
-package racing.ai;
+package racing.common.data.entityparts;
 
 
 
 import java.util.*;
+import racing.common.data.Entity;
+import racing.common.data.GameData;
 
 /**
  * A Star Algorithm
@@ -10,26 +12,26 @@ import java.util.*;
  * @author Marcelo Surriabre
  * @version 2.1, 2017-02-23
  */
-public class AStar {
+public class AStarPart implements EntityPart {
     private static int DEFAULT_HV_COST = 10; // Horizontal - Vertical Cost
     private static int DEFAULT_DIAGONAL_COST = 14;
     private int hvCost;
     private int diagonalCost;
-    private Node[][] searchArea;
-    private PriorityQueue<Node> openList;
-    private Set<Node> closedSet;
-    private Node initialNode;
-    private Node finalNode;
+    private AStarNode[][] searchArea;
+    private PriorityQueue<AStarNode> openList;
+    private Set<AStarNode> closedSet;
+    private AStarNode initialNode;
+    private AStarNode finalNode;
 
-    public AStar(int rows, int cols, Node initialNode, Node finalNode, int hvCost, int diagonalCost) {
+    public AStarPart(int rows, int cols, AStarNode initialNode, AStarNode finalNode, int hvCost, int diagonalCost) {
         this.hvCost = hvCost;
         this.diagonalCost = diagonalCost;
         setInitialNode(initialNode);
         setFinalNode(finalNode);
-        this.searchArea = new Node[rows][cols];
-        this.openList = new PriorityQueue<Node>(new Comparator<Node>() {
+        this.searchArea = new AStarNode[rows][cols];
+        this.openList = new PriorityQueue<AStarNode>(new Comparator<AStarNode>() {
             @Override
-            public int compare(Node node0, Node node1) {
+            public int compare(AStarNode node0, AStarNode node1) {
                 return Integer.compare(node0.getF(), node1.getF());
             }
         });
@@ -37,14 +39,14 @@ public class AStar {
         this.closedSet = new HashSet<>();
     }
 
-    public AStar(int rows, int cols, Node initialNode, Node finalNode) {
+    public AStarPart(int rows, int cols, AStarNode initialNode, AStarNode finalNode) {
         this(rows, cols, initialNode, finalNode, DEFAULT_HV_COST, DEFAULT_DIAGONAL_COST);
     }
 
     private void setNodes() {
         for (int i = 0; i < searchArea.length; i++) {
             for (int j = 0; j < searchArea[0].length; j++) {
-                Node node = new Node(i, j);
+                AStarNode node = new AStarNode(i, j);
                 node.calculateHeuristic(getFinalNode());
                 this.searchArea[i][j] = node;
             }
@@ -59,10 +61,10 @@ public class AStar {
         }
     }
 
-    public List<Node> findPath() {
+    public List<AStarNode> findPath() {
         openList.add(initialNode);
         while (!isEmpty(openList)) {
-            Node currentNode = openList.poll();
+            AStarNode currentNode = openList.poll();
             closedSet.add(currentNode);
             if (isFinalNode(currentNode)) {
                 return getPath(currentNode);
@@ -70,13 +72,13 @@ public class AStar {
                 addAdjacentNodes(currentNode);
             }
         }
-        return new ArrayList<Node>();
+        return new ArrayList<AStarNode>();
     }
 
-    private List<Node> getPath(Node currentNode) {
-        List<Node> path = new ArrayList<Node>();
+    private List<AStarNode> getPath(AStarNode currentNode) {
+        List<AStarNode> path = new ArrayList<AStarNode>();
         path.add(currentNode);
-        Node parent;
+        AStarNode parent;
         while ((parent = currentNode.getParent()) != null) {
             path.add(0, parent);
             currentNode = parent;
@@ -84,13 +86,13 @@ public class AStar {
         return path;
     }
 
-    private void addAdjacentNodes(Node currentNode) {
+    private void addAdjacentNodes(AStarNode currentNode) {
         addAdjacentUpperRow(currentNode);
         addAdjacentMiddleRow(currentNode);
         addAdjacentLowerRow(currentNode);
     }
 
-    private void addAdjacentLowerRow(Node currentNode) {
+    private void addAdjacentLowerRow(AStarNode currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int lowerRow = row + 1;
@@ -105,7 +107,7 @@ public class AStar {
         }
     }
 
-    private void addAdjacentMiddleRow(Node currentNode) {
+    private void addAdjacentMiddleRow(AStarNode currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int middleRow = row;
@@ -117,7 +119,7 @@ public class AStar {
         }
     }
 
-    private void addAdjacentUpperRow(Node currentNode) {
+    private void addAdjacentUpperRow(AStarNode currentNode) {
         int row = currentNode.getRow();
         int col = currentNode.getCol();
         int upperRow = row - 1;
@@ -132,8 +134,8 @@ public class AStar {
         }
     }
 
-    private void checkNode(Node currentNode, int col, int row, int cost) {
-        Node adjacentNode = getSearchArea()[row][col];
+    private void checkNode(AStarNode currentNode, int col, int row, int cost) {
+        AStarNode adjacentNode = getSearchArea()[row][col];
         if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
             if (!getOpenList().contains(adjacentNode)) {
                 adjacentNode.setNodeData(currentNode, cost);
@@ -150,11 +152,11 @@ public class AStar {
         }
     }
 
-    private boolean isFinalNode(Node currentNode) {
+    private boolean isFinalNode(AStarNode currentNode) {
         return currentNode.equals(finalNode);
     }
 
-    private boolean isEmpty(PriorityQueue<Node> openList) {
+    private boolean isEmpty(PriorityQueue<AStarNode> openList) {
         return openList.size() == 0;
     }
 
@@ -162,43 +164,43 @@ public class AStar {
         this.searchArea[row][col].setBlock(true);
     }
 
-    public Node getInitialNode() {
+    public AStarNode getInitialNode() {
         return initialNode;
     }
 
-    public void setInitialNode(Node initialNode) {
+    public void setInitialNode(AStarNode initialNode) {
         this.initialNode = initialNode;
     }
 
-    public Node getFinalNode() {
+    public AStarNode getFinalNode() {
         return finalNode;
     }
 
-    public void setFinalNode(Node finalNode) {
+    public void setFinalNode(AStarNode finalNode) {
         this.finalNode = finalNode;
     }
 
-    public Node[][] getSearchArea() {
+    public AStarNode[][] getSearchArea() {
         return searchArea;
     }
 
-    public void setSearchArea(Node[][] searchArea) {
+    public void setSearchArea(AStarNode[][] searchArea) {
         this.searchArea = searchArea;
     }
 
-    public PriorityQueue<Node> getOpenList() {
+    public PriorityQueue<AStarNode> getOpenList() {
         return openList;
     }
 
-    public void setOpenList(PriorityQueue<Node> openList) {
+    public void setOpenList(PriorityQueue<AStarNode> openList) {
         this.openList = openList;
     }
 
-    public Set<Node> getClosedSet() {
+    public Set<AStarNode> getClosedSet() {
         return closedSet;
     }
 
-    public void setClosedSet(Set<Node> closedSet) {
+    public void setClosedSet(Set<AStarNode> closedSet) {
         this.closedSet = closedSet;
     }
 
@@ -216,5 +218,10 @@ public class AStar {
 
     private void setDiagonalCost(int diagonalCost) {
         this.diagonalCost = diagonalCost;
+    }
+
+    @Override
+    public void process(GameData gameData, Entity entity) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

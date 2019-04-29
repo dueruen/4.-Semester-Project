@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package racing.ai;
+package racing.common.data.entityparts;
 
 /**
  * Node Class
@@ -11,7 +11,7 @@ package racing.ai;
  * @author Marcelo Surriabre
  * @version 2.0, 2018-02-23
  */
-public class Node {
+public class AStarNode {
 
     private int g;
     private int f;
@@ -19,26 +19,26 @@ public class Node {
     private int row;
     private int col;
     private boolean isBlock;
-    private Node parent;
+    private AStarNode parent;
 
-    public Node(int row, int col) {
+    public AStarNode(int row, int col) {
         super();
         this.row = row;
         this.col = col;
     }
 
-    public void calculateHeuristic(Node finalNode) {
+    public void calculateHeuristic(AStarNode finalNode) {
         this.h = Math.abs(finalNode.getRow() - getRow()) + Math.abs(finalNode.getCol() - getCol());
     }
 
-    public void setNodeData(Node currentNode, int cost) {
+    public void setNodeData(AStarNode currentNode, int cost) {
         int gCost = currentNode.getG() + cost;
         setParent(currentNode);
         setG(gCost);
         calculateFinalCost();
     }
 
-    public boolean checkBetterPath(Node currentNode, int cost) {
+    public boolean checkBetterPath(AStarNode currentNode, int cost) {
         int gCost = currentNode.getG() + cost;
         if (gCost < getG()) {
             setNodeData(currentNode, cost);
@@ -54,7 +54,7 @@ public class Node {
 
     @Override
     public boolean equals(Object arg0) {
-        Node other = (Node) arg0;
+        AStarNode other = (AStarNode) arg0;
         return this.getRow() == other.getRow() && this.getCol() == other.getCol();
     }
 
@@ -87,11 +87,11 @@ public class Node {
         this.f = f;
     }
 
-    public Node getParent() {
+    public AStarNode getParent() {
         return parent;
     }
 
-    public void setParent(Node parent) {
+    public void setParent(AStarNode parent) {
         this.parent = parent;
     }
 

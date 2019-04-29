@@ -12,17 +12,16 @@ import racing.Core;
 
 /**
  * The menu screen
- * 
+ *
  */
-public class MenuScreen extends BasicScreen{
+public class MenuScreen extends BasicScreen {
+
     /**
      * The stage
      */
     private Stage stage;
 
-    public MenuScreen(Core parent) {
-        super(parent);
-
+    public MenuScreen() {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
     }
@@ -31,23 +30,22 @@ public class MenuScreen extends BasicScreen{
     public void show() {
         Table table = new Table();
         table.setFillParent(true);
-        //table.setDebug(true);
         stage.addActor(table);
 
-        TextButton newGame = new TextButton("New Game", parent.getSkin());
-        TextButton exit = new TextButton("Exit", parent.getSkin());
+        TextButton newGame = new TextButton("New Game", Core.getInstance().getSkin());
+        TextButton exit = new TextButton("Exit", Core.getInstance().getSkin());
 
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(exit).fillX().uniformX();
 
-         newGame.addListener(new ChangeListener() {
+        newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
-                parent.changeScreen(Core.APPLICATION);
+                Core.getInstance().changeScreen(Core.APPLICATION);
             }
-        });       
-        
+        });
+
         exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {

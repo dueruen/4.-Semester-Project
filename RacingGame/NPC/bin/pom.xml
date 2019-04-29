@@ -8,17 +8,14 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>racing.core</bundle.symbolicName>
+        <bundle.symbolicName>npc</bundle.symbolicName>
         <bundle.namespace>racing</bundle.namespace>
     </properties>
-
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>Core</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>NPC</artifactId>
     <packaging>bundle</packaging>
-
-    <name>Core</name>
-    <dependencies>
+    <name>NPC</name>
+    <dependencies>    
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
@@ -36,12 +33,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>OSGiLibGDX</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CommonMap</artifactId>
+            <artifactId>CommonNPC</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>

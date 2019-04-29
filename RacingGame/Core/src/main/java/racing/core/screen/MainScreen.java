@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import racing.Core;
+import racing.common.map.MapSPI;
 import racing.core.managers.GameInputProcessor;
 
 /**
@@ -12,22 +13,41 @@ import racing.core.managers.GameInputProcessor;
  */
 public class MainScreen extends BasicScreen {
 
-    public MainScreen(Core parent) {
-        super(parent);
-        parent.map.loadFromFile("maps/map1.txt", parent.getGameData(), parent.getWorld());
+    /**
+     * MapSPI
+     */
+    private MapSPI map;
+
+    /**
+     * Declarative service set map service
+     *
+     * @param map map service
+     */
+    public void setMapService(MapSPI map) {
+        this.map = map;
+        this.map.loadFromFile("maps/map1.txt", Core.getInstance().getGameData(), Core.getInstance().getWorld());
+    }
+
+    /**
+     * Declarative service remove map service
+     *
+     * @param map map service
+     */
+    public void removeMapService(MapSPI map) {
+        this.map = null;
     }
 
     @Override
     public void show() {
-        parent.getGameData().setDisplayWidth(Gdx.graphics.getWidth());
-        parent.getGameData().setDisplayHeight(Gdx.graphics.getHeight());
+        Core.getInstance().getGameData().setDisplayWidth(Gdx.graphics.getWidth());
+        Core.getInstance().getGameData().setDisplayHeight(Gdx.graphics.getHeight());
 
-        OrthographicCamera c = new OrthographicCamera(parent.getGameData().getDisplayWidth(), parent.getGameData().getDisplayHeight());
-        c.translate(parent.getGameData().getDisplayWidth() / 2, parent.getGameData().getDisplayHeight() / 2);
+        OrthographicCamera c = new OrthographicCamera(Core.getInstance().getGameData().getDisplayWidth(), Core.getInstance().getGameData().getDisplayHeight());
+        c.translate(Core.getInstance().getGameData().getDisplayWidth() / 2, Core.getInstance().getGameData().getDisplayHeight() / 2);
         c.update();
-        parent.setCam(c);
+        Core.getInstance().setCam(c);
 
-        Gdx.input.setInputProcessor(new GameInputProcessor(parent.getGameData()));
+        Gdx.input.setInputProcessor(new GameInputProcessor(Core.getInstance().getGameData()));
     }
 
     @Override
@@ -35,10 +55,10 @@ public class MainScreen extends BasicScreen {
         Gdx.gl.glClearColor(255, 255, 255, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        parent.getGameData().setDelta(Gdx.graphics.getDeltaTime());
-        parent.getGameData().getKeys().update();
+        Core.getInstance().getGameData().setDelta(Gdx.graphics.getDeltaTime());
+        Core.getInstance().getGameData().getKeys().update();
 
-        parent.update();
-        parent.draw();
+        Core.getInstance().update();
+        Core.getInstance().draw();
     }
 }

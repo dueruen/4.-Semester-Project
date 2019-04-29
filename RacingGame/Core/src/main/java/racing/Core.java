@@ -22,6 +22,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import racing.common.data.GameImage;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.map.MapSPI;
+import racing.common.map.Tile;
 import racing.core.screen.*;
 
 /**
@@ -86,11 +87,6 @@ public class Core extends Game {
     public final static int APPLICATION = 2;
 
     /**
-     * MapSPI instate
-     */
-    public MapSPI map;
-
-    /**
      * Sprite batch
      */
     private SpriteBatch batch;
@@ -104,34 +100,25 @@ public class Core extends Game {
      * Skin
      */
     private Skin skin;
-
-    /**
-     * Declarative service set map service
-     *
-     * @param map map service
-     */
-    public void setMapService(MapSPI map) {
-        this.map = map;
-    }
-
-    /**
-     * Declarative service remove map service
-     */
-    public void removeMapService() {
-        this.map = null;
-    }
+    
+    private static Core instance = null;
 
     public Core() {
         SkinParameter p = new SkinParameter("skin/uiskin.atlas");
         assetManager.load("skin/uiskin.json", Skin.class, p);
         loadImages();
         init();
+        instance = this;
+    }
+    
+    public static Core getInstance() {
+        return instance;
     }
 
     /**
      * Instantiates the game
      */
-    public void init() {
+    private void init() {
         gameData.setDisplayHeight(600);
         gameData.setDisplayWidth(800);
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
@@ -146,19 +133,20 @@ public class Core extends Game {
 
     /**
      * Change screen
-     * @param screen value representing the screen 
+     *
+     * @param screen value representing the screen
      */
     public void changeScreen(int screen) {
         switch (screen) {
             case MENU:
                 if (menuScreen == null) {
-                    menuScreen = new MenuScreen(this);
+                    menuScreen = new MenuScreen();
                 }
                 this.setScreen(menuScreen);
                 break;
             case APPLICATION:
                 if (mainScreen == null) {
-                    mainScreen = new MainScreen(this);
+                    mainScreen = new MainScreen();
                 }
                 this.setScreen(mainScreen);
                 break;
@@ -171,7 +159,7 @@ public class Core extends Game {
         font = new BitmapFont();
         assetManager.finishLoading();
         skin = assetManager.get("skin/uiskin.json");
-        menuScreen = new MenuScreen(this);
+        menuScreen = new MenuScreen();
         setScreen(menuScreen);
     }
 
@@ -201,14 +189,38 @@ public class Core extends Game {
     public void draw() {
         batch.begin();
         for (Entity entity : world.getEntities()) {
-            GameImage image = entity.getImage();
-            Texture tex = assetManager.get(image.getImagePath(), Texture.class);
-            PositionPart p = entity.getPart(PositionPart.class);
-            Sprite sprite = new Sprite(tex);
-
-            batch.draw(sprite, p.getX(), p.getY(), image.getWidth(), image.getHeight());
+            if (entity instanceof Tile) {
+                GameImage image = entity.getImage();
+                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
+                PositionPart p = entity.getPart(PositionPart.class);
+                drawSprite(new Sprite(tex), image, p);
+            }
+        }
+        for (Entity entity : world.getEntities()) {
+            if (!(entity instanceof Tile)) {
+                GameImage image = entity.getImage();
+                Texture tex = assetManager.get(image.getImagePath(), Texture.class);
+                PositionPart p = entity.getPart(PositionPart.class);
+                drawSprite(new Sprite(tex), image, p);
+            }
         }
         batch.end();
+    }
+
+    /**
+     * Draw the sprite
+     *
+     * @param s the sprite
+     * @param image the image
+     * @param p the positionPart
+     */
+    private void drawSprite(Sprite s, GameImage image, PositionPart p) {
+        s.setOrigin(image.getWidth() / 2, image.getHeight() / 2);
+        s.rotate((float) Math.toDegrees(p.getRadians()));
+        s.setX(p.getX());
+        s.setY(p.getY());
+        s.setSize(image.getWidth(), image.getHeight());
+        s.draw(batch);
     }
 
     @Override
@@ -261,6 +273,8 @@ public class Core extends Game {
         assetManager.load("default.png", Texture.class);
         assetManager.load("testresource/testnpc.png", Texture.class);
 
+        assetManager.load("cars/car.png", Texture.class);
+
         //TILES
         assetManager.load("tiles/road.png", Texture.class);
         assetManager.load("tiles/start.png", Texture.class);
@@ -275,10 +289,6 @@ public class Core extends Game {
 
     public World getWorld() {
         return world;
-    }
-
-    public MapSPI getMap() {
-        return map;
     }
 
     public BitmapFont getFont() {

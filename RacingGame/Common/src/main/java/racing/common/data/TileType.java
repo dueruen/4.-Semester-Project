@@ -18,10 +18,15 @@ public enum TileType {
      */
     GRASS(2, 1.0, "tiles/grass.png"),
     /**
+     * Item
+     */
+    Item(1, 0.0, "tiles/road.png"),
+   
+    /**
      * Water
      */
     WATER(3, -1.0, "tiles/water.png");
-
+    
     /**
      * Used to identify the tile type
      */

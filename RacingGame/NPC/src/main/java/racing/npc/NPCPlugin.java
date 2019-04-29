@@ -7,6 +7,7 @@ import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
+import racing.commonai.AISPI;
 import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
 
@@ -19,6 +20,11 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      * ID identifying the specicfic NPC instance in the world
      */
     private String NPCID;
+    
+    /**
+     * AISPI
+     */
+    private AISPI ai;
     
     
     /**
@@ -48,6 +54,27 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         for (Entity npc : world.getEntities(NPC.class)) {
             world.removeEntity(npc);
         }
+    }
+    
+
+
+    /**
+     * Declarative service set AI service
+     *
+     * @param ai AI service
+     */
+    public void setAIService(AISPI ai) {
+        this.ai = ai;
+
+    }
+
+    /**
+     * Declarative service remove AI service
+     *
+     * @param ai AI service
+     */
+    public void removeAIService(AISPI ai) {
+        this.ai = null;
     }
     
 

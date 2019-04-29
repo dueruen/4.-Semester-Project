@@ -286,6 +286,7 @@ public class Core extends Game {
         assetManager.load("tiles/grass.png", Texture.class);
         assetManager.load("tiles/water.png", Texture.class);
         assetManager.load("tiles/goal.png", Texture.class);
+        assetManager.load("tiles/tree.png", Texture.class);
     }
 
     public GameData getGameData() {

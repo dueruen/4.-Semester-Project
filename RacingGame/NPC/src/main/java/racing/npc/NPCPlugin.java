@@ -10,10 +10,8 @@ import racing.common.data.GameData;
 import racing.common.data.Entity;
 import racing.common.data.GameImage;
 import racing.common.data.World;
-import racing.common.data.entityparts.AStarPart;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
-import racing.common.map.MapSPI;
 import racing.common.services.IGamePluginService;
 import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
@@ -28,10 +26,6 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      */
     private String NPCID;
     
-    /**
-     * MapSPI
-     */
-    private MapSPI map;
     
     /**
      * Creates a number of NPCs and adds it to the world 
@@ -41,55 +35,40 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     @Override
     public void start(GameData gameData, World world) {
         int NPCCount = 5;
+        int colorVal = 1;
         for (int i = 0; i < NPCCount; i++) {
-        Entity npc = createNPC(gameData);
+        Entity npc = createNPC(gameData, colorVal);
+        colorVal++;
         NPCID = world.addEntity(npc);
         }
         
     }
 
     /**
-     * Removes specific NPC from the world, using NPCID
+     * Removes all NPCs from the world
      * @param gameData 
      * @param world
      */
     @Override
     public void stop(GameData gameData, World world) {
-        world.removeEntity(NPCID);
+        for (Entity npc : world.getEntities(NPC.class)) {
+            world.removeEntity(npc);
+        }
     }
     
-
-
-    /**
-     * Declarative service set map service
-     *
-     * @param map map service
-     */
-    public void setMapService(MapSPI map) {
-        this.map = map;
-    }
-
-    /**
-     * Declarative service remove map service
-     *
-     * @param map map service
-     */
-    public void removeMapService(MapSPI map) {
-        this.map = null;
-    }
 
     /**
      * Creates Entity of the type NPC
      * @param gameData
      * @return created NPC instance
      */
-    private Entity createNPC (GameData gameData) { 
+    private Entity createNPC (GameData gameData, int colorVal) { 
         float deacceleration = 10;
         float acceleration = 150;
         float maxSpeed = 200;
         float rotationSpeed = 5;
-        float x = new Random().nextFloat() * gameData.getDisplayWidth();
-        float y = new Random().nextFloat() * gameData.getDisplayHeight();
+        float x = (gameData.getDisplayHeight()/2);
+        float y = (gameData.getDisplayWidth()/2);
         float radians = 3.1415f / 2;
 
         float[] colour = new float[4];
@@ -99,14 +78,10 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         colour[3] = 1.0f;
 
         Entity enemyShip = new NPC();
-        enemyShip.setImage(new GameImage("testresource/testnpc.png", 100, 100));
+        enemyShip.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 100));
         enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         enemyShip.add(new PositionPart(x, y, radians));
         
-        //for(Tile t: map.)
-        
-        //enemyShip.add(new AStarPart());
- 
         return enemyShip;
     }
     

@@ -5,7 +5,4 @@
         <provide interface="racing.common.services.IGamePluginService"/>
         <provide interface="racing.commonnpc.NPCSPI"/>
     </service>
-        <reference bind="setMapService" cardinality="1..1"
-               interface="racing.common.map.MapSPI"
-               name="MapService" policy="dynamic" unbind="removeMapService"/>
 </scr:component>

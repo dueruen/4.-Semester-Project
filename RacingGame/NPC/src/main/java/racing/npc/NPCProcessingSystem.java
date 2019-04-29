@@ -10,7 +10,6 @@ import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.World;
-import racing.common.data.entityparts.AStarPart;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.services.IEntityProcessingService;
 import racing.commonnpc.NPC;
@@ -26,7 +25,6 @@ public class NPCProcessingSystem implements IEntityProcessingService {
           for (Entity enemy : world.getEntities(NPC.class)) {
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
-            AStarPart astarPart = enemy.getPart(AStarPart.class);
 
             Random rand = new Random();
 
@@ -46,7 +44,6 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 
             movingPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
-            astarPart.process(gameData, enemy);
 
             updateShape(enemy);
 

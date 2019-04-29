@@ -78,7 +78,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         colour[3] = 1.0f;
 
         Entity enemyShip = new NPC();
-        enemyShip.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 100));
+        enemyShip.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 50));
         enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         enemyShip.add(new PositionPart(x, y, radians));
         

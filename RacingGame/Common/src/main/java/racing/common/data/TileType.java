@@ -21,13 +21,13 @@ public enum TileType {
      * Water
      */
 
-    WATER(3, -1.0, "tiles/water.png", false),
+    WATER(3, -1.0, "tiles/water.png", true),
     
 
     /**
      * Tree
      */
-    TREE(4, -1.0, "tiles/tree.png", false),
+    TREE(4, -1.0, "tiles/tree.png", true),
     
     /**
      * Start

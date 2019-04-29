@@ -3,12 +3,13 @@ package racing.common.data.entityparts;
 
 import racing.common.data.Entity;
 import racing.common.data.GameData;
-import static racing.common.data.GameKeys.LEFT;
-import static racing.common.data.GameKeys.RIGHT;
-import static racing.common.data.GameKeys.UP;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.sqrt;
+
+/**
+ * Part-object deifning physical attributes related to movement of Entity's
+ */
 
 public class MovingPart implements EntityPart {
     /**

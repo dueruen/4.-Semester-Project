@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.npc;
 
 import java.util.Random;
@@ -15,8 +10,7 @@ import racing.common.services.IEntityProcessingService;
 import racing.commonnpc.NPC;
 
 /**
- *
- * @author Victor Gram
+ *Processing system for NPC entity
  */
 public class NPCProcessingSystem implements IEntityProcessingService {
 

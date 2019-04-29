@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.npc;
 
 import racing.common.data.GameData;
@@ -16,8 +11,7 @@ import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
 
 /**
- *
- * @author Victor Gram
+ *NPC Plugin class, handling adding and rmeoving NPC Entitys from the game
  */
 public class NPCPlugin implements IGamePluginService, NPCSPI {
     

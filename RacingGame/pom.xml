@@ -25,6 +25,7 @@
     <module>OSGiLibGDX</module>
     <module>Player</module>
     <module>CommonMap</module>
+    <module>Collision</module>
     <module>Map</module>
   </modules>
 

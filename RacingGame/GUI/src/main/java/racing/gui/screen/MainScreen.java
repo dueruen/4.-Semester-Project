@@ -1,11 +1,12 @@
-package racing.core.screen;
+package racing.gui.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import racing.Core;
 import racing.common.map.MapSPI;
-import racing.core.managers.GameInputProcessor;
+import racing.gui.input.GameInputProcessor;
+import racing.gui.GuiManager;
 
 /**
  * The main screen
@@ -45,7 +46,7 @@ public class MainScreen extends BasicScreen {
         OrthographicCamera c = new OrthographicCamera(Core.getInstance().getGameData().getDisplayWidth(), Core.getInstance().getGameData().getDisplayHeight());
         c.translate(Core.getInstance().getGameData().getDisplayWidth() / 2, Core.getInstance().getGameData().getDisplayHeight() / 2);
         c.update();
-        Core.getInstance().setCam(c);
+        GuiManager.getInstance().setCam(c);
 
         Gdx.input.setInputProcessor(new GameInputProcessor(Core.getInstance().getGameData()));
     }
@@ -58,7 +59,7 @@ public class MainScreen extends BasicScreen {
         Core.getInstance().getGameData().setDelta(Gdx.graphics.getDeltaTime());
         Core.getInstance().getGameData().getKeys().update();
 
-        Core.getInstance().update();
-        Core.getInstance().draw();
+        GuiManager.getInstance().update();
+        GuiManager.getInstance().draw();
     }
 }

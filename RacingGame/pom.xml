@@ -28,6 +28,7 @@
     <module>Map</module>
     <module>NPC</module>
     <module>CommonNPC</module>
+    <module>GUI</module>
   </modules>
 
   <build>

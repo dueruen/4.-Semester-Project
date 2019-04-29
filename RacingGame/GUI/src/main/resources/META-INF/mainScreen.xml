@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.gui.screen.MainScreen">
+    <implementation class="racing.gui.screen.MainScreen"/>
+    <service>
+        <provide interface="racing.common.services.IGamePluginService"/>
+        <reference bind="setMapService" cardinality="1..1"
+                   interface="racing.common.map.MapSPI"
+                   name="MapService" policy="dynamic" unbind="removeMapService"/>
+    </service>
+</scr:component>

@@ -23,7 +23,6 @@ public class MenuScreen extends BasicScreen {
 
     public MenuScreen() {
         stage = new Stage(new ScreenViewport());
-        //Gdx.input.setInputProcessor(stage);
     }
 
     @Override

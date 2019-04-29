@@ -87,11 +87,6 @@ public class Core extends Game {
     public final static int APPLICATION = 2;
 
     /**
-     * MapSPI instate
-     */
-    public MapSPI map;
-
-    /**
      * Sprite batch
      */
     private SpriteBatch batch;
@@ -105,34 +100,25 @@ public class Core extends Game {
      * Skin
      */
     private Skin skin;
-
-    /**
-     * Declarative service set map service
-     *
-     * @param map map service
-     */
-    public void setMapService(MapSPI map) {
-        this.map = map;
-    }
-
-    /**
-     * Declarative service remove map service
-     */
-    public void removeMapService() {
-        this.map = null;
-    }
+    
+    private static Core instance = null;
 
     public Core() {
         SkinParameter p = new SkinParameter("skin/uiskin.atlas");
         assetManager.load("skin/uiskin.json", Skin.class, p);
         loadImages();
         init();
+        instance = this;
+    }
+    
+    public static Core getInstance() {
+        return instance;
     }
 
     /**
      * Instantiates the game
      */
-    public void init() {
+    private void init() {
         gameData.setDisplayHeight(600);
         gameData.setDisplayWidth(800);
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
@@ -154,13 +140,13 @@ public class Core extends Game {
         switch (screen) {
             case MENU:
                 if (menuScreen == null) {
-                    menuScreen = new MenuScreen(this);
+                    menuScreen = new MenuScreen();
                 }
                 this.setScreen(menuScreen);
                 break;
             case APPLICATION:
                 if (mainScreen == null) {
-                    mainScreen = new MainScreen(this);
+                    mainScreen = new MainScreen();
                 }
                 this.setScreen(mainScreen);
                 break;
@@ -173,7 +159,7 @@ public class Core extends Game {
         font = new BitmapFont();
         assetManager.finishLoading();
         skin = assetManager.get("skin/uiskin.json");
-        menuScreen = new MenuScreen(this);
+        menuScreen = new MenuScreen();
         setScreen(menuScreen);
     }
 
@@ -223,7 +209,7 @@ public class Core extends Game {
 
     /**
      * Draw the sprite
-     * 
+     *
      * @param s the sprite
      * @param image the image
      * @param p the positionPart
@@ -286,6 +272,8 @@ public class Core extends Game {
     private void loadImages() {
         assetManager.load("default.png", Texture.class);
 
+        assetManager.load("cars/car.png", Texture.class);
+
         //TILES
         assetManager.load("tiles/road.png", Texture.class);
         assetManager.load("tiles/grass.png", Texture.class);
@@ -299,10 +287,6 @@ public class Core extends Game {
 
     public World getWorld() {
         return world;
-    }
-
-    public MapSPI getMap() {
-        return map;
     }
 
     public BitmapFont getFont() {

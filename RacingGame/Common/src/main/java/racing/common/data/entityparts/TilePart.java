@@ -5,8 +5,8 @@ import racing.common.data.GameData;
 import racing.common.data.TileType;
 
 /**
- * Object containing information about a tile 
- * 
+ * Object containing information about a tile
+ *
  */
 public class TilePart implements EntityPart {
 

@@ -8,16 +8,7 @@ import racing.Core;
  *
  */
 public abstract class BasicScreen implements Screen {
-
-    /**
-     * Reference to core
-     */
-    protected Core parent;
-
-    public BasicScreen(Core parent) {
-        this.parent = parent;
-    }
-
+    
     //The following methods are LibGDX specific
     
     @Override

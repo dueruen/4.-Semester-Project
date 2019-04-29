@@ -5,7 +5,6 @@
  */
 package racing.npc;
 
-import java.util.Random;
 import racing.common.data.GameData;
 import racing.common.data.Entity;
 import racing.common.data.GameImage;
@@ -21,6 +20,7 @@ import racing.commonnpc.NPCSPI;
  * @author Victor Gram
  */
 public class NPCPlugin implements IGamePluginService, NPCSPI {
+    
     /**
      * ID identifying the specicfic NPC instance in the world
      */

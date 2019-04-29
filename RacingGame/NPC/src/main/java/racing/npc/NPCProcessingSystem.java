@@ -54,6 +54,10 @@ public class NPCProcessingSystem implements IEntityProcessingService {
     }
     }
     
+        /**
+         * Updates position of the NPC
+         * @param entity 
+         */
         private void updateShape(Entity entity) {
         float[] shapex = new float[4];
         float[] shapey = new float[4];

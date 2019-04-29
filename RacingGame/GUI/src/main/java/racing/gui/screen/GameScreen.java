@@ -2,5 +2,6 @@ package racing.gui.screen;
 
 public enum GameScreen {
     MENU,
-    GAME;
+    GAME,
+    MAP_EDITOR;
 }

@@ -40,9 +40,6 @@ public class MainScreen extends BasicScreen {
 
     @Override
     public void show() {
-        Core.getInstance().getGameData().setDisplayWidth(Gdx.graphics.getWidth());
-        Core.getInstance().getGameData().setDisplayHeight(Gdx.graphics.getHeight());
-
         OrthographicCamera c = new OrthographicCamera(Core.getInstance().getGameData().getDisplayWidth(), Core.getInstance().getGameData().getDisplayHeight());
         c.translate(Core.getInstance().getGameData().getDisplayWidth() / 2, Core.getInstance().getGameData().getDisplayHeight() / 2);
         c.update();

@@ -23,7 +23,7 @@ public class MenuScreen extends BasicScreen {
 
     public MenuScreen() {
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+        //Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -33,9 +33,12 @@ public class MenuScreen extends BasicScreen {
         stage.addActor(table);
 
         TextButton newGame = new TextButton("New Game", GuiManager.getInstance().getSkin());
+        TextButton mapEditor = new TextButton("Map editor", GuiManager.getInstance().getSkin());
         TextButton exit = new TextButton("Exit", GuiManager.getInstance().getSkin());
 
         table.add(newGame).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(mapEditor).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(exit).fillX().uniformX();
 
@@ -43,6 +46,13 @@ public class MenuScreen extends BasicScreen {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
                 GuiManager.getInstance().changeScreen(GameScreen.GAME);
+            }
+        });
+
+        mapEditor.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                GuiManager.getInstance().changeScreen(GameScreen.MAP_EDITOR);
             }
         });
 
@@ -56,6 +66,7 @@ public class MenuScreen extends BasicScreen {
 
     @Override
     public void render(float f) {
+        Gdx.input.setInputProcessor(stage);
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

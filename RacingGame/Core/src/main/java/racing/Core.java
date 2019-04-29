@@ -272,10 +272,17 @@ public class Core extends Game {
     private void loadImages() {
         assetManager.load("default.png", Texture.class);
 
+        //CARS
         assetManager.load("cars/car.png", Texture.class);
+        assetManager.load("cars/car1.png", Texture.class);
+        assetManager.load("cars/car2.png", Texture.class);
+        assetManager.load("cars/car3.png", Texture.class);
+        assetManager.load("cars/car4.png", Texture.class);
+        assetManager.load("cars/car5.png", Texture.class);
 
         //TILES
         assetManager.load("tiles/road.png", Texture.class);
+        assetManager.load("tiles/start.png", Texture.class);
         assetManager.load("tiles/grass.png", Texture.class);
         assetManager.load("tiles/water.png", Texture.class);
         assetManager.load("tiles/goal.png", Texture.class);

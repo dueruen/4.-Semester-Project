@@ -21,17 +21,18 @@ public enum TileType {
      * Water
      */
 
-    WATER(3, -1.0, "tiles/water.png"),
+    WATER(3, -1.0, "tiles/water.png", false),
     
-    /**
-     * Start
-     */
-    START(5, 0.0, "tiles/start.png");
 
     /**
      * Tree
      */
-    TREE(4, -1.0, "tiles/tree.png", false);
+    TREE(4, -1.0, "tiles/tree.png", false),
+    
+    /**
+     * Start
+     */
+    START(5, 0.0, "tiles/start.png", false);
     
     /**
      * Used to identify the tile type

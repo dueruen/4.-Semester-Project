@@ -71,12 +71,6 @@ public class MainScreen extends BasicScreen {
         Core.getInstance().getGameData().setDisplayHeight(Gdx.graphics.getHeight());
 
         c = new OrthographicCamera(Core.getInstance().getGameData().getDisplayWidth(), Core.getInstance().getGameData().getDisplayHeight());
-        //c = new OrthographicCamera();
-        //c.translate(Core.getInstance().getGameData().getDisplayWidth() / 2, Core.getInstance().getGameData().getDisplayHeight() / 2);
-        //c.translate(2, 2);
-        //PositionPart p = player.getPosition();
-        //c.translate(p.getX(), p.getY());
-        //c.update();
         GuiManager.getInstance().setCam(c);
 
         Gdx.input.setInputProcessor(new GameInputProcessor(Core.getInstance().getGameData()));

@@ -16,7 +16,7 @@ import racing.common.services.IPostEntityProcessingService;
 import racing.common.services.IScoreService;
 
 /**
- *
+ * Control system for the lap system.
  */
 public class LapControllSystem implements IPostEntityProcessingService, IScoreService {
 
@@ -93,10 +93,22 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
         return e;
     }
 
+    /**
+     * Contains local information
+     */
     private class Wrapper {
 
+        /**
+         * Current tile
+         */
         Tile current;
+        /**
+         * previous tile
+         */
         Tile previous;
+        /**
+         * True until the first time the start line is crossed
+         */
         boolean start = true;
     }
 }

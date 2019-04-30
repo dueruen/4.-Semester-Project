@@ -4,7 +4,7 @@ import racing.common.data.Entity;
 import racing.common.data.GameData;
 
 /**
- *
+ *  Object contains information about score / labs driven 
  */
 public class ScorePart implements EntityPart{
     private int labs;

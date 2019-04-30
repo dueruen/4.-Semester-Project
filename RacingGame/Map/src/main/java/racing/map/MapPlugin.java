@@ -1,16 +1,8 @@
 package racing.map;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
@@ -29,7 +21,7 @@ import racing.common.services.IGamePluginService;
 public class MapPlugin implements IGamePluginService, MapSPI {
 
     Tile[][] map;
-    
+
     @Override
     public void start(GameData gameData, World world) {
     }
@@ -50,6 +42,31 @@ public class MapPlugin implements IGamePluginService, MapSPI {
      */
     @Override
     public double getPositionWeight(Entity p, World world) {
+        Entity closedTile = getTileClosestToEntity(p, world);
+        TilePart tp = closedTile.getPart(TilePart.class);
+        return tp.getType().getWeight();
+    }
+
+    @Override
+    public int[] getTileXandY(Tile t) {
+        int[] result = new int[2];
+
+        int r = map.length;
+        int c = map[0].length;
+
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (map[i][j] == t) {
+                    result[0] = i;
+                    result[1] = j;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public Tile getTileClosestToEntity(Entity p, World world) {
         Entity closedTile = null;
         double shortestDistance = Double.MAX_VALUE;
         for (Entity tile : world.getEntities(Tile.class)) {
@@ -65,8 +82,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
                 shortestDistance = nextDistance;
             }
         }
-        TilePart tp = closedTile.getPart(TilePart.class);
-        return tp.getType().getWeight();
+        return (Tile) closedTile;
     }
 
     /**
@@ -130,7 +146,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         float tileWeight = gameData.getDisplayWidth() / d[0].length;
 
         map = new Tile[d.length][d[0].length];
-        
+
         int rOffSet = d.length - 1;
         for (int r = 0; r < d.length; r++) {
             for (int c = 0; c < d[r].length; c++) {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package racing.ai;
+package racing.ai.services;
 
 import racing.common.data.GameData;
 import racing.common.data.World;

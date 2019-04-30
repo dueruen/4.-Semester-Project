@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.ai.plugin">
-    <implementation class="racing.ai.AIPlugin"/>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.ai.services.plugin">
+    <implementation class="racing.ai.services.AIPlugin"/>
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
         <provide interface="racing.commonai.AISPI"/>
     </service>
-    <reference bind="setMapService" cardinality="1..1"
+        <reference bind="setMapService" cardinality="1..1"
                interface="racing.common.map.MapSPI"
                name="MapService" policy="dynamic" unbind="removeMapService"/>
 </scr:component>

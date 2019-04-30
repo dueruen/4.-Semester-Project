@@ -5,10 +5,16 @@
  */
 package racing.commonai;
 
+import racing.common.data.Entity;
+import racing.common.data.World;
+import racing.common.data.entityparts.PositionPart;
+
 /**
  *
  * @author Victor Gram
  */
 public interface AISPI {
+    PositionPart findNextPosition();
+    void setInitialPosition(Entity p, World world);
     
 }

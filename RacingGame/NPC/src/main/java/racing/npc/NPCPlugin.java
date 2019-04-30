@@ -4,10 +4,9 @@ import racing.common.data.GameData;
 import racing.common.data.Entity;
 import racing.common.data.GameImage;
 import racing.common.data.World;
-import racing.common.data.entityparts.MovingPart;
+import racing.common.data.entityparts.MoveToPointPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
-import racing.commonai.AISPI;
 import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
 
@@ -20,12 +19,6 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      * ID identifying the specicfic NPC instance in the world
      */
     private String NPCID;
-    
-    /**
-     * AISPI
-     */
-    private AISPI ai;
-    
     
     /**
      * Creates a number of NPCs and adds it to the world 
@@ -58,24 +51,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     
 
 
-    /**
-     * Declarative service set AI service
-     *
-     * @param ai AI service
-     */
-    public void setAIService(AISPI ai) {
-        this.ai = ai;
-
-    }
-
-    /**
-     * Declarative service remove AI service
-     *
-     * @param ai AI service
-     */
-    public void removeAIService(AISPI ai) {
-        this.ai = null;
-    }
+   
     
 
     /**
@@ -100,7 +76,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
 
         Entity enemyShip = new NPC();
         enemyShip.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 50));
-        enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
+        enemyShip.add(new MoveToPointPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         enemyShip.add(new PositionPart(x, y, radians));
         
         return enemyShip;

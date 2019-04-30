@@ -27,6 +27,12 @@
       <artifactId>CommonMap</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+      <version>4.3.1</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
 
 </project>

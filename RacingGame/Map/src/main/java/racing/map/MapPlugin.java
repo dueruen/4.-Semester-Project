@@ -1,16 +1,20 @@
 package racing.map;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
@@ -21,6 +25,7 @@ import racing.common.map.MapSPI;
 import racing.common.map.Tile;
 import racing.common.data.TileType;
 import racing.common.services.IGamePluginService;
+import sun.misc.IOUtils;
 
 /**
  * Plugin used to control the map
@@ -29,7 +34,7 @@ import racing.common.services.IGamePluginService;
 public class MapPlugin implements IGamePluginService, MapSPI {
 
     Tile[][] map;
-    
+
     @Override
     public void start(GameData gameData, World world) {
     }
@@ -130,7 +135,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         float tileWeight = gameData.getDisplayWidth() / d[0].length;
 
         map = new Tile[d.length][d[0].length];
-        
+
         int rOffSet = d.length - 1;
         for (int r = 0; r < d.length; r++) {
             for (int c = 0; c < d[r].length; c++) {
@@ -165,5 +170,59 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     @Override
     public Tile[][] getLoadedMap() {
         return map;
+    }
+
+    @Override
+    public void saveMapToFile(int[][] data) {
+        String p = "maps/" + UUID.randomUUID() + ".txt";
+        BundleContext b = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+
+        try {
+            FileOutputStream fos = new FileOutputStream("name.txt");
+            fos.write("TEST".getBytes());
+            fos.flush();
+            fos.close();
+//            File f = new File(p);
+//            if (f.createNewFile()) {
+//                throw new AbstractMethodError("HERE!!!!!!!!!!!!!!!!!!!!! " + f);
+//            }
+
+            //File.createTempFile("test", "txt");
+            //InputStream in = getClass().getClassLoader().getResourceAsStream(p);
+            //FileOutputStream out = new FileOutputStream();
+            //IOUtils.copy(in,out);
+//        File file = new File(is.toURI());
+//        URL resourceUrl = getClass().getResource(p);
+//        throw new AbstractMethodError("!!!!!!!!!!!:  " + resourceUrl);
+//        File file = null;
+//        try {
+//            file = new File(resourceUrl.toURI());
+//        } catch (URISyntaxException ex) {
+//            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        try {
+//            //f.createNewFile();
+//            try (FileOutputStream out = new FileOutputStream(file)) {
+//                for (int r = 0; r < data.length; r++) {
+//                    for (int c = 0; c < data[0].length; c++) {
+//                        if (c == data[0].length - 1) {
+//                            String s = "" + data[r][c];
+//                            out.write(s.getBytes());
+//                        } else {
+//                            String s = data[r][c] + ",";
+//                            out.write(s.getBytes());
+//                        }
+//
+//                    }
+//                }
+//            } catch (FileNotFoundException ex) {
+//                Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        } catch (IOException ex) {
+//            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+        } catch (IOException ex) {
+            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

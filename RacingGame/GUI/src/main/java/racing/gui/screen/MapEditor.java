@@ -30,7 +30,7 @@ public class MapEditor extends BasicScreen {
     /**
      * MapSPI
      */
-    private MapSPI map;
+    private static MapSPI map;
 
     /**
      * The stage
@@ -40,7 +40,7 @@ public class MapEditor extends BasicScreen {
     private ImageWrapper[][] tiles;
 
     public MapEditor() {
-        stage = new Stage(new ScreenViewport());
+
     }
 
     /**
@@ -63,6 +63,7 @@ public class MapEditor extends BasicScreen {
 
     @Override
     public void show() {
+        stage = new Stage(new ScreenViewport());
         Table table = new Table();
 
         table.setFillParent(true);
@@ -127,6 +128,8 @@ public class MapEditor extends BasicScreen {
         drawMap.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                tileTable.reset();
+
                 String colS = colTextField.getText();
                 String rowS = rowTextField.getText();
                 int col = 0, row = 0;
@@ -162,7 +165,14 @@ public class MapEditor extends BasicScreen {
         saveMap.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
-
+                int[][] types = new int[tiles.length][tiles[0].length];
+                for (int r = 0; r < tiles.length; r++) {
+                    for (int c = 0; c < tiles[0].length; c++) {
+                        types[r][c] = tiles[r][c].tileType;
+                    }
+                }
+                //throw new AbstractMethodError("Array: " + types.length + "  :: " + GuiManager.getInstance().getMap());
+                map.saveMapToFile(types);
             }
         });
     }
@@ -174,6 +184,7 @@ public class MapEditor extends BasicScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
     }
 
     private class ImageWrapper extends Image {

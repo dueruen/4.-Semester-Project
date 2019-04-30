@@ -14,4 +14,5 @@ public interface MapSPI {
     void loadFromFile(String filePath, GameData gameData, World world);
     void createMap(TileType[][] d, GameData gameData, World world);
     Tile[][] getLoadedMap();
+    void saveMapToFile(int[][] data);
 }

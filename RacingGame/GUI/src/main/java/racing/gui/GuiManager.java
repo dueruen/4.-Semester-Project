@@ -20,6 +20,7 @@ import racing.common.data.GameData;
 import racing.common.data.GameImage;
 import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
+import racing.common.map.MapSPI;
 import racing.common.map.Tile;
 import racing.common.services.IGamePluginService;
 import racing.gui.screen.*;

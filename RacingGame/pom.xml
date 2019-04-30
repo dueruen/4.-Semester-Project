@@ -29,6 +29,7 @@
     <module>NPC</module>
     <module>CommonNPC</module>
     <module>GUI</module>
+    <module>CommonPlayer</module>
   </modules>
 
   <build>

@@ -222,6 +222,10 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         return skin;
     }
 
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+
     @Override
     public void start(GameData gameData, World world) {
     }

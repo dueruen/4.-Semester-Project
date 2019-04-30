@@ -1,16 +1,8 @@
 package racing.map;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
@@ -126,8 +118,8 @@ public class MapPlugin implements IGamePluginService, MapSPI {
      */
     @Override
     public void createMap(TileType[][] d, GameData gameData, World world) {
-        float tileHeight = gameData.getDisplayHeight() / d.length;
-        float tileWeight = gameData.getDisplayWidth() / d[0].length;
+        float tileHeight = 70;
+        float tileWeight = 70;
 
         map = new Tile[d.length][d[0].length];
         

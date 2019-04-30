@@ -9,6 +9,7 @@ import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
 import java.util.UUID;
+import racing.common.data.entityparts.ScorePart;
 import racing.common.player.PlayerSPI;
 
 public class PlayerPlugin implements IGamePluginService, PlayerSPI {
@@ -50,6 +51,7 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         playerCar.setImage(img);
         playerCar.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerCar.add(new PositionPart(x, y, radians));
+        playerCar.add(new ScorePart());
         UUID uuid = UUID.randomUUID();
 
         return playerCar;

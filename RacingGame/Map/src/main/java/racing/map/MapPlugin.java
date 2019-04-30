@@ -21,7 +21,7 @@ import racing.common.services.IGamePluginService;
 public class MapPlugin implements IGamePluginService, MapSPI {
 
     Tile[][] map;
-    
+
     @Override
     public void start(GameData gameData, World world) {
     }
@@ -34,14 +34,12 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     }
 
     /**
-     * Finds the tile weight for the tile closed to the entity
-     *
-     * @param p the entity
-     * @param world the world
-     * @return the weight of the closed tile
+     * Finds the tile the entity is on
+     * @param p
+     * @param world
+     * @return the tile the entity is on
      */
-    @Override
-    public double getPositionWeight(Entity p, World world) {
+    public Tile getTile(Entity p, World world) {
         Entity closedTile = null;
         double shortestDistance = Double.MAX_VALUE;
         for (Entity tile : world.getEntities(Tile.class)) {
@@ -57,8 +55,20 @@ public class MapPlugin implements IGamePluginService, MapSPI {
                 shortestDistance = nextDistance;
             }
         }
-        TilePart tp = closedTile.getPart(TilePart.class);
-        return tp.getType().getWeight();
+        return (Tile)closedTile;
+    }
+
+    /**
+     * Finds the tile weight for the tile closed to the entity
+     *
+     * @param p the entity
+     * @param world the world
+     * @return the weight of the closed tile
+     */
+    @Override
+    public double getPositionWeight(Entity p, World world) {
+        TilePart t = getTile(p, world).getPart(TilePart.class);
+        return t.getType().getWeight();
     }
 
     /**
@@ -124,13 +134,14 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         float tileWeight = 70;
 
         map = new Tile[d.length][d[0].length];
-        
+
         int rOffSet = d.length - 1;
         for (int r = 0; r < d.length; r++) {
             for (int c = 0; c < d[r].length; c++) {
                 Tile t = new Tile();
                 PositionPart p = new PositionPart(c * tileWeight, (r + rOffSet) * tileHeight, 0);
                 t.add(p);
+                t.add(new TilePart(d[r][c]));
                 t.setImage(new GameImage(d[r][c].getImagePath(), tileWeight, tileHeight));
                 world.addEntity(t);
                 map[r][c] = t;

@@ -1,0 +1,3 @@
+Bundle-SymbolicName: LabSystem
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/postPros.xml 

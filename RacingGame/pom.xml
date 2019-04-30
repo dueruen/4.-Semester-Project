@@ -30,6 +30,7 @@
     <module>CommonNPC</module>
     <module>GUI</module>
     <module>CommonPlayer</module>
+    <module>LabSystem</module>
   </modules>
 
   <build>

@@ -18,7 +18,7 @@ import racing.common.services.IScoreService;
 /**
  *
  */
-public class LabControllSystem implements IPostEntityProcessingService, IScoreService {
+public class LapControllSystem implements IPostEntityProcessingService, IScoreService {
 
     private Map<String, Wrapper> entities = new HashMap<>();
 

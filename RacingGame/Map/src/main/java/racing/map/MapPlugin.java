@@ -126,8 +126,10 @@ public class MapPlugin implements IGamePluginService, MapSPI {
      */
     @Override
     public void createMap(TileType[][] d, GameData gameData, World world) {
-        float tileHeight = gameData.getDisplayHeight() / d.length;
-        float tileWeight = gameData.getDisplayWidth() / d[0].length;
+        //float tileHeight = gameData.getDisplayHeight() / d.length;
+        //float tileWeight = gameData.getDisplayWidth() / d[0].length;
+        float tileHeight = 70;
+        float tileWeight = 70;
 
         map = new Tile[d.length][d[0].length];
         

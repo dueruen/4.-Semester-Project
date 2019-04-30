@@ -45,7 +45,13 @@ public class CollisionSystem implements IPostEntityProcessingService {
                     continue;
                 }
 
-                // Stop entity
+                MovingPart mA = e.getPart(MovingPart.class);
+
+                if (mA == null) {
+                    continue;
+                }
+
+                mA.setAcceleration(0);
             }
         }
     }

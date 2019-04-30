@@ -2,6 +2,6 @@
 <scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.collision.CollisionSystem">
     <implementation class="racing.collision.CollisionSystem"/>
     <service>
-        <provide interface="racing.common.services.IEntityProcessingService"/>
+        <provide interface="racing.common.services.IPostEntityProcessingService"/>
     </service>
 </scr:component>

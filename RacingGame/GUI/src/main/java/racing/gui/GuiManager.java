@@ -39,7 +39,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
     /**
      * The a asset manager
      */
-    public AssetManager assetManager = new AssetManager();
+    private AssetManager assetManager = new AssetManager();
 
     /**
      * The Game screens

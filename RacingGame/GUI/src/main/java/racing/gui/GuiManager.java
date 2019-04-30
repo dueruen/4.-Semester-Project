@@ -206,6 +206,10 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         assetManager.load("tiles/tree.png", Texture.class);
     }
 
+    public AssetManager getAssetManager() {
+        return assetManager;
+    }
+
     public BitmapFont getFont() {
         return font;
     }

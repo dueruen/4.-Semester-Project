@@ -142,6 +142,7 @@ public class MainScreen extends BasicScreen {
      */
     public void removePlayerService(PlayerSPI player) {
         this.player = null;
+
     }
 
     /**

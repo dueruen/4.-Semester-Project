@@ -3,14 +3,14 @@
     <implementation class="racing.gui.screen.MainScreen"/>
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
-        <reference bind="setMapService" cardinality="1..1"
-                   interface="racing.common.map.MapSPI"
-                   name="MapService" policy="dynamic" unbind="removeMapService"/>
-        <reference bind="setPlayerService" cardinality="1..1"
+    </service>
+    <reference bind="setMapService" cardinality="0..1"
+                       interface="racing.common.map.MapSPI"
+                       name="MapService" policy="dynamic" unbind="removeMapService"/>
+    <reference bind="setPlayerService" cardinality="0..1"
                    interface="racing.common.player.PlayerSPI"
                    name="PlayerService" policy="dynamic" unbind="removePlayerService"/>
-        <reference bind="setScoreService" cardinality="1..1"
+    <reference bind="setScoreService" cardinality="0..1"
                    interface="racing.common.services.IScoreService"
                    name="ScoreService" policy="dynamic" unbind="removeScoreService"/>
-    </service>
 </scr:component>

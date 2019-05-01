@@ -83,9 +83,11 @@ public class MainScreen extends BasicScreen {
         GuiManager.getInstance().update();
         GuiManager.getInstance().draw();
 
-        PositionPart p = player.getPosition();
-        c.position.set(p.getX(), p.getY(), 0);
-        c.update();
+        if (player != null) {
+            PositionPart p = player.getPosition();
+            c.position.set(p.getX(), p.getY(), 0);
+            c.update();
+        }
 
         table.reset();
         if (score != null) {

@@ -1,4 +1,4 @@
-package racing.core.managers;
+package racing.gui.input;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;

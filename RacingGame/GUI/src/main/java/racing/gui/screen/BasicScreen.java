@@ -1,7 +1,6 @@
-package racing.core.screen;
+package racing.gui.screen;
 
 import com.badlogic.gdx.Screen;
-import racing.Core;
 
 /**
  * Basic game screen, extended by other screens to simplify there look

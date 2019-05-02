@@ -16,5 +16,6 @@ import racing.common.data.entityparts.PositionPart;
 public interface AISPI {
     PositionPart findNextPosition();
     void setInitialPosition(Entity p, World world);
+    void setSourceAndTargetNodes(Entity p, World world);
     
 }

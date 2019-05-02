@@ -141,57 +141,33 @@ public class MoveToPointPart implements EntityPart {
      */
     @Override
     public void process(GameData gameData, Entity entity) {
-        PositionPart positionPart = entity.getPart(PositionPart.class);
-        float x = positionPart.getX();
-        float y = positionPart.getY();
-        float radians = positionPart.getRadians();
+        PositionPart currentPosition = entity.getPart(PositionPart.class);
+        PositionPart targetPosition = targetPoint;
+        
+        //Initializes source position data
+        float x = currentPosition.getX();
+        float y = currentPosition.getY();
+        float radians = currentPosition.getRadians();
         float dt = gameData.getDelta();
 
-        // turning
-        if (left) {
-            radians += rotationSpeed * dt;
-        }
+        //Initializes target position data
+        float tX = targetPosition.getX();
+        float tY= targetPosition.getY();
+        float tRadians = targetPosition.getRadians();
+        
+        float deltaX = tX - x;
+        float deltaY = tY - y;
+        float angle = (float) Math.atan2(deltaY, deltaX);
+        
+        
 
-        if (right) {
-            radians -= rotationSpeed * dt;
-        }
+        currentPosition.setX((float) (maxSpeed * Math.cos(radians)));
+        currentPosition.setY((float) (maxSpeed * Math.sin(radians)));
+        
+        //currentPosition.setX(maxSpeed * x);
+        //currentPosition.setY(maxSpeed * y);
 
-        // accelerating
-        if (up) {
-            dx += cos(radians) * acceleration * dt;
-            dy += sin(radians) * acceleration * dt;
-        }
-
-        // deccelerating
-        float vec = (float) sqrt(dx * dx + dy * dy);
-        if (vec > 0) {
-            dx -= (dx / vec) * deceleration * dt;
-            dy -= (dy / vec) * deceleration * dt;
-        }
-        if (vec > maxSpeed) {
-            dx = (dx / vec) * maxSpeed;
-            dy = (dy / vec) * maxSpeed;
-        }
-
-        // set position
-        x += dx * dt;
-        if (x > gameData.getDisplayWidth()) {
-            x = 0;
-        } else if (x < 0) {
-            x = gameData.getDisplayWidth();
-        }
-
-        y += dy * dt;
-        if (y > gameData.getDisplayHeight()) {
-            y = 0;
-        } else if (y < 0) {
-            y = gameData.getDisplayHeight();
-        }
-
-        positionPart.setX(x);
-        positionPart.setY(y);
-
-        positionPart.setRadians(radians);
+        currentPosition.setRadians(angle);
     }
     
     public void setTargetPoint(PositionPart pp) { 

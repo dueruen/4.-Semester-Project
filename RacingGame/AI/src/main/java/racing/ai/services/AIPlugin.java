@@ -45,7 +45,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
 
     @Override
     public void start(GameData gameData, World world) {
-        initializeAI(gameData);
+        initializeAI();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
 
     }
     
-    private void initializeAI(GameData gameData) {
+    private void initializeAI() {
         Tile[][] map = mapSPI.getLoadedMap();
         int r = map.length;
         int c = map[0].length;
@@ -62,8 +62,10 @@ public class AIPlugin implements IGamePluginService, AISPI {
         
         for(int i = 0; i < r; i++) { 
             for(int j = 0; j < c; j++) { 
-                PositionPart pp = map[i][j].getPart(PositionPart.class);
-                AStarNode node = new AStarNode(Math.round(pp.getX()), Math.round(pp.getY()));
+                Tile pp = map[i][j];
+                //throw new ArrayStoreException(pp.getX() + ", " + pp.getY());
+                int[] coordinates = mapSPI.getTileXandY(pp);
+                AStarNode node = new AStarNode(coordinates[0], coordinates[1]);
                 nodes[i][j] = node;
             }
         }
@@ -78,7 +80,14 @@ public class AIPlugin implements IGamePluginService, AISPI {
 
     @Override
     public PositionPart findNextPosition() {
-        return ai.findNextPosition();
+        PositionPart pp = ai.findNextPosition();
+        Tile[][]map = mapSPI.getLoadedMap();
+        int x = Math.round(pp.getX());
+        int y = Math.round(pp.getY());
+        Tile gt = map[x][y];
+        return gt.getPart(PositionPart.class);
+        
+        //return ai.findNextPosition();
     }
 
     @Override
@@ -86,14 +95,32 @@ public class AIPlugin implements IGamePluginService, AISPI {
         
         Tile t = mapSPI.getTileClosestToEntity(p, world);
         int[] coordinates = mapSPI.getTileXandY(t);
-        float x = coordinates[0];
-        float y = coordinates[1];
+        int x = Math.round(coordinates[0]);
+        int y = Math.round(coordinates[1]);
    
         float radians = 3.1415f / 2;
         
    
+        ai.setInitialPosition(x,y);
+    }
+
+    @Override
+    public void setSourceAndTargetNodes(Entity p, World world) {
+        Tile t = mapSPI.getTileClosestToEntity(p, world);
+        int[] coordinates = mapSPI.getTileXandY(t);
+        int x = Math.round(coordinates[0]);
+        int y = Math.round(coordinates[1]);
+   
+        float radians = 3.1415f / 2;
         
-        PositionPart pp = new PositionPart(x, y, radians);
-        ai.setInitialPosition(pp);
+        Tile[][] map = mapSPI.getLoadedMap();
+        Tile gt = map[6][10]; //Starting point for eksemplets skyld, kan ændres
+        int[] gtc = mapSPI.getTileXandY(gt);
+                
+        AStarNode source = new AStarNode(x,y);
+        AStarNode target = new AStarNode(gtc[0], gtc[1]);
+        
+   
+        ai.setSourceAndTargetNodes(source, target);
     }
 }

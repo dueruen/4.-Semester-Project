@@ -40,7 +40,6 @@ public class AStar  {
                 return Integer.compare(node0.getF(), node1.getF());
             }
         });
-        setNodes();
         this.closedSet = new HashSet<>();
     }
 
@@ -87,7 +86,7 @@ public class AStar  {
                 addAdjacentNodes(currentNode);
             }
         }
-        return new ArrayList<AStarNode>();
+        return new ArrayList<>();
     }
 
     private List<AStarNode> getPath(AStarNode currentNode) {
@@ -150,8 +149,6 @@ public class AStar  {
     }
 
     private void checkNode(AStarNode currentNode, int col, int row, int cost) { 
-//        throw new AssertionError("Lenght and depth from serachArea: " + searchArea.length + ","  + searchArea[0].length +"\n" + 
-//                "Row and col from arguments: " + row + "," + col);
         AStarNode adjacentNode = getSearchArea()[row][col];
         if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
             if (!getOpenList().contains(adjacentNode)) {
@@ -185,8 +182,8 @@ public class AStar  {
         return initialNode;
     }
 
-    public void setInitialPosition(PositionPart pp) {
-        AStarNode initNode = new AStarNode(Math.round(pp.getY()),Math.round(pp.getX()));
+    public void setInitialPosition(int x, int y) {
+        AStarNode initNode = new AStarNode(x,y);
         setInitialNode(initNode);
         
     }
@@ -241,5 +238,11 @@ public class AStar  {
     private void setDiagonalCost(int diagonalCost) {
         this.diagonalCost = diagonalCost;
     }
+    
+    public void setSourceAndTargetNodes(AStarNode source, AStarNode target) { 
+        setInitialNode(source);
+        setFinalNode(target);
+        setNodes();
+   }
 
 }

@@ -26,10 +26,10 @@ public class NPCProcessingSystem implements IEntityProcessingService {
           for (Entity enemy : world.getEntities(NPC.class)) {
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MoveToPointPart moveToPointPart = enemy.getPart(MoveToPointPart.class);
-            ai.setInitialPosition(enemy, world);
+            ai.setSourceAndTargetNodes(enemy, world);
             PositionPart pp = ai.findNextPosition();
+
             moveToPointPart.setTargetPoint(pp);
-            
             moveToPointPart.process(gameData, enemy);
             positionPart.process(gameData, enemy);
 

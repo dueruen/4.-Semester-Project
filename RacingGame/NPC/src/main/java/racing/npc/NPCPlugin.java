@@ -27,7 +27,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      */
     @Override
     public void start(GameData gameData, World world) {
-        int NPCCount = 5;
+        int NPCCount = 1;
         int colorVal = 1;
         for (int i = 0; i < NPCCount; i++) {
         Entity npc = createNPC(gameData, colorVal);

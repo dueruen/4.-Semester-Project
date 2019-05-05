@@ -14,12 +14,7 @@ import racing.commonnpc.NPCSPI;
  *NPC Plugin class, handling adding and rmeoving NPC Entitys from the game
  */
 public class NPCPlugin implements IGamePluginService, NPCSPI {
-    
-    /**
-     * ID identifying the specicfic NPC instance in the world
-     */
-    private String NPCID;
-    
+       
     /**
      * Creates a number of NPCs and adds it to the world 
      * @param gameData
@@ -32,7 +27,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         for (int i = 0; i < NPCCount; i++) {
         Entity npc = createNPC(gameData, colorVal);
         colorVal++;
-        NPCID = world.addEntity(npc);
+        world.addEntity(npc);
         }
         
     }

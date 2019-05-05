@@ -68,18 +68,13 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         float y = (gameData.getDisplayWidth()/2);
         float radians = 3.1415f / 2;
 
-        float[] colour = new float[4];
-        colour[0] = 1.0f;
-        colour[1] = 0.0f;
-        colour[2] = 0.0f;
-        colour[3] = 1.0f;
 
-        Entity enemyShip = new NPC();
-        enemyShip.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 50));
-        enemyShip.add(new MoveToPointPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
-        enemyShip.add(new PositionPart(x, y, radians));
+        Entity NPCRacer = new NPC();
+        NPCRacer.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 50));
+        NPCRacer.add(new MoveToPointPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
+        NPCRacer.add(new PositionPart(x, y, radians));
         
-        return enemyShip;
+        return NPCRacer;
     }
     
 }

@@ -23,17 +23,15 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-          for (Entity enemy : world.getEntities(NPC.class)) {
-            PositionPart positionPart = enemy.getPart(PositionPart.class);
-            MoveToPointPart moveToPointPart = enemy.getPart(MoveToPointPart.class);
-            ai.setSourceAndTargetNodes(enemy, world);
+          for (Entity NPC : world.getEntities(NPC.class)) {
+            PositionPart positionPart = NPC.getPart(PositionPart.class);
+            MoveToPointPart moveToPointPart = NPC.getPart(MoveToPointPart.class);
+            ai.setSourceAndTargetNodes(NPC, world);
             PositionPart pp = ai.findNextPosition();
 
             moveToPointPart.setTargetPoint(pp);
-            moveToPointPart.process(gameData, enemy);
-            positionPart.process(gameData, enemy);
-
-            updateShape(enemy);
+            moveToPointPart.process(gameData, NPC);
+            positionPart.process(gameData, NPC);
         
     }
     }
@@ -55,22 +53,6 @@ public class NPCProcessingSystem implements IEntityProcessingService {
      */
     public void removeAIService(AISPI ai) {
         this.ai = null;
-    }
-    
-        /**
-         * Updates position of the NPC
-         * @param entity 
-         */
-        private void updateShape(Entity entity) {
-        float[] shapex = new float[4];
-        float[] shapey = new float[4];
-        PositionPart positionPart = entity.getPart(PositionPart.class);
-        //ai.setInitialPosition(positionPart);
-        //ai.findNextPosition();
-        
-        float x = positionPart.getX();
-        float y = positionPart.getY();
-        float radians = positionPart.getRadians();
     }
     
 }

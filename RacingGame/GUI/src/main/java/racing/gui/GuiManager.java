@@ -41,7 +41,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
     /**
      * The a asset manager
      */
-    private AssetManager assetManager;
+    private AssetManager assetManager = new AssetManager();
 
     /**
      * The Game screens
@@ -240,6 +240,10 @@ public class GuiManager extends Game implements IGamePluginService { //implement
 
     public Skin getSkin() {
         return skin;
+    }
+
+    public SpriteBatch getBatch() {
+        return batch;
     }
 
     @Override

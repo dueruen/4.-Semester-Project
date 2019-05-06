@@ -39,6 +39,9 @@ public class Core {
      */
     private final List<IPostEntityProcessingService> postEntityProcessorList = new CopyOnWriteArrayList<>();
 
+    /**
+     * Core instance
+     */
     private static Core instance = null;
 
     public Core() {

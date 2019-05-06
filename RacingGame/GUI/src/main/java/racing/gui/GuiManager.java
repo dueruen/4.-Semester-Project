@@ -20,10 +20,12 @@ import racing.common.data.GameData;
 import racing.common.data.GameImage;
 import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
+import racing.common.map.MapSPI;
 import racing.common.map.Tile;
 import racing.common.services.IGamePluginService;
 import racing.gui.screen.*;
 import static racing.gui.screen.GameScreen.GAME;
+import static racing.gui.screen.GameScreen.MAP_EDITOR;
 import static racing.gui.screen.GameScreen.MENU;
 
 /**
@@ -68,6 +70,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
 
     public GuiManager() {
         gameScreens = new HashMap<>();
+        assetManager = new AssetManager();
         SkinLoader.SkinParameter p = new SkinLoader.SkinParameter("skin/uiskin.atlas");
         assetManager.load("skin/uiskin.json", Skin.class, p);
         loadImages();
@@ -174,6 +177,12 @@ public class GuiManager extends Game implements IGamePluginService { //implement
                 }
                 this.setScreen(gameScreens.get(MENU));
                 break;
+            case MAP_EDITOR:
+                if (gameScreens.get(MAP_EDITOR) == null) {
+                    gameScreens.put(MAP_EDITOR, new MapEditor());
+                }
+                this.setScreen(gameScreens.get(MAP_EDITOR));
+                break;
             case GAME:
                 if (gameScreens.get(GAME) == null) {
                     gameScreens.put(GAME, new MainScreen());
@@ -205,6 +214,13 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         assetManager.load("tiles/goal.png", Texture.class);
         assetManager.load("tiles/tree.png", Texture.class);
         assetManager.load("tiles/spawn.png", Texture.class);
+
+        assetManager.load("tiles/road_sel.png", Texture.class);
+        assetManager.load("tiles/start_sel.png", Texture.class);
+        assetManager.load("tiles/grass_sel.png", Texture.class);
+        assetManager.load("tiles/water_sel.png", Texture.class);
+        assetManager.load("tiles/goal_sel.png", Texture.class);
+        assetManager.load("tiles/tree_sel.png", Texture.class);
         assetManager.load("tiles/spawn_sel.png", Texture.class);
     }
 

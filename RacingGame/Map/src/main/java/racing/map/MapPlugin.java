@@ -173,54 +173,25 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     }
 
     @Override
-    public void saveMapToFile(int[][] data) {
-        String p = "maps/" + UUID.randomUUID() + ".txt";
-        BundleContext b = FrameworkUtil.getBundle(this.getClass()).getBundleContext();
+    public void saveMapToFile(int[][] data, String mapName) {
+        String path = System.getProperty("user.home") + "/racing_game/maps/";
+        String fileName = path + mapName + ".txt";
+        
+        new File(path).mkdirs();
 
-        try {
-            FileOutputStream fos = new FileOutputStream("name.txt");
-            fos.write("TEST".getBytes());
-            fos.flush();
-            fos.close();
-//            File f = new File(p);
-//            if (f.createNewFile()) {
-//                throw new AbstractMethodError("HERE!!!!!!!!!!!!!!!!!!!!! " + f);
-//            }
-
-            //File.createTempFile("test", "txt");
-            //InputStream in = getClass().getClassLoader().getResourceAsStream(p);
-            //FileOutputStream out = new FileOutputStream();
-            //IOUtils.copy(in,out);
-//        File file = new File(is.toURI());
-//        URL resourceUrl = getClass().getResource(p);
-//        throw new AbstractMethodError("!!!!!!!!!!!:  " + resourceUrl);
-//        File file = null;
-//        try {
-//            file = new File(resourceUrl.toURI());
-//        } catch (URISyntaxException ex) {
-//            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        try {
-//            //f.createNewFile();
-//            try (FileOutputStream out = new FileOutputStream(file)) {
-//                for (int r = 0; r < data.length; r++) {
-//                    for (int c = 0; c < data[0].length; c++) {
-//                        if (c == data[0].length - 1) {
-//                            String s = "" + data[r][c];
-//                            out.write(s.getBytes());
-//                        } else {
-//                            String s = data[r][c] + ",";
-//                            out.write(s.getBytes());
-//                        }
-//
-//                    }
-//                }
-//            } catch (FileNotFoundException ex) {
-//                Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        } catch (IOException ex) {
-//            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try (FileOutputStream out = new FileOutputStream(fileName)) {
+            for (int r = 0; r < data.length; r++) {
+                for (int c = 0; c < data[0].length; c++) {
+                    if (c == data[0].length - 1) {
+                        String s = "" + data[r][c];
+                        out.write(s.getBytes());
+                    } else {
+                        String s = data[r][c] + ",";
+                        out.write(s.getBytes());
+                    }
+                }
+                out.write("\n".getBytes());
+            }
         } catch (IOException ex) {
             Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }

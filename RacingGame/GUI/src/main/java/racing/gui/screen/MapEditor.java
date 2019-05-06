@@ -78,6 +78,10 @@ public class MapEditor extends BasicScreen {
         Table tileSelectTable = new Table();
         table.add(tileSelectTable);
 
+        TextField mapName = new TextField("", GuiManager.getInstance().getSkin());
+        mapName.setMessageText("Map name");
+        tileSelectTable.add(mapName);
+
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.setMaxCheckCount(1);
         buttonGroup.setMinCheckCount(0);
@@ -152,7 +156,10 @@ public class MapEditor extends BasicScreen {
                             @Override
                             public void clicked(InputEvent event, float x, float y) {
                                 int tileNum = buttonGroup.getCheckedIndex();
-                                ibw.setDrawable(new TextureRegionDrawable(new TextureRegion(GuiManager.getInstance().getAssetManager().get(TileType.values()[tileNum].getImagePath(), Texture.class))));
+                                if (tileNum >= 0) {
+                                    ibw.setDrawable(new TextureRegionDrawable(new TextureRegion(GuiManager.getInstance().getAssetManager().get(TileType.values()[tileNum].getImagePath(), Texture.class))));
+                                    ibw.setTileType(tileNum);
+                                }
                             }
                         });
                         tileTable.add(ibw);
@@ -172,7 +179,7 @@ public class MapEditor extends BasicScreen {
                     }
                 }
                 //throw new AbstractMethodError("Array: " + types.length + "  :: " + GuiManager.getInstance().getMap());
-                map.saveMapToFile(types);
+                map.saveMapToFile(types, mapName.getText());
             }
         });
     }
@@ -192,6 +199,10 @@ public class MapEditor extends BasicScreen {
         int tileType;
 
         public ImageWrapper(int tileType) {
+            this.tileType = tileType;
+        }
+
+        void setTileType(int tileType) {
             this.tileType = tileType;
         }
     }

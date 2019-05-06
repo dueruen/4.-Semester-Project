@@ -37,11 +37,10 @@ public class MapEditor extends BasicScreen {
      */
     private Stage stage;
 
+    /**
+     * Array with tiles
+     */
     private ImageWrapper[][] tiles;
-
-    public MapEditor() {
-
-    }
 
     /**
      * Declarative service set map service
@@ -78,10 +77,6 @@ public class MapEditor extends BasicScreen {
         Table tileSelectTable = new Table();
         table.add(tileSelectTable);
 
-        TextField mapName = new TextField("", GuiManager.getInstance().getSkin());
-        mapName.setMessageText("Map name");
-        tileSelectTable.add(mapName);
-
         ButtonGroup buttonGroup = new ButtonGroup();
         buttonGroup.setMaxCheckCount(1);
         buttonGroup.setMinCheckCount(0);
@@ -106,7 +101,11 @@ public class MapEditor extends BasicScreen {
         table.add(butTable);
 
         TextButton menu = new TextButton("Menu", GuiManager.getInstance().getSkin());
-        butTable.add(menu).fillX().uniformX();
+        butTable.add(menu);
+
+        TextField mapName = new TextField("", GuiManager.getInstance().getSkin());
+        mapName.setMessageText("Map name");
+        butTable.add(mapName).fillX().uniformX();
 
         TextField colTextField = new TextField("", GuiManager.getInstance().getSkin());
         colTextField.setMessageText("Columns");
@@ -178,7 +177,6 @@ public class MapEditor extends BasicScreen {
                         types[r][c] = tiles[r][c].tileType;
                     }
                 }
-                //throw new AbstractMethodError("Array: " + types.length + "  :: " + GuiManager.getInstance().getMap());
                 map.saveMapToFile(types, mapName.getText());
             }
         });
@@ -194,8 +192,14 @@ public class MapEditor extends BasicScreen {
 
     }
 
+    /**
+     * Extention on Image with tileType
+     */
     private class ImageWrapper extends Image {
 
+        /**
+         * Tile type
+         */
         int tileType;
 
         public ImageWrapper(int tileType) {

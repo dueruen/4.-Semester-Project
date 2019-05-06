@@ -10,7 +10,9 @@ import racing.common.data.TileType;
  * 
  */
 public interface MapSPI {
+    Tile getTile(Entity p, World world);
     double getPositionWeight(Entity p, World world);
     void loadFromFile(String filePath, GameData gameData, World world);
     void createMap(TileType[][] d, GameData gameData, World world);
+    Tile[][] getLoadedMap();
 }

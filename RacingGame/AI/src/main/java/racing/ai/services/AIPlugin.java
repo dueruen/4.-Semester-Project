@@ -90,19 +90,19 @@ public class AIPlugin implements IGamePluginService, AISPI {
         //return ai.findNextPosition();
     }
 
-    @Override
-    public void setInitialPosition(Entity p, World world) {
-        
-        Tile t = mapSPI.getTileClosestToEntity(p, world);
-        int[] coordinates = mapSPI.getTileXandY(t);
-        int x = Math.round(coordinates[0]);
-        int y = Math.round(coordinates[1]);
-   
-        float radians = 3.1415f / 2;
-        
-   
-        ai.setInitialPosition(x,y);
-    }
+//    @Override
+//    public void setInitialPosition(Entity p, World world) {
+//        
+//        Tile t = mapSPI.getTileClosestToEntity(p, world);
+//        int[] coordinates = mapSPI.getTileXandY(t);
+//        int x = Math.round(coordinates[0]);
+//        int y = Math.round(coordinates[1]);
+//   
+//        float radians = 3.1415f / 2;
+//        
+//   
+//        ai.setInitialPosition(x,y);
+//    }
 
     @Override
     public void setSourceAndTargetNodes(Entity p, World world) {

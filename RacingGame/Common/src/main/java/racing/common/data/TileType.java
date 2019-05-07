@@ -2,7 +2,7 @@ package racing.common.data;
 
 /**
  * Used to describe a tile type
- * 
+ *
  */
 public enum TileType {
     /**
@@ -21,14 +21,14 @@ public enum TileType {
      * Water
      */
 
-    WATER(3, -1.0, "tiles/water.png", true),
-    
+    WATER(3, -1.0, "tiles/water.png", false),
+
 
     /**
      * Tree
      */
     TREE(4, -1.0, "tiles/tree.png", true),
-    
+
     /**
      * Start
      */
@@ -43,18 +43,18 @@ public enum TileType {
      * Used to identify the tile type
      */
     private int value;
-    
+
     /**
      * The type weight
      */
     private double weight;
-    
+
     /**
      * The path to the image, this path is relative to the OSGiLibGDX
      * src/main/resources folder
      */
     private String imagePath;
-    
+
     /**
      * True if the tile is static (Has collision)
      */

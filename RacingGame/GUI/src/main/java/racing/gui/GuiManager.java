@@ -120,7 +120,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         cfg.width = 800;
         cfg.height = 600;
         cfg.useGL30 = false;
-        cfg.resizable = false;
+        cfg.resizable = true;
 
         new LwjglApplication(this, cfg);
     }

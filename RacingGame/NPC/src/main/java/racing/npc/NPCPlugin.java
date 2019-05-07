@@ -16,11 +16,13 @@ import racing.common.services.IGamePluginService;
  */
 public class NPCPlugin implements IGamePluginService, NPCSPI {
 
+    /**
+     * Number for amount of npcs
+     */
     private static int loadedNPC;
-    
+
     /**
      * Creates a number of NPCs and adds it to the world
-     *
      * @param gameData
      * @param world
      */
@@ -33,7 +35,6 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
 
     /**
      * Removes all NPCs from the world
-     *
      * @param gameData
      * @param world
      */
@@ -48,7 +49,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      * @param gameData
      * @return created NPC instance
      */
-    private Entity createNPC(GameData gameData, int colorVal) {
+    private Entity createNPC (GameData gameData, int colorVal) {
         float deacceleration = 10;
         float acceleration = 150;
         float maxSpeed = 200;
@@ -79,6 +80,9 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         for (int i = 0; i < amount; i++) {
             Entity npc = createNPC(gameData, colorVal);
             colorVal++;
+            if(colorVal == 6) {
+                colorVal = 1;
+            }
             world.addEntity(npc);
             npcs[i] = (NPC)npc;
         }

@@ -1,4 +1,3 @@
-
 package racing.common.data.entityparts;
 
 import racing.common.data.Entity;
@@ -10,13 +9,12 @@ import static java.lang.Math.sqrt;
 /**
  * Part-object deifning physical attributes related to movement of Entity's
  */
-
 public class MovingPart implements EntityPart {
+
     /**
      * Delta x and y describes a coordinate in time
      */
     private float dx, dy;
-
     /**
      * Acceleration and deceleration
      */
@@ -25,15 +23,16 @@ public class MovingPart implements EntityPart {
     /**
      * Max speed and rotation speed
      */
-    private float maxSpeed, rotationSpeed;
+    private float maxSpeed, rotationSpeed, currentSpeed, reverseSpeed;
 
     /**
      * Booleans to indicate in which direction to move
      */
-    private boolean left, right, up;
+    private boolean left, right, up, down, moving, reversing;
 
     /**
      * Create a new instance of a moving part
+     *
      * @param deceleration
      * @param acceleration
      * @param maxSpeed
@@ -48,6 +47,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Get dx
+     *
      * @return position on x axis
      */
     public float getDx() {
@@ -56,6 +56,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Get dy
+     *
      * @return position on y axis
      */
     public float getDy() {
@@ -64,6 +65,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Set deceleration
+     *
      * @param deceleration
      */
     public void setDeceleration(float deceleration) {
@@ -72,6 +74,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Set Acceleration
+     *
      * @param acceleration
      */
     public void setAcceleration(float acceleration) {
@@ -80,6 +83,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Set max speed
+     *
      * @param maxSpeed
      */
     public void setMaxSpeed(float maxSpeed) {
@@ -88,15 +92,16 @@ public class MovingPart implements EntityPart {
 
     /**
      * Set speed
+     *
      * @param speed
      */
     public void setSpeed(float speed) {
-        this.acceleration = speed;
-        this.maxSpeed = speed;
+        this.currentSpeed = speed;
     }
 
     /**
      * Set rotationSpeed
+     *
      * @param rotationSpeed
      */
     public void setRotationSpeed(float rotationSpeed) {
@@ -105,6 +110,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Set left
+     *
      * @param left
      */
     public void setLeft(boolean left) {
@@ -113,6 +119,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Set right
+     *
      * @param right
      */
     public void setRight(boolean right) {
@@ -121,6 +128,7 @@ public class MovingPart implements EntityPart {
 
     /**
      * Set up
+     *
      * @param up
      */
     public void setUp(boolean up) {
@@ -128,7 +136,34 @@ public class MovingPart implements EntityPart {
     }
 
     /**
+     * Set down
+     *
+     * @param down
+     */
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    /**
+     * Set moving
+     *
+     * @param moving
+     */
+    public void setMoving(boolean moving) {
+        this.moving = moving;
+    }
+
+     /**
+     * Set reversing
+     *
+     * @param moving
+     */
+    public void setReversing(boolean reversing) {
+        this.reversing = reversing;
+    }
+    /**
      * Process the MovingPart behaviour
+     *
      * @param gameData
      * @param entity
      */
@@ -151,19 +186,40 @@ public class MovingPart implements EntityPart {
 
         // accelerating
         if (up) {
-            dx += cos(radians) * acceleration * dt;
-            dy += sin(radians) * acceleration * dt;
+            setReversing(false);
+            if (currentSpeed <= maxSpeed) {
+                currentSpeed += acceleration;
+            }
+            x += cos(radians) * currentSpeed * dt;
+            y += sin(radians) * currentSpeed * dt;
+            setMoving(true);
         }
 
-        // deccelerating
-        float vec = (float) sqrt(dx * dx + dy * dy);
-        if (vec > 0) {
-            dx -= (dx / vec) * deceleration * dt;
-            dy -= (dy / vec) * deceleration * dt;
+        //continuos movement forward with decay in speed
+        if (moving && !up) {
+            if (currentSpeed > 0) {
+                currentSpeed -= deceleration / 10;
+            }
+            x += cos(radians) * currentSpeed * dt;
+            y += sin(radians) * currentSpeed * dt;
         }
-        if (vec > maxSpeed) {
-            dx = (dx / vec) * maxSpeed;
-            dy = (dy / vec) * maxSpeed;
+
+        //Deaccelerating or reversing
+        if (down) {
+           if (currentSpeed > (0 - maxSpeed)) {
+                currentSpeed -= deceleration;
+            }
+            x += cos(radians) * currentSpeed * dt;
+            y += sin(radians) * currentSpeed * dt;
+            setMoving(false);
+            setReversing(true);
+        }
+
+        //continuous movement backwards with decay in speed
+        if(!down && reversing) {
+            currentSpeed += acceleration / 10;
+            x += cos(radians) * currentSpeed * dt;
+            y += sin(radians) * currentSpeed *dt;
         }
 
         // set position

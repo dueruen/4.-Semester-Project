@@ -44,12 +44,13 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
      */
     private Entity createPlayerCar(GameData gameData) {
         float deacceleration = 10;
-        float acceleration = 200;
-        float maxSpeed = 300;
-        float rotationSpeed = 5;
-        float x = gameData.getDisplayWidth() / 2;
-        float y = gameData.getDisplayHeight() / 2;
+        float acceleration = 10;
+        float maxSpeed = 400;
+        float rotationSpeed = 3;
+        float x = 500;
+        float y = 800;
         float radians = 0.0f;
+
         Entity playerCar = new Player();
         GameImage img = new GameImage("cars/car.png", 100, 50);
         playerCar.setImage(img);

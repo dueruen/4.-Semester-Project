@@ -1,4 +1,4 @@
-package racing.player;
+package racing.common.player;
 
 import racing.common.data.Entity;
 

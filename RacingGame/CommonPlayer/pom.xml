@@ -9,30 +9,24 @@
   </parent>
 
   <properties>
-    <bundle.symbolicName>racing.map</bundle.symbolicName>
+    <bundle.symbolicName>racing.common</bundle.symbolicName>
     <bundle.namespace>racing</bundle.namespace>
   </properties>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>Map</artifactId>
+  <artifactId>CommonPlayer</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>Map</name>
+  <name>CommonPlayer</name>
 
   <packaging>bundle</packaging>
 
   <dependencies>
-    <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>CommonMap</artifactId>
-      <version>${project.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.core</artifactId>
-      <version>4.3.1</version>
-      <type>jar</type>
-    </dependency>
+        <dependency>
+            <groupId>racing.build</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
   </dependencies>
 
 </project>

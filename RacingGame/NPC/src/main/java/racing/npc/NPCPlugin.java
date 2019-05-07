@@ -6,6 +6,7 @@ import racing.common.data.GameImage;
 import racing.common.data.World;
 import racing.common.data.entityparts.MoveToPointPart;
 import racing.common.data.entityparts.PositionPart;
+import racing.common.data.entityparts.ScorePart;
 import racing.common.services.IGamePluginService;
 import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
@@ -64,12 +65,19 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         float radians = 3.1415f / 2;
 
 
+<<<<<<< HEAD
         Entity NPCRacer = new NPC();
         NPCRacer.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 50));
         NPCRacer.add(new MoveToPointPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         NPCRacer.add(new PositionPart(x, y, radians));
+=======
+        Entity enemyShip = new NPC();
+        enemyShip.setImage(new GameImage("cars/car" +colorVal+ ".png", 100, 50));
+        enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
+        enemyShip.add(new PositionPart(x, y, radians));
+        enemyShip.add(new ScorePart());
+>>>>>>> master
         
         return NPCRacer;
     }
-    
 }

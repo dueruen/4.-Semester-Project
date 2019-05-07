@@ -1,0 +1,3 @@
+Bundle-SymbolicName: LapSystem
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/postPros.xml 

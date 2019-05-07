@@ -1,5 +1,9 @@
 package racing.map;
 
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -34,12 +38,12 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     }
 
     /**
-     * Finds the tile weight for the tile closed to the entity
-     *
-     * @param p the entity
-     * @param world the world
-     * @return the weight of the closed tile
+     * Finds the tile the entity is on
+     * @param p
+     * @param world
+     * @return the tile the entity is on
      */
+
     @Override
     public double getPositionWeight(Entity p, World world) {
         Entity closedTile = getTileClosestToEntity(p, world);
@@ -66,7 +70,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     }
 
     @Override
-    public Tile getTileClosestToEntity(Entity p, World world) {
+    public Tile getTile(Entity p, World world) {
         Entity closedTile = null;
         double shortestDistance = Double.MAX_VALUE;
         for (Entity tile : world.getEntities(Tile.class)) {
@@ -82,7 +86,20 @@ public class MapPlugin implements IGamePluginService, MapSPI {
                 shortestDistance = nextDistance;
             }
         }
-        return (Tile) closedTile;
+        return (Tile)closedTile;
+    }
+
+    /**
+     * Finds the tile weight for the tile closed to the entity
+     *
+     * @param p the entity
+     * @param world the world
+     * @return the weight of the closed tile
+     */
+    @Override
+    public double getPositionWeight(Entity p, World world) {
+        TilePart t = getTile(p, world).getPart(TilePart.class);
+        return t.getType().getWeight();
     }
 
     /**
@@ -142,8 +159,8 @@ public class MapPlugin implements IGamePluginService, MapSPI {
      */
     @Override
     public void createMap(TileType[][] d, GameData gameData, World world) {
-        float tileHeight = gameData.getDisplayHeight() / d.length;
-        float tileWeight = gameData.getDisplayWidth() / d[0].length;
+        float tileHeight = 70;
+        float tileWeight = 70;
 
         map = new Tile[d.length][d[0].length];
 
@@ -153,6 +170,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
                 Tile t = new Tile();
                 PositionPart p = new PositionPart(c * tileWeight, (r + rOffSet) * tileHeight, 0);
                 t.add(p);
+                t.add(new TilePart(d[r][c]));
                 t.setImage(new GameImage(d[r][c].getImagePath(), tileWeight, tileHeight));
                 world.addEntity(t);
                 map[r][c] = t;
@@ -181,5 +199,30 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     @Override
     public Tile[][] getLoadedMap() {
         return map;
+    }
+
+    @Override
+    public void saveMapToFile(int[][] data, String mapName) {
+        String path = System.getProperty("user.home") + "/racing_game/maps/";
+        String fileName = path + mapName + ".txt";
+
+        new File(path).mkdirs();
+
+        try (FileOutputStream out = new FileOutputStream(fileName)) {
+            for (int r = 0; r < data.length; r++) {
+                for (int c = 0; c < data[0].length; c++) {
+                    if (c == data[0].length - 1) {
+                        String s = "" + data[r][c];
+                        out.write(s.getBytes());
+                    } else {
+                        String s = data[r][c] + ",";
+                        out.write(s.getBytes());
+                    }
+                }
+                out.write("\n".getBytes());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

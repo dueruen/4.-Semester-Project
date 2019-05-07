@@ -222,18 +222,7 @@ public class MovingPart implements EntityPart {
             x += cos(radians) * currentSpeed * dt;
             y += sin(radians) * currentSpeed *dt;
         }
-
-//        // deccelerating
-//        float vec = (float) sqrt(dx * dx + dy * dy);
-//        if (vec > 0) {
-//            dx -= (dx / vec) * deceleration * dt;
-//            dy -= (dy / vec) * deceleration * dt;
-//        }
-//        if (vec > maxSpeed) {
-//            dx = (dx / vec) * maxSpeed;
-//            dy = (dy / vec) * maxSpeed;
-//        }
-//        
+        
         // set position
         x += dx * dt;
         if (x > gameData.getDisplayWidth()) {

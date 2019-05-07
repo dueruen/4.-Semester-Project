@@ -65,6 +65,7 @@ public class MainScreen extends BasicScreen {
         stage.addActor(table);
 
         c = new OrthographicCamera(Core.getInstance().getGameData().getDisplayWidth(), Core.getInstance().getGameData().getDisplayHeight());
+
         GuiManager.getInstance().setCam(c);
 
         Gdx.input.setInputProcessor(new GameInputProcessor(Core.getInstance().getGameData()));

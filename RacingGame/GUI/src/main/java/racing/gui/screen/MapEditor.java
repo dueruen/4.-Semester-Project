@@ -19,18 +19,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import java.util.regex.Pattern;
 import racing.common.data.TileType;
-import racing.common.map.MapSPI;
 import racing.gui.GuiManager;
 
 /**
  * This screen is used to create a new map
  */
 public class MapEditor extends BasicScreen {
-
-    /**
-     * MapSPI
-     */
-    private static MapSPI map;
 
     /**
      * The stage
@@ -41,24 +35,6 @@ public class MapEditor extends BasicScreen {
      * Array with tiles
      */
     private ImageWrapper[][] tiles;
-
-    /**
-     * Declarative service set map service
-     *
-     * @param map map service
-     */
-    public void setMapService(MapSPI map) {
-        this.map = map;
-    }
-
-    /**
-     * Declarative service remove map service
-     *
-     * @param map map service
-     */
-    public void removeMapService(MapSPI map) {
-        this.map = null;
-    }
 
     @Override
     public void show() {
@@ -177,7 +153,7 @@ public class MapEditor extends BasicScreen {
                         types[r][c] = tiles[r][c].tileType;
                     }
                 }
-                map.saveMapToFile(types, mapName.getText());
+                GuiManager.getInstance().getMap().saveMapToFile(types, mapName.getText());
             }
         });
     }
@@ -209,5 +185,10 @@ public class MapEditor extends BasicScreen {
         void setTileType(int tileType) {
             this.tileType = tileType;
         }
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }

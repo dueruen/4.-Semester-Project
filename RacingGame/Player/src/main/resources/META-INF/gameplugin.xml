@@ -3,5 +3,6 @@
     <implementation class="racing.player.PlayerPlugin"/>
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
+        <provide interface="racing.common.player.PlayerSPI"/>
     </service>
 </scr:component>

@@ -27,6 +27,11 @@
     <module>CommonMap</module>
     <module>Map</module>
     <module>CommonItem</module>
+    <module>NPC</module>
+    <module>CommonNPC</module>
+    <module>GUI</module>
+    <module>CommonPlayer</module>
+    <module>LabSystem</module>
   </modules>
 
   <build>

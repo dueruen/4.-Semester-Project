@@ -1,0 +1,3 @@
+Bundle-SymbolicName: GUI
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/gui.xml, META-INF/mainScreen.xml

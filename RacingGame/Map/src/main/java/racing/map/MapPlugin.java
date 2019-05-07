@@ -1,8 +1,13 @@
 package racing.map;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
@@ -168,5 +173,30 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     @Override
     public Tile[][] getLoadedMap() {
         return map;
+    }
+
+    @Override
+    public void saveMapToFile(int[][] data, String mapName) {
+        String path = System.getProperty("user.home") + "/racing_game/maps/";
+        String fileName = path + mapName + ".txt";
+        
+        new File(path).mkdirs();
+
+        try (FileOutputStream out = new FileOutputStream(fileName)) {
+            for (int r = 0; r < data.length; r++) {
+                for (int c = 0; c < data[0].length; c++) {
+                    if (c == data[0].length - 1) {
+                        String s = "" + data[r][c];
+                        out.write(s.getBytes());
+                    } else {
+                        String s = data[r][c] + ",";
+                        out.write(s.getBytes());
+                    }
+                }
+                out.write("\n".getBytes());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

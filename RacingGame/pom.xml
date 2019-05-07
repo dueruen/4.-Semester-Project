@@ -26,7 +26,7 @@
     <module>Player</module>
     <module>CommonMap</module>
     <module>Map</module>
-    <module>Item</module>
+    <module>CommonItem</module>
   </modules>
 
   <build>

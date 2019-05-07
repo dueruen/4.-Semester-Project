@@ -5,10 +5,15 @@
  */
 package racing.commonnpc;
 
+import racing.common.data.GameData;
+import racing.common.data.World;
+
 /**
  *
- * @author Victor Gram
+ * @author Victor Gram & Niclas Johansen
  */
 public interface NPCSPI {
+  
+  void createNPCs(GameData gameData, World world);
     
 }

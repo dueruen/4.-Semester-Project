@@ -6,7 +6,6 @@ import racing.common.data.GameImage;
 import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
-import racing.common.data.entityparts.ScorePart;
 import racing.common.services.IGamePluginService;
 import racing.commonnpc.NPC;
 import racing.commonnpc.NPCSPI;
@@ -23,13 +22,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      */
     @Override
     public void start(GameData gameData, World world) {
-        int NPCCount = 1;
-        int colorVal = 1;
-        for (int i = 0; i < NPCCount; i++) {
-        Entity npc = createNPC(gameData, colorVal);
-        colorVal++;
-        world.addEntity(npc);
-        }
+        
         
     }
 
@@ -45,10 +38,17 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         }
     }
     
-
-
-   
-    
+    public void createNPCs (GameData gameData, World world) { 
+      
+      int NPCCount = 1;
+        int colorVal = 1;
+        for (int i = 0; i < NPCCount; i++) {
+        Entity npc = createNPC(gameData, colorVal);
+        colorVal++;
+        world.addEntity(npc);
+        }
+      
+    }
 
     /**
      * Creates Entity of the type NPC
@@ -57,8 +57,8 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      */
     private Entity createNPC (GameData gameData, int colorVal) { 
         float deacceleration = 10;
-        float acceleration = 150;
-        float maxSpeed = 200;
+        float acceleration = 10;
+        float maxSpeed = 10;
         float rotationSpeed = 5;
         float x = (gameData.getDisplayHeight()/2);
         float y = (gameData.getDisplayWidth()/2);

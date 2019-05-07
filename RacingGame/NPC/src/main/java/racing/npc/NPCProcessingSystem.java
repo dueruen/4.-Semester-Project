@@ -30,9 +30,8 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             PositionPart pp = ai.findNextPosition();
 
             movingPart.process(gameData, NPC);
-            positionPart.process(gameData, NPC);
-        
-    }
+            positionPart.process(gameData, NPC);   
+        }
     }
     
      /**

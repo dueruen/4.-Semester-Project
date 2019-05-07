@@ -114,7 +114,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
         float radians = 3.1415f / 2;
         
         Tile[][] map = mapSPI.getLoadedMap();
-        Tile gt = map[6][10]; //Starting point for eksemplets skyld, kan ændres
+        Tile gt = map[6][10]; //Starting point for eksemplets skyld, kan ï¿½ndres
         int[] gtc = mapSPI.getTileXandY(gt);
                 
         AStarNode source = new AStarNode(x,y);

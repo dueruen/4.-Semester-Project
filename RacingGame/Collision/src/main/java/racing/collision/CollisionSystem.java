@@ -23,9 +23,9 @@ public class CollisionSystem implements IPostEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        Player player = (Player) world.getEntities(Player.class).get(0);
-
-        intersects(player, world);
+        for (Entity player : world.getEntities(Player.class)) {
+            intersects(player, world);
+        }
 
         for (Entity npc : world.getEntities(NPC.class)) {
             intersects(npc, world);

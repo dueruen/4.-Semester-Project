@@ -15,15 +15,15 @@ import racing.commonnpc.NPCSPI;
  *NPC Plugin class, handling adding and rmeoving NPC Entitys from the game
  */
 public class NPCPlugin implements IGamePluginService, NPCSPI {
-    
+
     /**
      * ID identifying the specicfic NPC instance in the world
      */
     private String NPCID;
-    
-    
+
+
     /**
-     * Creates a number of NPCs and adds it to the world 
+     * Creates a number of NPCs and adds it to the world
      * @param gameData
      * @param world
      */
@@ -36,12 +36,12 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         colorVal++;
         NPCID = world.addEntity(npc);
         }
-        
+
     }
 
     /**
      * Removes all NPCs from the world
-     * @param gameData 
+     * @param gameData
      * @param world
      */
     @Override
@@ -50,20 +50,20 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
             world.removeEntity(npc);
         }
     }
-    
+
 
     /**
      * Creates Entity of the type NPC
      * @param gameData
      * @return created NPC instance
      */
-    private Entity createNPC (GameData gameData, int colorVal) { 
+    private Entity createNPC (GameData gameData, int colorVal) {
         float deacceleration = 10;
         float acceleration = 150;
         float maxSpeed = 200;
         float rotationSpeed = 5;
-        float x = (gameData.getDisplayHeight()/2);
-        float y = (gameData.getDisplayWidth()/2);
+        float x = 200;
+        float y = 200;
         float radians = 3.1415f / 2;
 
         float[] colour = new float[4];
@@ -77,7 +77,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         enemyShip.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         enemyShip.add(new PositionPart(x, y, radians));
         enemyShip.add(new ScorePart());
-        
+
         return enemyShip;
     }
 }

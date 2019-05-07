@@ -6,6 +6,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.lang.Math;
 import racing.common.player.Player;
+import racing.commonnpc.NPC;
 import racing.common.map.Tile;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
@@ -23,44 +24,58 @@ public class CollisionSystem implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         Player player = (Player) world.getEntities(Player.class).get(0);
-        MovingPart playerMovingPart = player.getPart(MovingPart.class);
 
-        for (Entity entity : world.getEntities(Tile.class)) {
-            TilePart tilePart = entity.getPart(TilePart.class);
+        intersects(player, world);
+
+        for (Entity npc : world.getEntities(NPC.class)) {
+            intersects(npc, world);
+        }
+    }
+
+    /**
+     * Check if entity intersects with statis tiles
+     * @param entity
+     * @param world
+     */
+    private void intersects(Entity entity, World world) {
+        MovingPart entityMovingPart = entity.getPart(MovingPart.class);
+
+        for (Entity tileEntity : world.getEntities(Tile.class)) {
+            TilePart tilePart = tileEntity.getPart(TilePart.class);
 
             if (!tilePart.getType().isIsStatic()) {
                 continue;
             }
 
-            PositionPart playerPosition = player.getPart(PositionPart.class);
+            PositionPart entityPosition = entity.getPart(PositionPart.class);
 
             AffineTransform transform = new AffineTransform();
             transform.rotate(
-                playerPosition.getRadians(),
-                playerPosition.getX() + player.getImage().getWidth()/2,
-                playerPosition.getY() + player.getImage().getHeight()/2
+                entityPosition.getRadians(),
+                entityPosition.getX() + entity.getImage().getWidth()/2,
+                entityPosition.getY() + entity.getImage().getHeight()/2
             );
 
-            Shape playerShape = transform.createTransformedShape(new Rectangle(
-                Math.round(playerPosition.getX()),
-                Math.round(playerPosition.getY()),
-                Math.round(player.getImage().getWidth()),
-                Math.round(player.getImage().getHeight())
-            ));
-
-            PositionPart tilePosition = entity.getPart(PositionPart.class);
-            Rectangle tileShape = new Rectangle(
-                Math.round(tilePosition.getX()),
-                Math.round(tilePosition.getY()),
+            Shape car = transform.createTransformedShape(new Rectangle(
+                Math.round(entityPosition.getX()),
+                Math.round(entityPosition.getY()),
                 Math.round(entity.getImage().getWidth()),
                 Math.round(entity.getImage().getHeight())
+            ));
+
+            PositionPart tilePosition = tileEntity.getPart(PositionPart.class);
+            Rectangle tile = new Rectangle(
+                Math.round(tilePosition.getX()),
+                Math.round(tilePosition.getY()),
+                Math.round(tileEntity.getImage().getWidth()),
+                Math.round(tileEntity.getImage().getHeight())
             );
 
-            if (!playerShape.intersects(tileShape)) {
+            if (!car.intersects(tile)) {
                 continue;
             }
 
-            playerMovingPart.setSpeed(0);
+            entityMovingPart.setSpeed(0);
         }
     }
 }

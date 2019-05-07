@@ -5,7 +5,7 @@ import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.World;
-import racing.common.data.entityparts.MoveToPointPart;
+import racing.common.data.entityparts.MovingPart;
 import racing.common.services.IEntityProcessingService;
 import racing.commonai.AISPI;
 import racing.commonnpc.NPC;
@@ -25,12 +25,11 @@ public class NPCProcessingSystem implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
           for (Entity NPC : world.getEntities(NPC.class)) {
             PositionPart positionPart = NPC.getPart(PositionPart.class);
-            MoveToPointPart moveToPointPart = NPC.getPart(MoveToPointPart.class);
+            MovingPart movingPart = NPC.getPart(MovingPart.class);
             ai.setSourceAndTargetNodes(NPC, world);
             PositionPart pp = ai.findNextPosition();
 
-            moveToPointPart.setTargetPoint(pp);
-            moveToPointPart.process(gameData, NPC);
+            movingPart.process(gameData, NPC);
             positionPart.process(gameData, NPC);
         
     }

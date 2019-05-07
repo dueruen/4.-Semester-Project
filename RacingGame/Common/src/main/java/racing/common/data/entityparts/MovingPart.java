@@ -96,8 +96,7 @@ public class MovingPart implements EntityPart {
      * @param speed
      */
     public void setSpeed(float speed) {
-        this.acceleration = speed;
-        this.maxSpeed = speed;
+        this.currentSpeed = speed;
     }
 
     /**
@@ -153,7 +152,7 @@ public class MovingPart implements EntityPart {
     public void setMoving(boolean moving) {
         this.moving = moving;
     }
-    
+
      /**
      * Set reversing
      *
@@ -195,7 +194,7 @@ public class MovingPart implements EntityPart {
             y += sin(radians) * currentSpeed * dt;
             setMoving(true);
         }
-        
+
         //continuos movement forward with decay in speed
         if (moving && !up) {
             if (currentSpeed > 0) {
@@ -204,7 +203,7 @@ public class MovingPart implements EntityPart {
             x += cos(radians) * currentSpeed * dt;
             y += sin(radians) * currentSpeed * dt;
         }
-        
+
         //Deaccelerating or reversing
         if (down) {
            if (currentSpeed > (0 - maxSpeed)) {
@@ -215,14 +214,14 @@ public class MovingPart implements EntityPart {
             setMoving(false);
             setReversing(true);
         }
-        
+
         //continuous movement backwards with decay in speed
         if(!down && reversing) {
             currentSpeed += acceleration / 10;
             x += cos(radians) * currentSpeed * dt;
             y += sin(radians) * currentSpeed *dt;
         }
-        
+
         // set position
         x += dx * dt;
         y += dy * dt;

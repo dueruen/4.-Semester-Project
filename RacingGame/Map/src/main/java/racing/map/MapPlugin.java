@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
@@ -37,16 +39,18 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         }
     }
 
-    /**
-     * Finds the tile the entity is on
-     * @param p
-     * @param world
-     * @return the tile the entity is on
-     */
+ 
 
+      /**
+     * Finds the tile weight for the tile closed to the entity
+     *
+     * @param p the entity
+     * @param world the world
+     * @return the weight of the closed tile
+     */
     @Override
     public double getPositionWeight(Entity p, World world) {
-        Entity closedTile = getTileClosestToEntity(p, world);
+        Entity closedTile = getTile(p, world);
         TilePart tp = closedTile.getPart(TilePart.class);
         return tp.getType().getWeight();
     }
@@ -69,6 +73,13 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         return result;
     }
 
+    
+       /**
+     * Finds the tile the entity is on
+     * @param p
+     * @param world
+     * @return the tile the entity is on
+     */
     @Override
     public Tile getTile(Entity p, World world) {
         Entity closedTile = null;
@@ -89,18 +100,6 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         return (Tile)closedTile;
     }
 
-    /**
-     * Finds the tile weight for the tile closed to the entity
-     *
-     * @param p the entity
-     * @param world the world
-     * @return the weight of the closed tile
-     */
-    @Override
-    public double getPositionWeight(Entity p, World world) {
-        TilePart t = getTile(p, world).getPart(TilePart.class);
-        return t.getType().getWeight();
-    }
 
     /**
      * Calculates the distance between to entities based center of the image

@@ -106,7 +106,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
 
     @Override
     public void setSourceAndTargetNodes(Entity p, World world) {
-        Tile t = mapSPI.getTileClosestToEntity(p, world);
+        Tile t = mapSPI.getTile(p, world);
         int[] coordinates = mapSPI.getTileXandY(t);
         int x = Math.round(coordinates[0]);
         int y = Math.round(coordinates[1]);

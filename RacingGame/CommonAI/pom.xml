@@ -20,6 +20,21 @@
   <name>CommonAI</name>
 
   <packaging>bundle</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package>!racing.internal.*,racing.*;version="1.0-SNAPSHOT",racing.common.ai</Export-Package>
+                        <Private-Package>racing.common.ai.*</Private-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>racing.build</groupId>

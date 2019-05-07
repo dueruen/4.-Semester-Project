@@ -3,9 +3,9 @@
     <implementation class="racing.npc.NPCPlugin"/>
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
-        <provide interface="racing.commonnpc.NPCSPI"/>
+        <provide interface="racing.common.npc.NPCSPI"/>
     </service>
     <reference bind="setAIService" cardinality="1..1"
-               interface="racing.commonai.AISPI"
+               interface="racing.common.ai.AISPI"
                name="AIService" policy="dynamic" unbind="removeAIService"/>
 </scr:component>

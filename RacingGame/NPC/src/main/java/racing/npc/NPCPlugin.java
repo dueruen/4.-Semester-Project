@@ -7,8 +7,8 @@ import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
-import racing.commonnpc.NPC;
-import racing.commonnpc.NPCSPI;
+import racing.common.npc.NPC;
+import racing.common.npc.NPCSPI;
 
 /**
  *NPC Plugin class, handling adding and rmeoving NPC Entitys from the game
@@ -39,8 +39,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     }
     
     public void createNPCs (GameData gameData, World world) { 
-      
-      int NPCCount = 1;
+        int NPCCount = 1;
         int colorVal = 1;
         for (int i = 0; i < NPCCount; i++) {
         Entity npc = createNPC(gameData, colorVal);

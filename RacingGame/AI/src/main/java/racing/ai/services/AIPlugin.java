@@ -1,7 +1,5 @@
 package racing.ai.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import racing.ai.astar.AStar;
 import racing.ai.astar.AStarNode;
 import racing.common.data.Entity;
@@ -11,11 +9,11 @@ import racing.common.data.entityparts.PositionPart;
 import racing.common.map.MapSPI;
 import racing.common.map.Tile;
 import racing.common.services.IGamePluginService;
-import racing.commonai.AISPI;
+import racing.common.ai.AISPI;
 
 /**
  *
- * @author Victor Gram
+ * @author Victor Gram & Niclas Johansen
  */
 public class AIPlugin implements IGamePluginService, AISPI {
     
@@ -45,12 +43,15 @@ public class AIPlugin implements IGamePluginService, AISPI {
 
     @Override
     public void start(GameData gameData, World world) {
-        initializeAI();
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-
+    }
+    
+    @Override
+    public void startAI() {
+        initializeAI();
     }
     
     private void initializeAI() {
@@ -63,7 +64,6 @@ public class AIPlugin implements IGamePluginService, AISPI {
         for(int i = 0; i < r; i++) { 
             for(int j = 0; j < c; j++) { 
                 Tile pp = map[i][j];
-                //throw new ArrayStoreException(pp.getX() + ", " + pp.getY());
                 int[] coordinates = mapSPI.getTileXandY(pp);
                 AStarNode node = new AStarNode(coordinates[0], coordinates[1]);
                 nodes[i][j] = node;
@@ -87,7 +87,6 @@ public class AIPlugin implements IGamePluginService, AISPI {
         Tile gt = map[x][y];
         return gt.getPart(PositionPart.class);
         
-        //return ai.findNextPosition();
     }
 
 //    @Override
@@ -114,7 +113,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
         float radians = 3.1415f / 2;
         
         Tile[][] map = mapSPI.getLoadedMap();
-        Tile gt = map[6][10]; //Starting point for eksemplets skyld, kan �ndres
+        Tile gt = map[2][2]; //Starting point for eksemplets skyld, kan �ndres
         int[] gtc = mapSPI.getTileXandY(gt);
                 
         AStarNode source = new AStarNode(x,y);

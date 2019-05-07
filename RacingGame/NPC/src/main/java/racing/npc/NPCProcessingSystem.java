@@ -7,8 +7,8 @@ import racing.common.data.entityparts.PositionPart;
 import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.services.IEntityProcessingService;
-import racing.commonai.AISPI;
-import racing.commonnpc.NPC;
+import racing.common.ai.AISPI;
+import racing.common.npc.NPC;
 
 /**
  *Processing system for NPC entity
@@ -28,7 +28,28 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             MovingPart movingPart = NPC.getPart(MovingPart.class);
             ai.setSourceAndTargetNodes(NPC, world);
             PositionPart pp = ai.findNextPosition();
-
+            
+            
+            //TODO Find the next position so we can finish this Vector calculations
+            double[] course = { pp.getX() - positionPart.getX(), pp.getY() - positionPart.getY() };
+            double[] heading = { course[0] + 1, course[0] };
+            
+            heading[0] = (heading[0] * Math.cos(Math.toDegrees(positionPart.getRadians()))) - (heading[1] * Math.sin(Math.toDegrees(positionPart.getRadians())));
+            heading[1] = (heading[0] * Math.sin(Math.toDegrees(positionPart.getRadians()))) - (heading[1] * Math.cos(Math.toDegrees(positionPart.getRadians())));
+            
+            double coursemagnitude = Math.sqrt(Math.pow(course[0], 2) + Math.pow(course[1], 2));
+            double headingmagnitude = Math.sqrt(Math.pow(heading[0] + 2, 2) + Math.pow(positionPart.getY(), 2));
+            
+            double angle = ((course[0] * heading[0]) + (course[1] * heading[1])) / (coursemagnitude * headingmagnitude);
+            
+            double acosAngle = Math.acos(angle);
+            
+            positionPart.setX(pp.getX());
+            positionPart.setY(pp.getY());
+            System.out.println(pp.getX() + " " +  pp.getY());
+            
+            System.out.println( "X-værdi heading: " + heading[0] + " Y-værdi heading: " + heading[1]);
+            movingPart.setRight(true);
             movingPart.process(gameData, NPC);
             positionPart.process(gameData, NPC);   
         }

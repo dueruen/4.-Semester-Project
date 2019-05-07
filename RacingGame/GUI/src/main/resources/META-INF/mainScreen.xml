@@ -4,6 +4,12 @@
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
     </service>
+    <reference bind="setAIService" cardinality="0..1"
+                   interface="racing.common.ai.AISPI"
+                   name="AIService" policy="dynamic" unbind="removeAIService"/>
+   <reference bind="setNPCService" cardinality="0..1"
+                  interface="racing.common.npc.NPCSPI"
+                  name="NPCService" policy="dynamic" unbind="removeNPCService"/>
     <reference bind="setMapService" cardinality="0..1"
                        interface="racing.common.map.MapSPI"
                        name="MapService" policy="dynamic" unbind="removeMapService"/>

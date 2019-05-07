@@ -18,6 +18,8 @@ import racing.common.data.entityparts.ScorePart;
 import racing.common.map.MapSPI;
 import racing.common.player.PlayerSPI;
 import racing.common.services.IScoreService;
+import racing.common.npc.NPCSPI;
+import racing.common.ai.AISPI;
 import racing.gui.input.GameInputProcessor;
 import racing.gui.GuiManager;
 
@@ -46,6 +48,16 @@ public class MainScreen extends BasicScreen {
      * MapSPI
      */
     private MapSPI map;
+    
+    /**
+     * NPCSPI
+     */
+    private NPCSPI npcSPI;
+    
+    /**
+     * AISPI
+     */
+    private AISPI aiSPI;
 
     /**
      * PlayerSPI
@@ -116,6 +128,9 @@ public class MainScreen extends BasicScreen {
     public void setMapService(MapSPI map) {
         this.map = map;
         this.map.loadFromFile("maps/map1.txt", Core.getInstance().getGameData(), Core.getInstance().getWorld());
+        npcSPI.createNPCs(Core.getInstance().getGameData(), Core.getInstance().getWorld());
+        aiSPI.startAI();
+        
     }
 
     /**
@@ -145,7 +160,45 @@ public class MainScreen extends BasicScreen {
         this.player = null;
 
     }
+    
+    /**
+     * Declarative service set npc service
+     *
+     * @param npcSPI player service
+     */
+    public void setNPCService(NPCSPI npcSPI) {
+        this.npcSPI = npcSPI;
+    }
 
+    /**
+     * Declarative service remove npc service
+     *
+     * @param npcSPI player service
+     */
+    public void removeNPCService(NPCSPI npcSPI) {
+        this.npcSPI = null;
+
+    }
+    
+    /**
+     * Declarative service set npc service
+     *
+     * @param aiSPI ai service
+     */
+    public void setAIService(AISPI aiSPI) {
+        this.aiSPI = aiSPI;
+    }
+
+    /**
+     * Declarative service remove npc service
+     *
+     * @param aiSPI ai service
+     */
+    public void removeAIService(AISPI aiSPI) {
+        this.aiSPI = null;
+
+    }
+    
     /**
      * Declarative service set score service
      *

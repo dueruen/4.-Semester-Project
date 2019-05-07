@@ -20,8 +20,22 @@
   <name>CommonNPC</name>
 
   <packaging>bundle</packaging>
-
-  <dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package>!racing.internal.*,racing.*;version="1.0-SNAPSHOT",racing.common.npc</Export-Package>
+                        <Private-Package>racing.common.npc.*</Private-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
         <dependency>
             <groupId>racing.build</groupId>
             <artifactId>Common</artifactId>

@@ -18,6 +18,7 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
      * Player
      */
     private Entity player;
+    private boolean haveItem;
 
     /**
      * Start the plugin, initilize a new player and add it to the world of
@@ -53,9 +54,14 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         playerCar.add(new PositionPart(x, y, radians));
         playerCar.add(new ScorePart());
         UUID uuid = UUID.randomUUID();
+        
 
         return playerCar;
     }
+    public void checkForItem() {
+        
+    
+}
 
     /**
      * Remove entity from the world if the bundle is removed

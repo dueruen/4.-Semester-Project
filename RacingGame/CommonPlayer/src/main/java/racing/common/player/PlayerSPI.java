@@ -8,4 +8,5 @@ import racing.common.data.entityparts.PositionPart;
  */
 public interface PlayerSPI {
     PositionPart getPosition();
+    public boolean hasItem();
 }

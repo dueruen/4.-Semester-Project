@@ -64,14 +64,14 @@ public class CollisionSystem implements IPostEntityProcessingService {
             ));
 
             PositionPart tilePosition = tileEntity.getPart(PositionPart.class);
-            Rectangle tile = new Rectangle(
+            Rectangle staticTile = new Rectangle(
                 Math.round(tilePosition.getX()),
                 Math.round(tilePosition.getY()),
                 Math.round(tileEntity.getImage().getWidth()),
                 Math.round(tileEntity.getImage().getHeight())
             );
 
-            if (!car.intersects(tile)) {
+            if (!car.intersects(staticTile)) {
                 continue;
             }
 

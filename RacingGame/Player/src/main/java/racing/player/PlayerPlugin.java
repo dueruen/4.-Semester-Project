@@ -36,9 +36,9 @@ public class PlayerPlugin implements IGamePluginService {
      * @return player
      */
     private Entity createPlayerCar(GameData gameData) {
-        float deacceleration = 20;
-        float acceleration = 20;
-        float maxSpeed = 600;
+        float deacceleration = 10;
+        float acceleration = 10;
+        float maxSpeed = 400;
         float rotationSpeed = 3;
         float x = gameData.getDisplayWidth() / 2;
         float y = gameData.getDisplayHeight() / 2;

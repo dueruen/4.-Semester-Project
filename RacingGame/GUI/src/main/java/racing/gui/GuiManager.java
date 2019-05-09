@@ -22,21 +22,19 @@ import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.map.MapSPI;
 import racing.common.map.Tile;
+import racing.common.npc.NPCSPI;
+import racing.common.player.PlayerSPI;
 import racing.common.services.IGamePluginService;
 import racing.gui.screen.*;
 import static racing.gui.screen.GameScreen.GAME;
 import static racing.gui.screen.GameScreen.MAP_EDITOR;
 import static racing.gui.screen.GameScreen.MENU;
+import static racing.gui.screen.GameScreen.START_GAME;
 
 /**
  * This class is rendering the game using LibGDX
  */
 public class GuiManager extends Game implements IGamePluginService { //implements IGamePluginService
-
-    /**
-     * The game camera
-     */
-    private OrthographicCamera cam;
 
     /**
      * The a asset manager
@@ -62,6 +60,21 @@ public class GuiManager extends Game implements IGamePluginService { //implement
      * Skin
      */
     private Skin skin;
+
+    /**
+     * MapSPI
+     */
+    private static MapSPI map;
+
+    /**
+     * NPCSPI
+     */
+    private static NPCSPI npc;
+
+    /**
+     * PlayerSPI
+     */
+    private static PlayerSPI player;
 
     /**
      * GuiManager
@@ -175,19 +188,29 @@ public class GuiManager extends Game implements IGamePluginService { //implement
                 if (gameScreens.get(MENU) == null) {
                     gameScreens.put(MENU, new MenuScreen());
                 }
+                Core.getInstance().getGameData().setGameRunning(false);
                 this.setScreen(gameScreens.get(MENU));
                 break;
             case MAP_EDITOR:
                 if (gameScreens.get(MAP_EDITOR) == null) {
                     gameScreens.put(MAP_EDITOR, new MapEditor());
                 }
+                Core.getInstance().getGameData().setGameRunning(false);
                 this.setScreen(gameScreens.get(MAP_EDITOR));
                 break;
             case GAME:
                 if (gameScreens.get(GAME) == null) {
                     gameScreens.put(GAME, new MainScreen());
                 }
+                Core.getInstance().getGameData().setGameRunning(true);
                 this.setScreen(gameScreens.get(GAME));
+                break;
+            case START_GAME:
+                if (gameScreens.get(START_GAME) == null) {
+                    gameScreens.put(START_GAME, new StartGameScreen());
+                }
+                Core.getInstance().getGameData().setGameRunning(false);
+                this.setScreen(gameScreens.get(START_GAME));
                 break;
         }
     }
@@ -213,6 +236,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         assetManager.load("tiles/water.png", Texture.class);
         assetManager.load("tiles/goal.png", Texture.class);
         assetManager.load("tiles/tree.png", Texture.class);
+        assetManager.load("tiles/spawn.png", Texture.class);
 
         assetManager.load("tiles/road_sel.png", Texture.class);
         assetManager.load("tiles/start_sel.png", Texture.class);
@@ -220,6 +244,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         assetManager.load("tiles/water_sel.png", Texture.class);
         assetManager.load("tiles/goal_sel.png", Texture.class);
         assetManager.load("tiles/tree_sel.png", Texture.class);
+        assetManager.load("tiles/spawn_sel.png", Texture.class);
     }
 
     public AssetManager getAssetManager() {
@@ -230,20 +255,24 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         return font;
     }
 
-    public OrthographicCamera getCam() {
-        return cam;
-    }
-
-    public void setCam(OrthographicCamera cam) {
-        this.cam = cam;
-    }
-
     public Skin getSkin() {
         return skin;
     }
 
     public SpriteBatch getBatch() {
         return batch;
+    }
+
+    public MapSPI getMap() {
+        return map;
+    }
+
+    public NPCSPI getNpc() {
+        return npc;
+    }
+
+    public PlayerSPI getPlayer() {
+        return player;
     }
 
     @Override
@@ -253,5 +282,59 @@ public class GuiManager extends Game implements IGamePluginService { //implement
     @Override
     public void stop(GameData gameData, World world) {
         Gdx.app.exit();
+    }
+
+    /**
+     * Declarative service set map service
+     *
+     * @param map map service
+     */
+    public void setMapService(MapSPI map) {
+        this.map = map;
+    }
+
+    /**
+     * Declarative service remove map service
+     *
+     * @param map map service
+     */
+    public void removeMapService(MapSPI map) {
+        this.map = null;
+    }
+
+    /**
+     * Declarative service set NPC service
+     *
+     * @param npc NPC service
+     */
+    public void setNPCService(NPCSPI npc) {
+        this.npc = npc;
+    }
+
+    /**
+     * Declarative service remove npc service
+     *
+     * @param npc npc service
+     */
+    public void removeNPCService(NPCSPI npc) {
+        this.npc = null;
+    }
+
+    /**
+     * Declarative service set player service
+     *
+     * @param player player service
+     */
+    public void setPlayerService(PlayerSPI player) {
+        this.player = player;
+    }
+
+    /**
+     * Declarative service remove player service
+     *
+     * @param player player service
+     */
+    public void removePlayerService(PlayerSPI player) {
+        this.player = null;
     }
 }

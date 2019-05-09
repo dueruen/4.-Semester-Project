@@ -7,7 +7,7 @@ import racing.common.data.entityparts.PositionPart;
 import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.services.IEntityProcessingService;
-import racing.commonnpc.NPC;
+import racing.common.npc.NPC;
 
 /**
  *Processing system for NPC entity

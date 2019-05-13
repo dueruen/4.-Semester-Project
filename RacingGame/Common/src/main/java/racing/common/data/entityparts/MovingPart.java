@@ -18,7 +18,7 @@ public class MovingPart implements EntityPart {
     /**
      * Acceleration and deceleration
      */
-    private float deceleration, acceleration;
+    private float deceleration, acceleration, penalty;
 
     /**
      * Max speed and rotation speed
@@ -97,6 +97,15 @@ public class MovingPart implements EntityPart {
      */
     public void setSpeed(float speed) {
         this.currentSpeed = speed;
+    }
+    
+      /**
+     * Set penalty
+     *
+     * @param penalty
+     */
+    public void setPenalty(float penalty) {
+        this.penalty = penalty;
     }
 
     /**
@@ -188,7 +197,7 @@ public class MovingPart implements EntityPart {
         if (up) {
             setReversing(false);
             if (currentSpeed <= maxSpeed) {
-                currentSpeed += acceleration;
+                currentSpeed += acceleration - penalty;
             }
             x += cos(radians) * currentSpeed * dt;
             y += sin(radians) * currentSpeed * dt;
@@ -198,7 +207,7 @@ public class MovingPart implements EntityPart {
         //continuos movement forward with decay in speed
         if (moving && !up) {
             if (currentSpeed > 0) {
-                currentSpeed -= deceleration / 10;
+                currentSpeed -= (deceleration / 10) + penalty / 2;
             }
             x += cos(radians) * currentSpeed * dt;
             y += sin(radians) * currentSpeed * dt;

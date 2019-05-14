@@ -109,4 +109,9 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
             world.removeEntity(npc);
         }
     }
+
+    @Override
+    public boolean hasItem() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

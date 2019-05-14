@@ -33,6 +33,7 @@
     <module>CommonPlayer</module>
     <module>LabSystem</module>
     <module>SpawnSystem</module>
+    <module>racing.build_Bullet_bundle_1.0-SNAPSHOT</module>
   </modules>
 
   <build>

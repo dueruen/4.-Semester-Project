@@ -229,7 +229,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         }
     }
 
-    @Override
+    
     public String[] getMapNames() {
         File folder = new File(System.getProperty("user.home") + "/racing_game/maps/");
         File[] listOfFiles = folder.listFiles();
@@ -244,7 +244,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         return s;
     }
 
-    @Override
+    
     public void removeAll(World world) {
         for (Entity tile : world.getEntities(Tile.class)) {
             world.removeEntity(tile);

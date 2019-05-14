@@ -191,7 +191,11 @@ public class MovingPart implements EntityPart {
         float actualMaxSpeed = maxSpeed / penalty;
 
         if (actualMaxSpeed < currentSpeed && penalty > 1) {
-            setSpeed(actualMaxSpeed);
+            setSpeed(Math.min(currentSpeed, actualMaxSpeed));
+        }
+        
+        if(currentSpeed < 0 && penalty > 1) {
+            setSpeed(Math.max(currentSpeed, -actualMaxSpeed));
         }
 
         // turning

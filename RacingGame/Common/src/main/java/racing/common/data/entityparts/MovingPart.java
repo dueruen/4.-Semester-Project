@@ -18,7 +18,12 @@ public class MovingPart implements EntityPart {
     /**
      * Acceleration and deceleration
      */
-    private float deceleration, acceleration, penalty;
+    private float deceleration, acceleration;
+    
+    /**
+     * Penalty
+     */
+    private float penalty = 1;
 
     /**
      * Max speed and rotation speed
@@ -116,7 +121,7 @@ public class MovingPart implements EntityPart {
     public void setRotationSpeed(float rotationSpeed) {
         this.rotationSpeed = rotationSpeed;
     }
-
+    
     /**
      * Set left
      *
@@ -183,6 +188,9 @@ public class MovingPart implements EntityPart {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
         float dt = gameData.getDelta();
+        System.out.println("Penalty : " + penalty);
+        float actualMaxSpeed = maxSpeed / penalty;
+        System.out.println("MaxSpeed: " + maxSpeed);
 
         // turning
         if (left) {
@@ -196,8 +204,8 @@ public class MovingPart implements EntityPart {
         // accelerating
         if (up) {
             setReversing(false);
-            if (currentSpeed <= maxSpeed) {
-                currentSpeed += acceleration - penalty;
+            if (currentSpeed <= actualMaxSpeed) {
+                currentSpeed += acceleration;
             }
             x += cos(radians) * currentSpeed * dt;
             y += sin(radians) * currentSpeed * dt;
@@ -207,7 +215,7 @@ public class MovingPart implements EntityPart {
         //continuos movement forward with decay in speed
         if (moving && !up) {
             if (currentSpeed > 0) {
-                currentSpeed -= (deceleration / 10) + penalty / 2;
+                currentSpeed -= deceleration / 10;
             }
             x += cos(radians) * currentSpeed * dt;
             y += sin(radians) * currentSpeed * dt;
@@ -215,7 +223,7 @@ public class MovingPart implements EntityPart {
 
         //Deaccelerating or reversing
         if (down) {
-           if (currentSpeed > (0 - maxSpeed)) {
+           if (currentSpeed > (0 - actualMaxSpeed)) {
                 currentSpeed -= deceleration;
             }
             x += cos(radians) * currentSpeed * dt;

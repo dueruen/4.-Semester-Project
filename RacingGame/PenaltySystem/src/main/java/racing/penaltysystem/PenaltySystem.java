@@ -40,7 +40,6 @@ public class PenaltySystem implements IPostEntityProcessingService {
      */
     private void intersects(Entity entity, World world) {
         MovingPart entityMovingPart = entity.getPart(MovingPart.class);
-        PositionPart entityPositionPart = entity.getPart(PositionPart.class);
 
         for (Entity tileEntity : world.getEntities(Tile.class)) {
             TilePart tilePart = tileEntity.getPart(TilePart.class);
@@ -69,39 +68,10 @@ public class PenaltySystem implements IPostEntityProcessingService {
                 Math.round(tileEntity.getImage().getHeight())
             );
 
-            if (car.intersects(staticTile) && tilePart.getType() != TileType.ROAD 
-                    && tilePart.getType() != TileType.FINISHLINE 
-                    && tilePart.getType() != TileType.START) {
-                entityMovingPart.setSpeed(200);
-            } else {
-                entityMovingPart.setPenalty(0);
-            }
-
-//            int tileBotLeftY = Math.round(tilePosition.getY());
-//            int tileTopRightY = Math.round(tilePosition.getY() + tileEntity.getImage().getHeight());
-//
-//            int tileBotLeftX = Math.round(tilePosition.getX());
-//            int tileTopRightX = Math.round(tilePosition.getX() + tileEntity.getImage().getWidth());
-//
-//            int carBotLeftY = Math.round(entityPositionPart.getY());
-//            int carTopRightY = Math.round(entityPositionPart.getY() + entity.getImage().getHeight());
-//
-//            int carBotLeftX = Math.round(entityPositionPart.getX());
-//            int carTopRightX = Math.round(entityPositionPart.getX() + entity.getImage().getWidth());
-//
-//            if (tileTopRightY < carBotLeftY
-//                    || tileBotLeftY > carTopRightY) {
-//                entityMovingPart.setPenalty(0);
-//                
-//            }
-//            if (tileTopRightX < carBotLeftX
-//                    || tileBotLeftX > carTopRightX) {
-//                entityMovingPart.setPenalty(0);
-//                
-//            } else {
-//                entityMovingPart.setPenalty(Math.round(tilePart.getType().getWeight()));
-//            }
-
+            if (car.intersects(staticTile)) {
+                System.out.println("weight: " + tilePart.getType().getWeight());
+                entityMovingPart.setPenalty(Math.round(tilePart.getType().getWeight()));
+            } 
         }
     }
 }

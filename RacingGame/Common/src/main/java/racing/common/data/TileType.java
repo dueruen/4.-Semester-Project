@@ -8,31 +8,31 @@ public enum TileType {
     /**
      * Finish line
      */
-    FINISHLINE(0, 0.0, "tiles/goal.png", false),
+    FINISHLINE(0, 1.0, "tiles/goal.png", false),
     /**
      * Road
      */
-    ROAD(1, 0.0, "tiles/road.png", false),
+    ROAD(1, 1.0, "tiles/road.png", false),
     /**
      * Grass
      */
-    GRASS(2, 1.0, "tiles/grass.png", false),
+    GRASS(2, 2.0, "tiles/grass.png", false),
     /**
      * Water
      */
 
-    WATER(3, -1.0, "tiles/water.png", false),
+    WATER(3, 4.0, "tiles/water.png", false),
 
 
     /**
      * Tree
      */
-    TREE(4, -1.0, "tiles/tree.png", true),
+    TREE(4, 1.0, "tiles/tree.png", true),
 
     /**
      * Start
      */
-    START(5, 0.0, "tiles/start.png", false);
+    START(5, 10, "tiles/start.png", false);
 
     /**
      * Used to identify the tile type

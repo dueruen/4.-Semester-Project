@@ -66,8 +66,12 @@ public class AIPlugin implements IGamePluginService, AISPI {
         for(int i = 0; i < r; i++) { 
             for(int j = 0; j < c; j++) { 
                 Tile pp = map[i][j];
+                TilePart tp = pp.getPart(TilePart.class);
                 int[] coordinates = mapSPI.getTileXandY(pp);
                 AStarNode node = new AStarNode(coordinates[0], coordinates[1]);
+                if(tp.getType().isIsStatic()) {
+                    node.setBlock(true);
+                }
                 nodes[i][j] = node;
             }
         }
@@ -76,6 +80,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
         AStarNode finalNode = new AStarNode(r, c);
         ai = new AStar(r, c, initNode, finalNode);
         ai.setSearchArea(nodes);
+
         
         
     }

@@ -51,13 +51,16 @@ public class AStar  {
         for (int i = 0; i < searchArea.length; i++) {
             for (int j = 0; j < searchArea[0].length; j++) {
                 AStarNode node = new AStarNode(i, j);
+                if(searchArea[i][j].isBlock()) { 
+                    node.setBlock(true);
+                }
                 node.calculateHeuristic(getFinalNode());
                 this.searchArea[i][j] = node;
             }
         }
     }
 
-    public void setBlocks(int[][] blocksArray) {
+     public void setBlocks(int[][] blocksArray) {
         for (int i = 0; i < blocksArray.length; i++) {
             int row = blocksArray[i][0];
             int col = blocksArray[i][1];
@@ -159,6 +162,7 @@ public class AStar  {
     private void checkNode(AStarNode currentNode, int col, int row, int cost) { 
         AStarNode adjacentNode = getSearchArea()[row][col];
         if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
+            
             if (!getOpenList().contains(adjacentNode)) {
                 adjacentNode.setNodeData(currentNode, cost);
                 getOpenList().add(adjacentNode);

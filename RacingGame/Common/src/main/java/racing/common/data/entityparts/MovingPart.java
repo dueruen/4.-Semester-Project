@@ -188,9 +188,7 @@ public class MovingPart implements EntityPart {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
         float dt = gameData.getDelta();
-        System.out.println("Penalty : " + penalty);
         float actualMaxSpeed = maxSpeed / penalty;
-        System.out.println("MaxSpeed: " + maxSpeed);
 
         if (actualMaxSpeed < currentSpeed && penalty > 1) {
             setSpeed(actualMaxSpeed);

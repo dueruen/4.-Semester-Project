@@ -1,4 +1,4 @@
-package racing.commonnpc;
+package racing.common.npc;
 
 import racing.common.data.Entity;
 

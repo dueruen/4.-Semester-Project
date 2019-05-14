@@ -18,26 +18,28 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
     /**
      * Player
      */
-    private Entity player;
-    private boolean haveItem;
+    private static Entity player;
 
     /**
-     * Start the plugin, initilize a new player and add it to the world of
-     * entities
+     * Start the plugin, initilize a new player and add it to the world of entities
      *
      * @param gameData
      * @param world
      */
     @Override
     public void start(GameData gameData, World world) {
-        // Add entities to the world
-        player = createPlayerCar(gameData);
-        world.addEntity(player);
+        if (gameData.isGameRunning()) {
+            create(gameData, world);
+        }
+        // // Add entities to the world
+        // player = createPlayerCar(gameData);
+        // world.addEntity(player);
     }
 
     /**
      * Helper method to create a new player car
-     * @param  gameData
+     *
+     * @param gameData
      * @return player
      */
     private Entity createPlayerCar(GameData gameData) {
@@ -47,7 +49,8 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         float rotationSpeed = 3;
         float x = 500;
         float y = 800;
-        float radians = 3.1415f / 2;
+        float radians = 0.0f;
+
         Entity playerCar = new Player();
         GameImage img = new GameImage("cars/car.png", 100, 50);
         playerCar.setImage(img);
@@ -55,25 +58,26 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         playerCar.add(new PositionPart(x, y, radians));
         playerCar.add(new ScorePart());
         UUID uuid = UUID.randomUUID();
-        
 
         return playerCar;
     }
+
     public void checkForItem(Entity entity, World world) {
-     MovingPart entityMovingPart = entity.getPart(MovingPart.class);
+        MovingPart entityMovingPart = entity.getPart(MovingPart.class);
 
         for (Entity tileEntity : world.getEntities()) {
             TilePart tilePart = tileEntity.getPart(TilePart.class);
-            
-            if (tilePart.getType().Item == tilePart.getType() ) {
-                
+
+            if (tilePart.getType().Item == tilePart.getType()) {
+
             }
-        
-    
-}
+
+        }
     }
+
     /**
      * Remove entity from the world if the bundle is removed
+     *
      * @param gameData
      * @param world
      */
@@ -85,12 +89,24 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
 
     @Override
     public PositionPart getPosition() {
-        return player.getPart(PositionPart.class);
-        
-        public boolean setHasItem() {
-            this.haveItem = true;
-            return haveItem;
-            
+        if (player != null) {
+            return player.getPart(PositionPart.class);
+        }
+        return null;
+    }
+
+    @Override
+    public Player create(GameData gameData, World world) {
+        Entity player = createPlayerCar(gameData);
+        world.addEntity(player);
+        this.player = player;
+        return (Player) player;
+    }
+
+    @Override
+    public void removeAll(GameData gameData, World world) {
+        for (Entity npc : world.getEntities(Player.class)) {
+            world.removeEntity(npc);
         }
     }
 }

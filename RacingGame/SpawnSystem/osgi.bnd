@@ -1,0 +1,3 @@
+Bundle-SymbolicName: SpawnSystem
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/spawn.xml 

@@ -21,6 +21,11 @@ public class MovingPart implements EntityPart {
     private float deceleration, acceleration;
 
     /**
+     * Penalty
+     */
+    private float penalty = 1;
+
+    /**
      * Max speed and rotation speed
      */
     private float maxSpeed, rotationSpeed, currentSpeed, reverseSpeed;
@@ -99,6 +104,15 @@ public class MovingPart implements EntityPart {
         this.currentSpeed = speed;
     }
 
+      /**
+     * Set penalty
+     *
+     * @param penalty
+     */
+    public void setPenalty(float penalty) {
+        this.penalty = penalty;
+    }
+
     /**
      * Set rotationSpeed
      *
@@ -174,6 +188,11 @@ public class MovingPart implements EntityPart {
         float y = positionPart.getY();
         float radians = positionPart.getRadians();
         float dt = gameData.getDelta();
+        float actualMaxSpeed = maxSpeed / penalty;
+
+        if (actualMaxSpeed < currentSpeed && penalty > 1) {
+            setSpeed(actualMaxSpeed);
+        }
 
         // turning
         if (left) {
@@ -187,7 +206,7 @@ public class MovingPart implements EntityPart {
         // accelerating
         if (up) {
             setReversing(false);
-            if (currentSpeed <= maxSpeed) {
+            if (currentSpeed <= actualMaxSpeed) {
                 currentSpeed += acceleration;
             }
             x += cos(radians) * currentSpeed * dt;
@@ -206,7 +225,7 @@ public class MovingPart implements EntityPart {
 
         //Deaccelerating or reversing
         if (down) {
-           if (currentSpeed > (0 - maxSpeed)) {
+           if (currentSpeed > (0 - actualMaxSpeed)) {
                 currentSpeed -= deceleration;
             }
             x += cos(radians) * currentSpeed * dt;

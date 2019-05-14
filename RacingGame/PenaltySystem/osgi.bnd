@@ -1,0 +1,3 @@
+Bundle-SymbolicName: PenaltySystem
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/penaltysystem.xml

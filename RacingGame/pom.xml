@@ -32,6 +32,7 @@
     <module>GUI</module>
     <module>CommonPlayer</module>
     <module>LabSystem</module>
+    <module>PenaltySystem</module>
     <module>SpawnSystem</module>
   </modules>
 

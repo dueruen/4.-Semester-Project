@@ -32,7 +32,6 @@
     <module>GUI</module>
     <module>CommonPlayer</module>
     <module>LabSystem</module>
-    <module>Bullet</module>
     <module>racing.build_CommonItem_bundle_1.0-SNAPSHOT</module>
   </modules>
 

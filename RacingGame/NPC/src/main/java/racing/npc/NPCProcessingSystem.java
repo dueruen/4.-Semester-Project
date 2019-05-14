@@ -30,7 +30,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             PositionPart pp = ai.findNextPosition();
             float x = pp.getX();
             float y = pp.getY();
-            
+
             //TODO Find the next position so we can finish this Vector calculations
             double[] course = { pp.getX() - positionPart.getX(), pp.getY() - positionPart.getY() };
             double[] heading = { course[0] + 1, course[0] };

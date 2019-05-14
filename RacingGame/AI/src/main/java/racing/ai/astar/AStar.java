@@ -51,6 +51,8 @@ public class AStar  {
         for (int i = 0; i < searchArea.length; i++) {
             for (int j = 0; j < searchArea[0].length; j++) {
                 AStarNode node = new AStarNode(i, j);
+                int w = searchArea[i][j].getW();
+                node.setW(w);
                 if(searchArea[i][j].isBlock()) { 
                     node.setBlock(true);
                 }

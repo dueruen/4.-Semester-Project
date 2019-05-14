@@ -69,6 +69,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
                 TilePart tp = pp.getPart(TilePart.class);
                 int[] coordinates = mapSPI.getTileXandY(pp);
                 AStarNode node = new AStarNode(coordinates[0], coordinates[1]);
+                node.setW((int) tp.getType().getWeight());
                 if(tp.getType().isIsStatic()) {
                     node.setBlock(true);
                 }
@@ -116,7 +117,6 @@ public class AIPlugin implements IGamePluginService, AISPI {
             if(tt == TileType.FINISHLINE){
               int[] newGoalTile = mapSPI.getTileXandY(map[i][j]);
               target = new AStarNode(newGoalTile[0],newGoalTile[1]);
-              System.out.println("goal:" + newGoalTile[0] + " " +  newGoalTile[1]);
             }
           }
         }

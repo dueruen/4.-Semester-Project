@@ -14,6 +14,7 @@ public class AStarNode {
     private int g;
     private int f;
     private int h;
+    private int w;
     private int row;
     private int col;
     private boolean isBlock;
@@ -24,6 +25,14 @@ public class AStarNode {
         this.row = row;
         this.col = col;
     }
+
+  public int getW() {
+    return w;
+  }
+
+  public void setW(int w) {
+    this.w = w;
+  }
 
     public void calculateHeuristic(AStarNode finalNode) {
         this.h = Math.abs(finalNode.getRow() - getRow()) + Math.abs(finalNode.getCol() - getCol());
@@ -46,7 +55,7 @@ public class AStarNode {
     }
 
     private void calculateFinalCost() {
-        int finalCost = getG() + getH();
+        int finalCost = getG() + getH() * getW();
         setF(finalCost);
     }
 

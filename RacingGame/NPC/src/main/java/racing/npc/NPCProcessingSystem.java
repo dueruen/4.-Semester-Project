@@ -1,5 +1,6 @@
 package racing.npc;
 
+import com.badlogic.gdx.math.Vector2;
 import java.util.Random;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
@@ -31,21 +32,26 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             float x = pp.getX();
             float y = pp.getY();
 
-            //TODO Find the next position so we can finish this Vector calculations
-            double[] course = { pp.getX() - positionPart.getX(), pp.getY() - positionPart.getY() };
-            double[] heading = { course[0] + 1, course[0] };
+//            double[] course = { pp.getX() - positionPart.getX(), pp.getY() - positionPart.getY() };
+//            double[] heading = { course[0] + 1, course[0] };
+//            
+//            heading[0] = (heading[0] * Math.cos(Math.toDegrees(positionPart.getRadians()))) - (heading[1] * Math.sin(Math.toDegrees(positionPart.getRadians())));
+//            heading[1] = (heading[0] * Math.sin(Math.toDegrees(positionPart.getRadians()))) - (heading[1] * Math.cos(Math.toDegrees(positionPart.getRadians())));
+//            
+//            double coursemagnitude = Math.sqrt(Math.pow(course[0], 2) + Math.pow(course[1], 2));
+//            double headingmagnitude = Math.sqrt(Math.pow(heading[0] + 2, 2) + Math.pow(positionPart.getY(), 2));
+//            
+//            double angle = ((course[0] * heading[0]) + (course[1] * heading[1])) / (coursemagnitude * headingmagnitude);
+//            
+//            double acosAngle = Math.acos(angle);
+
+           //TODO Calculate the angle to the target Vector and move on this.
+            Vector2 npc_pos = new Vector2(positionPart.getX(),positionPart.getY());
+            Vector2 target_pos = new Vector2(pp.getX(),pp.getY());
             
-            heading[0] = (heading[0] * Math.cos(Math.toDegrees(positionPart.getRadians()))) - (heading[1] * Math.sin(Math.toDegrees(positionPart.getRadians())));
-            heading[1] = (heading[0] * Math.sin(Math.toDegrees(positionPart.getRadians()))) - (heading[1] * Math.cos(Math.toDegrees(positionPart.getRadians())));
+            float diff_vect = npc_pos.angle(target_pos);
             
-            double coursemagnitude = Math.sqrt(Math.pow(course[0], 2) + Math.pow(course[1], 2));
-            double headingmagnitude = Math.sqrt(Math.pow(heading[0] + 2, 2) + Math.pow(positionPart.getY(), 2));
-            
-            double angle = ((course[0] * heading[0]) + (course[1] * heading[1])) / (coursemagnitude * headingmagnitude);
-            
-            double acosAngle = Math.acos(angle);
-            
-            System.out.println(positionPart.getX() + " positonpart " + positionPart.getY());
+            System.out.println(diff_vect);
             
             positionPart.setX(x);
             positionPart.setY(y);

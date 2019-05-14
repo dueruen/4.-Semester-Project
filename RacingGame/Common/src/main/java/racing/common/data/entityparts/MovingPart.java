@@ -19,7 +19,7 @@ public class MovingPart implements EntityPart {
      * Acceleration and deceleration
      */
     private float deceleration, acceleration;
-    
+
     /**
      * Penalty
      */
@@ -103,7 +103,7 @@ public class MovingPart implements EntityPart {
     public void setSpeed(float speed) {
         this.currentSpeed = speed;
     }
-    
+
       /**
      * Set penalty
      *
@@ -121,7 +121,7 @@ public class MovingPart implements EntityPart {
     public void setRotationSpeed(float rotationSpeed) {
         this.rotationSpeed = rotationSpeed;
     }
-    
+
     /**
      * Set left
      *
@@ -191,6 +191,10 @@ public class MovingPart implements EntityPart {
         System.out.println("Penalty : " + penalty);
         float actualMaxSpeed = maxSpeed / penalty;
         System.out.println("MaxSpeed: " + maxSpeed);
+
+        if (actualMaxSpeed < currentSpeed && penalty > 1) {
+            setSpeed(actualMaxSpeed);
+        }
 
         // turning
         if (left) {

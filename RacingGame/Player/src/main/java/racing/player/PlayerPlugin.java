@@ -10,6 +10,7 @@ import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
 import java.util.UUID;
 import racing.common.data.entityparts.ScorePart;
+import racing.common.data.entityparts.TilePart;
 import racing.common.player.PlayerSPI;
 
 public class PlayerPlugin implements IGamePluginService, PlayerSPI {
@@ -58,11 +59,19 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
 
         return playerCar;
     }
-    public void checkForItem() {
+    public void checkForItem(Entity entity, World world) {
+     MovingPart entityMovingPart = entity.getPart(MovingPart.class);
+
+        for (Entity tileEntity : world.getEntities()) {
+            TilePart tilePart = tileEntity.getPart(TilePart.class);
+            
+            if (tilePart.getType().Item == tilePart.getType() ) {
+                
+            }
         
     
 }
-
+    }
     /**
      * Remove entity from the world if the bundle is removed
      * @param gameData
@@ -77,5 +86,11 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
     @Override
     public PositionPart getPosition() {
         return player.getPart(PositionPart.class);
+        
+        public boolean setHasItem() {
+            this.haveItem = true;
+            return haveItem;
+            
+        }
     }
 }

@@ -32,7 +32,12 @@ public enum TileType {
     /**
      * Start
      */
-    START(5, 1.0, "tiles/start.png", false);
+    START(5, 1.0, "tiles/start.png", false),
+
+    /**
+     * Spawn
+     */
+    SPAWN(6, 1.0, "tiles/spawn.png", false);
 
     /**
      * Used to identify the tile type

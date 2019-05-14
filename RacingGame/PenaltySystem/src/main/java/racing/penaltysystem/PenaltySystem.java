@@ -6,7 +6,7 @@ import java.awt.Shape;
 import java.awt.geom.AffineTransform;
 import java.lang.Math;
 import racing.common.player.Player;
-import racing.commonnpc.NPC;
+import racing.common.npc.NPC;
 import racing.common.map.Tile;
 import racing.common.data.Entity;
 import racing.common.data.GameData;

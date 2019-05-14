@@ -22,11 +22,12 @@ public class MenuScreen extends BasicScreen {
     private Stage stage;
 
     public MenuScreen() {
-        stage = new Stage(new ScreenViewport());
+
     }
 
     @Override
     public void show() {
+        stage = new Stage(new ScreenViewport());
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
@@ -44,7 +45,7 @@ public class MenuScreen extends BasicScreen {
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
-                GuiManager.getInstance().changeScreen(GameScreen.GAME);
+                GuiManager.getInstance().changeScreen(GameScreen.START_GAME);
             }
         });
 

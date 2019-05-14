@@ -2,10 +2,13 @@ package racing.map;
 
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,17 +29,26 @@ import racing.common.services.IGamePluginService;
  */
 public class MapPlugin implements IGamePluginService, MapSPI {
 
-    Tile[][] map;
+    /**
+     * Tile in current map
+     */
+    private Tile[][] map;
+    
+    /**
+     * Current map name
+     */
+    private static String currentMapName;
 
     @Override
     public void start(GameData gameData, World world) {
+        if(gameData.isGameRunning()) {
+            loadFromFile(currentMapName, gameData, world);
+        }
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        for (Entity tile : world.getEntities(Tile.class)) {
-            world.removeEntity(tile);
-        }
+        removeAll(world);
     }
 
  
@@ -76,6 +88,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     
        /**
      * Finds the tile the entity is on
+     *
      * @param p
      * @param world
      * @return the tile the entity is on
@@ -97,7 +110,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
                 shortestDistance = nextDistance;
             }
         }
-        return (Tile)closedTile;
+        return (Tile) closedTile;
     }
 
 
@@ -123,29 +136,45 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     /**
      * Creates a new map based on a comma separated file
      *
-     * @param filePath the file path relative to src/main/resources folder
+     * @param fileName the file name
      * @param gameData the game data
      * @param world the world data
      */
     @Override
-    public void loadFromFile(String filePath, GameData gameData, World world) {
-        InputStream is = getClass().getClassLoader().getResourceAsStream(filePath);
-        ArrayList<int[]> data = new ArrayList<>();
-        try (Scanner sc = new Scanner(is)) {
-            while (sc.hasNextLine()) {
-                String nextLine = sc.nextLine();
-                String[] values = nextLine.split(",");
-                int[] row = new int[values.length];
-                for (int i = 0; i < values.length; i++) {
-                    row[i] = Integer.parseInt(values[i]);
+    public void loadFromFile(String fileName, GameData gameData, World world) {
+        try {
+            InputStream is;
+            if (fileName.equals("DefaultMap.txt")) {
+                is = getClass().getClassLoader().getResourceAsStream("/maps/" + fileName);
+            } else {
+                String path = System.getProperty("user.home") + "/racing_game/maps/";
+                String file = path + fileName;
+
+                is = new FileInputStream(file);
+            }
+            ArrayList<int[]> data = new ArrayList<>();
+            try (Scanner sc = new Scanner(is)) {
+                while (sc.hasNextLine()) {
+                    String nextLine = sc.nextLine();
+                    String[] values = nextLine.split(",");
+                    int[] row = new int[values.length];
+                    for (int i = 0; i < values.length; i++) {
+                        row[i] = Integer.parseInt(values[i]);
+                    }
+                    data.add(row);
                 }
-                data.add(row);
+                int[][] map = new int[data.size()][data.get(0).length];
+                for (int i = 0; i < data.size(); i++) {
+                    map[i] = data.get(i);
+                }
+                createMap(map, gameData, world);
+                currentMapName = fileName;
             }
-            int[][] map = new int[data.size()][data.get(0).length];
-            for (int i = 0; i < data.size(); i++) {
-                map[i] = data.get(i);
-            }
-            createMap(map, gameData, world);
+            is.close();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -222,6 +251,28 @@ public class MapPlugin implements IGamePluginService, MapSPI {
             }
         } catch (IOException ex) {
             Logger.getLogger(MapPlugin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public String[] getMapNames() {
+        File folder = new File(System.getProperty("user.home") + "/racing_game/maps/");
+        File[] listOfFiles = folder.listFiles();
+        
+        String[] s = new String[listOfFiles.length + 1];
+        s[0] = "DefaultMap.txt";
+        int i = 1;
+        for (File f : listOfFiles) {
+            s[i] = f.getName();
+            i++;
+        }
+        return s;
+    }
+
+    @Override
+    public void removeAll(World world) {
+        for (Entity tile : world.getEntities(Tile.class)) {
+            world.removeEntity(tile);
         }
     }
 }

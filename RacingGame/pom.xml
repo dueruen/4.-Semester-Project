@@ -25,6 +25,7 @@
     <module>OSGiLibGDX</module>
     <module>Player</module>
     <module>CommonMap</module>
+    <module>Collision</module>
     <module>Map</module>
     <module>NPC</module>
     <module>CommonNPC</module>
@@ -33,6 +34,7 @@
     <module>GUI</module>
     <module>CommonPlayer</module>
     <module>LabSystem</module>
+    <module>SpawnSystem</module>
   </modules>
 
   <build>

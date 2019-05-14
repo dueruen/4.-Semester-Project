@@ -10,6 +10,11 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 
  */
 public class GameData {
+    
+    /**
+     * Is the game running
+     */
+    private boolean gameRunning = false;
 
     /**
      * Time between the start of previous and current call to render
@@ -85,5 +90,13 @@ public class GameData {
         }
 
         return r;
+    }
+
+    public boolean isGameRunning() {
+        return gameRunning;
+    }
+
+    public void setGameRunning(boolean gameRunning) {
+        this.gameRunning = gameRunning;
     }
 }

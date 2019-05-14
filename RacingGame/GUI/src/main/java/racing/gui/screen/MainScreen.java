@@ -13,13 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import racing.Core;
 import racing.common.data.Entity;
+import racing.common.data.GameKeys;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.ScorePart;
-import racing.common.map.MapSPI;
-import racing.common.player.PlayerSPI;
 import racing.common.services.IScoreService;
-import racing.common.npc.NPCSPI;
-import racing.common.ai.AISPI;
 import racing.gui.input.GameInputProcessor;
 import racing.gui.GuiManager;
 
@@ -45,26 +42,6 @@ public class MainScreen extends BasicScreen {
     private Table table;
 
     /**
-     * MapSPI
-     */
-    private MapSPI map;
-    
-    /**
-     * NPCSPI
-     */
-    private NPCSPI npcSPI;
-    
-    /**
-     * AISPI
-     */
-    private AISPI aiSPI;
-
-    /**
-     * PlayerSPI
-     */
-    private static PlayerSPI player;
-
-    /**
      * IScoreService
      */
     private static IScoreService score;
@@ -78,13 +55,15 @@ public class MainScreen extends BasicScreen {
 
         c = new OrthographicCamera(Core.getInstance().getGameData().getDisplayWidth(), Core.getInstance().getGameData().getDisplayHeight());
 
-        GuiManager.getInstance().setCam(c);
-
         Gdx.input.setInputProcessor(new GameInputProcessor(Core.getInstance().getGameData()));
     }
 
     @Override
     public void render(float f) {
+        if (Core.getInstance().getGameData().getKeys().isPressed(GameKeys.ESCAPE)) {
+            stopEntities();
+            GuiManager.getInstance().changeScreen(GameScreen.MENU);
+        }
         GuiManager.getInstance().getBatch().setProjectionMatrix(c.combined);
 
         Gdx.gl.glClearColor(255, 255, 255, 1);
@@ -96,8 +75,8 @@ public class MainScreen extends BasicScreen {
         GuiManager.getInstance().update();
         GuiManager.getInstance().draw();
 
-        if (player != null) {
-            PositionPart p = player.getPosition();
+        if (GuiManager.getInstance().getPlayer() != null) {
+            PositionPart p = GuiManager.getInstance().getPlayer().getPosition();
             c.position.set(p.getX(), p.getY(), 0);
             c.update();
         }
@@ -121,82 +100,12 @@ public class MainScreen extends BasicScreen {
     }
 
     /**
-     * Declarative service set map service
-     *
-     * @param map map service
+     * Stops player, enemy and map
      */
-    public void setMapService(MapSPI map) {
-        this.map = map;
-        this.map.loadFromFile("maps/map1.txt", Core.getInstance().getGameData(), Core.getInstance().getWorld());
-        npcSPI.createNPCs(Core.getInstance().getGameData(), Core.getInstance().getWorld());
-        aiSPI.startAI();
-        
-    }
-
-    /**
-     * Declarative service remove map service
-     *
-     * @param map map service
-     */
-    public void removeMapService(MapSPI map) {
-        this.map = null;
-    }
-
-    /**
-     * Declarative service set player service
-     *
-     * @param player player service
-     */
-    public void setPlayerService(PlayerSPI player) {
-        this.player = player;
-    }
-
-    /**
-     * Declarative service remove player service
-     *
-     * @param player player service
-     */
-    public void removePlayerService(PlayerSPI player) {
-        this.player = null;
-
-    }
-    
-    /**
-     * Declarative service set npc service
-     *
-     * @param npcSPI player service
-     */
-    public void setNPCService(NPCSPI npcSPI) {
-        this.npcSPI = npcSPI;
-    }
-
-    /**
-     * Declarative service remove npc service
-     *
-     * @param npcSPI player service
-     */
-    public void removeNPCService(NPCSPI npcSPI) {
-        this.npcSPI = null;
-
-    }
-    
-    /**
-     * Declarative service set npc service
-     *
-     * @param aiSPI ai service
-     */
-    public void setAIService(AISPI aiSPI) {
-        this.aiSPI = aiSPI;
-    }
-
-    /**
-     * Declarative service remove npc service
-     *
-     * @param aiSPI ai service
-     */
-    public void removeAIService(AISPI aiSPI) {
-        this.aiSPI = null;
-
+    private void stopEntities() {
+        GuiManager.getInstance().getPlayer().removeAll(Core.getInstance().getGameData(), Core.getInstance().getWorld());
+        GuiManager.getInstance().getNpc().removeAll(Core.getInstance().getGameData(), Core.getInstance().getWorld());
+        GuiManager.getInstance().getMap().removeAll(Core.getInstance().getWorld());
     }
     
     /**
@@ -215,5 +124,10 @@ public class MainScreen extends BasicScreen {
      */
     public void removeScoreService(IScoreService score) {
         this.score = null;
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }

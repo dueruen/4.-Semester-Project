@@ -4,19 +4,7 @@
     <service>
         <provide interface="racing.common.services.IGamePluginService"/>
     </service>
-    <reference bind="setAIService" cardinality="0..1"
-                   interface="racing.common.ai.AISPI"
-                   name="AIService" policy="dynamic" unbind="removeAIService"/>
-   <reference bind="setNPCService" cardinality="0..1"
-                  interface="racing.common.npc.NPCSPI"
-                  name="NPCService" policy="dynamic" unbind="removeNPCService"/>
-    <reference bind="setMapService" cardinality="0..1"
-                       interface="racing.common.map.MapSPI"
-                       name="MapService" policy="dynamic" unbind="removeMapService"/>
-    <reference bind="setPlayerService" cardinality="0..1"
-                   interface="racing.common.player.PlayerSPI"
-                   name="PlayerService" policy="dynamic" unbind="removePlayerService"/>
     <reference bind="setScoreService" cardinality="0..1"
-                   interface="racing.common.services.IScoreService"
-                   name="ScoreService" policy="dynamic" unbind="removeScoreService"/>
+               interface="racing.common.services.IScoreService"
+               name="ScoreService" policy="dynamic" unbind="removeScoreService"/>
 </scr:component>

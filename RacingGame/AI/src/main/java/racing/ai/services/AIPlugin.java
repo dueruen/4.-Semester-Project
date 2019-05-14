@@ -119,7 +119,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
         AStarNode source = new AStarNode(x,y);
         AStarNode target = new AStarNode(gtc[0], gtc[1]);
         
-   
+        
         ai.setSourceAndTargetNodes(source, target);
     }
 }

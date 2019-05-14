@@ -27,13 +27,13 @@
     <module>CommonMap</module>
     <module>Collision</module>
     <module>Map</module>
-    <module>CommonItem</module>
     <module>NPC</module>
     <module>CommonNPC</module>
     <module>GUI</module>
     <module>CommonPlayer</module>
     <module>LabSystem</module>
     <module>Bullet</module>
+    <module>racing.build_CommonItem_bundle_1.0-SNAPSHOT</module>
   </modules>
 
   <build>

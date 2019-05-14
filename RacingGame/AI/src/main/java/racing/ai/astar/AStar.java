@@ -68,7 +68,7 @@ public class AStar  {
     
     public PositionPart findNextPosition() { 
         List<AStarNode> path = findPath();
-        AStarNode nextPositionNode = path.get(0);
+        AStarNode nextPositionNode = path.get(1);
         float x = nextPositionNode.getRow();
         float y = nextPositionNode.getCol();
         PositionPart nextPosition = new PositionPart(x, y, (3.1415f / 2));

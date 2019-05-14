@@ -28,7 +28,8 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             MovingPart movingPart = NPC.getPart(MovingPart.class);
             ai.setSourceAndTargetNodes(NPC, world);
             PositionPart pp = ai.findNextPosition();
-            
+            float x = pp.getX();
+            float y = pp.getY();
             
             //TODO Find the next position so we can finish this Vector calculations
             double[] course = { pp.getX() - positionPart.getX(), pp.getY() - positionPart.getY() };
@@ -44,12 +45,11 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             
             double acosAngle = Math.acos(angle);
             
-            positionPart.setX(pp.getX());
-            positionPart.setY(pp.getY());
-            System.out.println(pp.getX() + " " +  pp.getY());
+            System.out.println(positionPart.getX() + " positonpart " + positionPart.getY());
             
-            System.out.println( "X-værdi heading: " + heading[0] + " Y-værdi heading: " + heading[1]);
-            movingPart.setRight(true);
+            positionPart.setX(x);
+            positionPart.setY(y);
+            
             movingPart.process(gameData, NPC);
             positionPart.process(gameData, NPC);   
         }

@@ -10,6 +10,8 @@ import racing.common.map.MapSPI;
 import racing.common.map.Tile;
 import racing.common.services.IGamePluginService;
 import racing.common.ai.AISPI;
+import racing.common.data.TileType;
+import racing.common.data.entityparts.TilePart;
 
 /**
  *
@@ -89,35 +91,31 @@ public class AIPlugin implements IGamePluginService, AISPI {
         
     }
 
-//    @Override
-//    public void setInitialPosition(Entity p, World world) {
-//        
-//        Tile t = mapSPI.getTileClosestToEntity(p, world);
-//        int[] coordinates = mapSPI.getTileXandY(t);
-//        int x = Math.round(coordinates[0]);
-//        int y = Math.round(coordinates[1]);
-//   
-//        float radians = 3.1415f / 2;
-//        
-//   
-//        ai.setInitialPosition(x,y);
-//    }
-
     @Override
     public void setSourceAndTargetNodes(Entity p, World world) {
         Tile t = mapSPI.getTile(p, world);
         int[] coordinates = mapSPI.getTileXandY(t);
         int x = Math.round(coordinates[0]);
         int y = Math.round(coordinates[1]);
-   
-        float radians = 3.1415f / 2;
         
         Tile[][] map = mapSPI.getLoadedMap();
-        Tile gt = map[2][2]; //Starting point for eksemplets skyld, kan �ndres
-        int[] gtc = mapSPI.getTileXandY(gt);
-                
+        
+        
         AStarNode source = new AStarNode(x,y);
-        AStarNode target = new AStarNode(gtc[0], gtc[1]);
+        AStarNode target = null;
+        for(int i = 0; i < map.length; i++){
+          for(int j = 0; j < map[0].length; j++){
+            TilePart tp = map[i][j].getPart(TilePart.class);
+            TileType tt = tp.getType();
+            
+            if(tt == TileType.FINISHLINE){
+              int[] newGoalTile = mapSPI.getTileXandY(map[i][j]);
+              target = new AStarNode(newGoalTile[0],newGoalTile[1]);
+              System.out.println("goal:" + newGoalTile[0] + " " +  newGoalTile[1]);
+            }
+          }
+        }
+
         
         
         ai.setSourceAndTargetNodes(source, target);

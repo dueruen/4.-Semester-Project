@@ -68,6 +68,14 @@ public class AStar  {
     
     public PositionPart findNextPosition() { 
         List<AStarNode> path = findPath();
+        if(path.size() == 1) { 
+            AStarNode nextPositionNode = path.get(0);
+            float x = nextPositionNode.getRow();
+            float y = nextPositionNode.getCol();
+            PositionPart nextPosition = new PositionPart(x, y, (3.1415f / 2));
+            return nextPosition;
+            
+        }
         AStarNode nextPositionNode = path.get(1);
         float x = nextPositionNode.getRow();
         float y = nextPositionNode.getCol();

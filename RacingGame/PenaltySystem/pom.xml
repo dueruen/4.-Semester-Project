@@ -8,14 +8,14 @@
     </parent>
 
     <properties>
-        <bundle.symbolicName>npc</bundle.symbolicName>
+        <bundle.symbolicName>racing.penaltysystem</bundle.symbolicName>
         <bundle.namespace>racing</bundle.namespace>
     </properties>
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>NPC</artifactId>
+    <artifactId>PenaltySystem</artifactId>
     <packaging>bundle</packaging>
-    <name>NPC</name>
-    <dependencies>    
+    <name>PenaltySystemn</name>
+    <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
@@ -39,13 +39,19 @@
         </dependency>
         <dependency>
             <groupId>racing.build</groupId>
-            <artifactId>CommonNPC</artifactId>
+            <artifactId>CommonPlayer</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
         <dependency>
             <groupId>racing.build</groupId>
-            <artifactId>CommonAI</artifactId>
+            <artifactId>NPC</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>racing.build</groupId>
+            <artifactId>CommonNPC</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>

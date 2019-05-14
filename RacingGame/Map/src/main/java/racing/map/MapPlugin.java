@@ -33,7 +33,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
      * Tile in current map
      */
     private Tile[][] map;
-    
+
     /**
      * Current map name
      */
@@ -41,7 +41,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
 
     @Override
     public void start(GameData gameData, World world) {
-        if(gameData.isGameRunning()) {
+        if (gameData.isGameRunning()) {
             loadFromFile(currentMapName, gameData, world);
         }
     }
@@ -51,7 +51,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         removeAll(world);
     }
 
- 
+
 
       /**
      * Finds the tile weight for the tile closed to the entity
@@ -85,7 +85,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
         return result;
     }
 
-    
+
        /**
      * Finds the tile the entity is on
      *
@@ -258,13 +258,21 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     public String[] getMapNames() {
         File folder = new File(System.getProperty("user.home") + "/racing_game/maps/");
         File[] listOfFiles = folder.listFiles();
-        
-        String[] s = new String[listOfFiles.length + 1];
+
+        String[] s;
+        if (listOfFiles != null) {
+            s = new String[listOfFiles.length + 1];
+        } else {
+            s = new String[1];
+        }
+
         s[0] = "DefaultMap.txt";
-        int i = 1;
-        for (File f : listOfFiles) {
-            s[i] = f.getName();
-            i++;
+        if (listOfFiles != null) {
+            int i = 1;
+            for (File f : listOfFiles) {
+                s[i] = f.getName();
+                i++;
+            }
         }
         return s;
     }

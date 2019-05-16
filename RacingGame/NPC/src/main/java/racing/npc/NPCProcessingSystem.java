@@ -29,8 +29,6 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             MovingPart movingPart = NPC.getPart(MovingPart.class);
             ai.setSourceAndTargetNodes(NPC, world);
             PositionPart pp = ai.findNextPosition();
-            float x = pp.getX();
-            float y = pp.getY();
 
 //            double[] course = { pp.getX() - positionPart.getX(), pp.getY() - positionPart.getY() };
 //            double[] heading = { course[0] + 1, course[0] };
@@ -46,18 +44,45 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 //            double acosAngle = Math.acos(angle);
 
            //TODO Calculate the angle to the target Vector and move on this.
-            Vector2 npc_pos = new Vector2(positionPart.getX(),positionPart.getY());
-            Vector2 target_pos = new Vector2(pp.getX(),pp.getY());
+//            Vector2 npc_pos = new Vector2(positionPart.getX(),positionPart.getY());
+//            Vector2 target_pos = new Vector2(pp.getX(),pp.getY());
+//           
+//            
+//            float diff_vect = npc_pos.dot(target_pos);
+          
             
-            float diff_vect = npc_pos.angle(target_pos);
+            double carAng = Math.toDegrees(positionPart.getRadians());
+
+            double angle = Math.atan2((pp.getY() - positionPart.getY()),(pp.getX() - positionPart.getX()) )
+                    *180.0d / Math.PI;
             
-            System.out.println(diff_vect);
             
-            positionPart.setX(x);
-            positionPart.setY(y);
-            
+              System.out.println("Pointangle: " + angle);
+              System.out.println("Carangle: " + carAng);
+              
+              if(carAng == angle) { 
+                  movingPart.setUp(true);
+              }
+              if(carAng < angle) { 
+                  movingPart.setLeft(true);
+              }
+              if(carAng > angle) { 
+                  movingPart.setRight(true);
+              
+              }
+              else { 
+                  movingPart.setUp(true);
+              }
+
+       
+          
+     
             movingPart.process(gameData, NPC);
             positionPart.process(gameData, NPC);   
+            
+            movingPart.setRight(false);
+            movingPart.setLeft(false);
+            movingPart.setUp(false);
         }
     }
     

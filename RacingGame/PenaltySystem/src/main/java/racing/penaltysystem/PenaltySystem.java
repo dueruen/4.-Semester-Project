@@ -69,7 +69,7 @@ public class PenaltySystem implements IPostEntityProcessingService {
             );
 
             if (car.intersects(staticTile)) {
-                entityMovingPart.setPenalty(Math.round(tilePart.getType().getWeight()));
+                entityMovingPart.setPenalty(Math.round(tilePart.getType().getPenalty()));
             } 
         }
     }

@@ -64,7 +64,7 @@ public class MapPlugin implements IGamePluginService, MapSPI {
     public double getPositionWeight(Entity p, World world) {
         Entity closedTile = getTile(p, world);
         TilePart tp = closedTile.getPart(TilePart.class);
-        return tp.getType().getWeight();
+        return tp.getType().getPenalty();
     }
 
     @Override

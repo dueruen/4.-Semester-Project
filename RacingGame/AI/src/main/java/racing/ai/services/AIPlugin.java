@@ -114,7 +114,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
             TilePart tp = map[i][j].getPart(TilePart.class);
             TileType tt = tp.getType();
             
-            if(tt == TileType.FINISHLINE){
+            if(tt == TileType.START){
               int[] newGoalTile = mapSPI.getTileXandY(map[i][j]);
               target = new AStarNode(newGoalTile[0],newGoalTile[1]);
             }

@@ -8,7 +8,7 @@ public enum TileType {
     /**
      * Finish line
      */
-    FINISHLINE(0, 1.0, 1.0,"tiles/goal.png", false),
+    FINISHLINE(0, 1.0, 1.0,"tiles/goal.png", true),
     /**
      * Road
      */

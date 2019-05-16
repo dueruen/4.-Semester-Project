@@ -56,9 +56,6 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             double angle = Math.atan2((pp.getY() - positionPart.getY()),(pp.getX() - positionPart.getX()) )
                     *180.0d / Math.PI;
             
-            
-              System.out.println("Pointangle: " + angle);
-              System.out.println("Carangle: " + carAng);
               
               if(carAng == angle) { 
                   movingPart.setUp(true);

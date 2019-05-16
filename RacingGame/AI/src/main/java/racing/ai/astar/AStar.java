@@ -103,7 +103,7 @@ public class AStar  {
     }
 
     private List<AStarNode> getPath(AStarNode currentNode) {
-        List<AStarNode> path = new ArrayList<AStarNode>();
+        List<AStarNode> path = new ArrayList<>();
         path.add(currentNode);
         AStarNode parent;
         while ((parent = currentNode.getParent()) != null) {
@@ -164,7 +164,6 @@ public class AStar  {
     private void checkNode(AStarNode currentNode, int col, int row, int cost) { 
         AStarNode adjacentNode = getSearchArea()[row][col];
         if (!adjacentNode.isBlock() && !getClosedSet().contains(adjacentNode)) {
-            
             if (!getOpenList().contains(adjacentNode)) {
                 adjacentNode.setNodeData(currentNode, cost);
                 getOpenList().add(adjacentNode);

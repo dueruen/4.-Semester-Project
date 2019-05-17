@@ -25,6 +25,8 @@ public class AIPlugin implements IGamePluginService, AISPI {
     private MapSPI mapSPI;
 
     private AStar ai;
+    
+    private Tile[][] map;
     /**
      * Declarative service set map service
      *
@@ -57,7 +59,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
     }
     
     private void initializeAI() {
-        Tile[][] map = mapSPI.getLoadedMap();
+        map = mapSPI.getLoadedMap();
         int r = map.length;
         int c = map[0].length;
         
@@ -78,7 +80,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
         }
         
         AStarNode initNode = new AStarNode((r/2), (c/2));
-        AStarNode finalNode = new AStarNode(r, c);
+        AStarNode finalNode = findGoalNode();
         ai = new AStar(r, c, initNode, finalNode);
         ai.setSearchArea(nodes);
 
@@ -98,7 +100,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
     }
 
     @Override
-    public void setSourceAndTargetNodes(Entity p, World world) {
+    public void setSourceNode(Entity p, World world) {
         Tile t = mapSPI.getTile(p, world);
         int[] coordinates = mapSPI.getTileXandY(t);
         int x = Math.round(coordinates[0]);
@@ -108,6 +110,12 @@ public class AIPlugin implements IGamePluginService, AISPI {
         
         
         AStarNode source = new AStarNode(x,y);
+        
+
+        ai.setSourceNode(source);
+    }
+    
+    private AStarNode findGoalNode() {
         AStarNode target = null;
         for(int i = 0; i < map.length; i++){
           for(int j = 0; j < map[0].length; j++){
@@ -120,9 +128,6 @@ public class AIPlugin implements IGamePluginService, AISPI {
             }
           }
         }
-
-        
-        
-        ai.setSourceAndTargetNodes(source, target);
+        return target;
     }
 }

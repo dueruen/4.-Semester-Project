@@ -55,7 +55,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     private Entity createNPC (GameData gameData, int colorVal) {
         float deacceleration = 10;
         float acceleration = 10;
-        float maxSpeed = 200;
+        float maxSpeed = 400;
         float rotationSpeed = 5;
         float x = (gameData.getDisplayHeight() / 2);
         float y = (gameData.getDisplayWidth() / 2);

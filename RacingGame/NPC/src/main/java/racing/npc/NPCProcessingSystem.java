@@ -27,7 +27,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
           for (Entity NPC : world.getEntities(NPC.class)) {
             PositionPart positionPart = NPC.getPart(PositionPart.class);
             MovingPart movingPart = NPC.getPart(MovingPart.class);
-            ai.setSourceAndTargetNodes(NPC, world);
+            ai.setSourceNode(NPC, world);
             PositionPart pp = ai.findNextPosition();
 
 //            double[] course = { pp.getX() - positionPart.getX(), pp.getY() - positionPart.getY() };

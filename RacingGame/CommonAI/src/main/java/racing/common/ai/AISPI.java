@@ -10,7 +10,7 @@ import racing.common.data.entityparts.PositionPart;
  */
 public interface AISPI {
     PositionPart findNextPosition();
-    void setSourceAndTargetNodes(Entity p, World world);
+    void setSourceNode(Entity p, World world);
     void startAI();
     
 }

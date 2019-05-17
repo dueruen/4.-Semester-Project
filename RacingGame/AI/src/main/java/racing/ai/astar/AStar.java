@@ -73,15 +73,11 @@ public class AStar  {
     
     public PositionPart findNextPosition() { 
         List<AStarNode> path = findPath();
+        int positionIndex = 1;
         if(path.size() == 1) { 
-            AStarNode nextPositionNode = path.get(0);
-            float x = nextPositionNode.getRow();
-            float y = nextPositionNode.getCol();
-            PositionPart nextPosition = new PositionPart(x, y, (3.1415f / 2));
-            return nextPosition;
-            
+            positionIndex = 0;
         }
-        AStarNode nextPositionNode = path.get(1);
+        AStarNode nextPositionNode = path.get(positionIndex);
         float x = nextPositionNode.getRow();
         float y = nextPositionNode.getCol();
         PositionPart nextPosition = new PositionPart(x, y, (3.1415f / 2));
@@ -252,9 +248,9 @@ public class AStar  {
         this.diagonalCost = diagonalCost;
     }
     
-    public void setSourceAndTargetNodes(AStarNode source, AStarNode target) { 
+    public void setSourceNode(AStarNode source) { 
         setInitialNode(source);
-        setFinalNode(target);
+        setFinalNode(getFinalNode());
         setNodes();
    }
 

@@ -106,12 +106,8 @@ public class AIPlugin implements IGamePluginService, AISPI {
         int x = Math.round(coordinates[0]);
         int y = Math.round(coordinates[1]);
         
-        Tile[][] map = mapSPI.getLoadedMap();
-        
-        
         AStarNode source = new AStarNode(x,y);
         
-
         ai.setSourceNode(source);
     }
     

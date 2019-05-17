@@ -57,19 +57,21 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                     *180.0d / Math.PI;
             
               
-              if(carAng == angle) { 
+              if(carAng > angle-1 && carAng< angle+1) { 
                   movingPart.setUp(true);
               }
-              if(carAng < angle) { 
+              if(carAng < angle -1) { 
                   movingPart.setLeft(true);
+        
               }
-              if(carAng > angle) { 
+              if(carAng > angle + 1) { 
                   movingPart.setRight(true);
-              
+            
               }
-              else { 
+              else {
                   movingPart.setUp(true);
               }
+              
 
        
           

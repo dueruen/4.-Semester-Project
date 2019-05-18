@@ -44,7 +44,7 @@ public class CollisionSystem implements IPostEntityProcessingService {
             TilePart tilePart = tileEntity.getPart(TilePart.class);
 
             if (tilePart.getType().Item == tilePart.getType()) {
-                entity.setHasItem(true);
+                entity.set
                 
             }
             

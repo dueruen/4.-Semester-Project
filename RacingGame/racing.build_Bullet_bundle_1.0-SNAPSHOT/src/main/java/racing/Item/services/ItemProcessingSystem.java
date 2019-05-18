@@ -11,6 +11,7 @@ import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IEntityProcessingService;
+import racing.common.item.Item;
 
 /**
  *
@@ -18,9 +19,9 @@ import racing.common.services.IEntityProcessingService;
  */
 public class ItemProcessingSystem implements IEntityProcessingService {
 
-    Override
+    
     public void process(GameData gameData, World world) {
-        for (Entity bullet : world.getEntities(Bullet.class)) {
+        for (Entity bullet : world.getEntities(Item.class)) {
             PositionPart positionPart = bullet.getPart(PositionPart.class);
             MovingPart movingPart = bullet.getPart(MovingPart.class);
         } 

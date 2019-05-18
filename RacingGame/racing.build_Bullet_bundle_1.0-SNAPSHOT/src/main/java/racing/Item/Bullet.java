@@ -16,11 +16,11 @@ import racing.common.services.IEntityProcessingService;
  * Plugin used to control the map
  *
  */
-public class Bullet  {
+public class Bullet implements ItemSPI{
     
     
 
-    @
+    
 
     @Override
     public Entity createItem(Entity entity, GameData gameData) {

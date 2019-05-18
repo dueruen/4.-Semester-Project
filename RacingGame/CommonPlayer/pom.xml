@@ -25,7 +25,8 @@
         <dependency>
             <groupId>racing.build</groupId>
             <artifactId>Common</artifactId>
-            <version>${projzct.version}</version>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
         </dependency>
   </dependencies>
 

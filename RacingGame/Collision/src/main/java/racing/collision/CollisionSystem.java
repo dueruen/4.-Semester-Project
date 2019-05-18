@@ -43,6 +43,11 @@ public class CollisionSystem implements IPostEntityProcessingService {
         for (Entity tileEntity : world.getEntities(Tile.class)) {
             TilePart tilePart = tileEntity.getPart(TilePart.class);
 
+            if (tilePart.getType().Item == tilePart.getType()) {
+                entity.setHasItem(true);
+                
+            }
+            
             if (!tilePart.getType().isIsStatic()) {
                 continue;
             }

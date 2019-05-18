@@ -25,7 +25,7 @@
         <dependency>
             <groupId>racing.build</groupId>
             <artifactId>Common</artifactId>
-            <version>${project.version}</version>
+            <version>${projzct.version}</version>
         </dependency>
   </dependencies>
 

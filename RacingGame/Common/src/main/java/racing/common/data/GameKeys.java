@@ -2,7 +2,7 @@ package racing.common.data;
 
 /**
  * Class containing the keys supported in the game
- * 
+ *
  */
 public class GameKeys {
 
@@ -43,4 +43,8 @@ public class GameKeys {
         return keys[k] && !pkeys[k];
     }
 
+    public void reset() {
+        keys = new boolean[NUM_KEYS];
+        pkeys = new boolean[NUM_KEYS];
+    }
 }

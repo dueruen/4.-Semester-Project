@@ -1,9 +1,14 @@
 package racing.labsystem;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.TileType;
@@ -20,12 +25,25 @@ import racing.common.services.IScoreService;
  */
 public class LapControllSystem implements IPostEntityProcessingService, IScoreService {
 
+    /**
+     * Wrapper map
+     */
     private Map<String, Wrapper> entities = new HashMap<>();
 
     /**
      * MapSPI
      */
     private MapSPI map;
+    
+    /**
+     * Is there a winner
+     */
+    private boolean winner = false;
+    
+    /**
+     * Laps to win
+     */
+    private int lapsToWin = 3;
 
     /**
      * Declarative service set map service
@@ -72,6 +90,9 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
                         w.start = false;
                     } else {
                         sp.setLabs(sp.getLabs() + 1);
+                        if (sp.getLabs() == lapsToWin) {
+                            winner = true;
+                        }
                     }
                 }
             }
@@ -90,7 +111,35 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
             }
             e.add(entity);
         }
+        Collections.sort(e, new ScoreComparator());
         return e;
+    }
+
+    /**
+     * Score comparator
+     */
+    private class ScoreComparator implements Comparator<Entity> {
+
+        @Override
+        public int compare(Entity o1, Entity o2) {
+            ScorePart sp1 = o1.getPart(ScorePart.class);
+            ScorePart sp2 = o2.getPart(ScorePart.class);
+            Integer i1 = sp1.getLabs();
+            Integer i2 = sp2.getLabs();
+            return i2.compareTo(i1);
+        }
+        
+    }
+
+    @Override
+    public boolean isThereAWinner() {
+        return winner;
+    }
+
+    @Override
+    public void reset() {
+        winner = false;
+        entities = new HashMap<>();
     }
 
     /**

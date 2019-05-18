@@ -41,11 +41,6 @@ public class MainScreen extends BasicScreen {
      */
     private Table table;
 
-    /**
-     * IScoreService
-     */
-    private static IScoreService score;
-
     @Override
     public void show() {
         stage = new Stage();
@@ -61,7 +56,6 @@ public class MainScreen extends BasicScreen {
     @Override
     public void render(float f) {
         if (Core.getInstance().getGameData().getKeys().isPressed(GameKeys.ESCAPE)) {
-            stopEntities();
             GuiManager.getInstance().changeScreen(GameScreen.MENU);
         }
         GuiManager.getInstance().getBatch().setProjectionMatrix(c.combined);
@@ -77,14 +71,16 @@ public class MainScreen extends BasicScreen {
 
         if (GuiManager.getInstance().getPlayer() != null) {
             PositionPart p = GuiManager.getInstance().getPlayer().getPosition();
-            c.position.set(p.getX(), p.getY(), 0);
-            c.update();
+            if (p != null) {
+                c.position.set(p.getX(), p.getY(), 0);
+                c.update();
+            }
         }
 
         table.reset();
-        if (score != null) {
+        if (GuiManager.getInstance().getScore() != null) {
             table.align(Align.topLeft);
-            for (Entity e : score.getScores(Core.getInstance().getWorld())) {
+            for (Entity e : GuiManager.getInstance().getScore().getScores(Core.getInstance().getWorld())) {
                 Image i = new Image(new TextureRegionDrawable(new TextureRegion(GuiManager.getInstance().getAssetManager().get(e.getImage().getImagePath(), Texture.class))));
                 table.add(i).size(20);
                 ScorePart sp = e.getPart(ScorePart.class);
@@ -97,6 +93,7 @@ public class MainScreen extends BasicScreen {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+<<<<<<< HEAD
     }
 
     /**
@@ -107,7 +104,7 @@ public class MainScreen extends BasicScreen {
         GuiManager.getInstance().getNpc().removeAll(Core.getInstance().getGameData(), Core.getInstance().getWorld());
         GuiManager.getInstance().getMap().removeAll(Core.getInstance().getWorld());
     }
-    
+
     /**
      * Declarative service set score service
      *
@@ -124,6 +121,12 @@ public class MainScreen extends BasicScreen {
      */
     public void removeScoreService(IScoreService score) {
         this.score = null;
+=======
+
+        if (GuiManager.getInstance().getScore() != null && GuiManager.getInstance().getScore().isThereAWinner()) {
+            GuiManager.getInstance().changeScreen(GameScreen.GAME_OVER);
+        }
+>>>>>>> master
     }
 
     @Override

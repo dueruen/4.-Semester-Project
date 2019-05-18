@@ -7,5 +7,6 @@ public enum GameScreen {
     MENU,
     GAME,
     MAP_EDITOR,
-    START_GAME;
+    START_GAME,
+    GAME_OVER;
 }

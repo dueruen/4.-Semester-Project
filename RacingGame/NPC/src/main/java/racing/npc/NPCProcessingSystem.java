@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.entityparts.PositionPart;
@@ -19,43 +20,49 @@ import racing.common.map.Tile;
 import racing.common.npc.NPC;
 
 /**
+ *
+ * @author Victor Gram & Niclas Johansen
+ */
+
+/**
  *Processing system for NPC entity
  */
 public class NPCProcessingSystem implements IEntityProcessingService {
-    
+
     /**
      * AISPI
      */
     private AISPI ai;
-    
+
     private Map<Entity, ArrayList<PositionPart>> pathMap = new HashMap<>();
-    
+
     private MapSPI map;
-    
+
 
     @Override
     public void process(GameData gameData, World world) {
           for (Entity NPC : world.getEntities(NPC.class)) {
             PositionPart positionPart = NPC.getPart(PositionPart.class);
             MovingPart movingPart = NPC.getPart(MovingPart.class);
-            
-              
-              if(!pathMap.containsKey(NPC)) { 
+
+
+
+              if(!pathMap.containsKey(NPC)) {
                   ai.setSourceNode(NPC, world, 0);
                   pathMap.put(NPC, ai.getPath());
-                  
+
               }
-              
-              
-            
+
+
+
             Tile t = map.getTile(NPC, world);
             PositionPart tp = t.getPart(PositionPart.class);
             TilePart atp = t.getPart(TilePart.class);
-            
-            
+
+
             ArrayList<PositionPart> path = pathMap.get(NPC);
               //System.out.println("Processing path: " + path.size());
-            if(path.size() == 1) { 
+            if(path.size() == 1) {
                 System.out.println(atp.getType());
                     if(atp.getType() == TileType.CHECKPOINTONE) {
                     ai.setSourceNode(NPC, world, 1);
@@ -66,57 +73,58 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                     pathMap.put(NPC, ai.getPath());
                         //System.out.println(ai.getPath().size());
                     }
-                    
+
                     if(atp.getType() == TileType.FINISHLINE) {
                     ai.setSourceNode(NPC, world, 0);
                     pathMap.put(NPC, ai.getPath());
                     }
                     path = pathMap.get(NPC);
-                    
+
                 }
 
             PositionPart pp = path.get(0);
-            
+
+
             double carAng = Math.toDegrees(positionPart.getRadians());
 
             double angle = Math.atan2((pp.getY() - positionPart.getY()),(pp.getX() - positionPart.getX()) )
                     *180.0d / Math.PI;
-            
-              
-              if(carAng > angle-4 && carAng< angle+4) { 
+
+
+              if(carAng > angle-4 && carAng< angle+4) {
                   movingPart.setUp(true);
               }
-              if(carAng < angle -4) { 
+              if(carAng < angle -4) {
                   movingPart.setLeft(true);
               }
-              if(carAng > angle + 4) { 
+              if(carAng > angle + 4) {
                   movingPart.setRight(true);
               }
               else {
                   movingPart.setUp(true);
               }
-              
-            
+
+
             if(isOverlapping(tp, positionPart)) {
-                
+
                 if(path.contains(tp)){
                     path.remove(tp);
                 }
             }
-       
-          
-     
+
+
+
             movingPart.process(gameData, NPC);
-            positionPart.process(gameData, NPC);   
-            
+            positionPart.process(gameData, NPC);
+
             movingPart.setRight(false);
             movingPart.setLeft(false);
             movingPart.setUp(false);
-            
-            
+
+
         }
     }
-    
+
     private boolean isOverlapping(PositionPart tilePos, PositionPart npcPos) {
         int tileSize = 200;
         int half = tileSize/2;
@@ -128,7 +136,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
         }
         return true;
     }
-    
+
      /**
      * Declarative service set AI service
      *
@@ -147,7 +155,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
     public void removeAIService(AISPI ai) {
         this.ai = null;
     }
-    
+
     public void setMapService(MapSPI map) {
         this.map = map;
 
@@ -161,5 +169,5 @@ public class NPCProcessingSystem implements IEntityProcessingService {
     public void removeMapService(MapSPI map) {
         this.map = null;
     }
-    
+
 }

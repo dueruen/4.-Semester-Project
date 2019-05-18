@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.ai.astar;
 
 import java.util.ArrayList;
@@ -15,7 +10,7 @@ import racing.common.data.entityparts.PositionPart;
 
 /**
  *
- * @author Victor Gram
+ * @author Victor Gram & Niclas Johansen
  */
 public class AStar  {
     private static int DEFAULT_HV_COST = 10; // Horizontal - Vertical Cost

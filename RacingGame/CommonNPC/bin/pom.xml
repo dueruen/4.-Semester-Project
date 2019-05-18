@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+  <parent>
+    <relativePath>../poms/compiled/</relativePath>
+    <groupId>racing.build</groupId>
+    <artifactId>compiled-bundle-settings</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <bundle.symbolicName>racing.common</bundle.symbolicName>
+    <bundle.namespace>racing</bundle.namespace>
+  </properties>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>CommonNPC</artifactId>
+  <version>1.0-SNAPSHOT</version>
+
+  <name>CommonNPC</name>
+
+  <packaging>bundle</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package>!racing.internal.*,racing.*;version="1.0-SNAPSHOT",racing.common.npc</Export-Package>
+                        <Private-Package>racing.common.npc.*</Private-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>racing.build</groupId>
+            <artifactId>Common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+  </dependencies>
+
+</project>

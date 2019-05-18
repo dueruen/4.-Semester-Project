@@ -16,7 +16,6 @@ import racing.common.data.Entity;
 import racing.common.data.GameKeys;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.ScorePart;
-import racing.common.services.IScoreService;
 import racing.gui.input.GameInputProcessor;
 import racing.gui.GuiManager;
 
@@ -93,40 +92,10 @@ public class MainScreen extends BasicScreen {
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-<<<<<<< HEAD
-    }
-
-    /**
-     * Stops player, enemy and map
-     */
-    private void stopEntities() {
-        GuiManager.getInstance().getPlayer().removeAll(Core.getInstance().getGameData(), Core.getInstance().getWorld());
-        GuiManager.getInstance().getNpc().removeAll(Core.getInstance().getGameData(), Core.getInstance().getWorld());
-        GuiManager.getInstance().getMap().removeAll(Core.getInstance().getWorld());
-    }
-
-    /**
-     * Declarative service set score service
-     *
-     * @param score score service
-     */
-    public void setScoreService(IScoreService score) {
-        this.score = score;
-    }
-
-    /**
-     * Declarative service remove score service
-     *
-     * @param score score service
-     */
-    public void removeScoreService(IScoreService score) {
-        this.score = null;
-=======
 
         if (GuiManager.getInstance().getScore() != null && GuiManager.getInstance().getScore().isThereAWinner()) {
             GuiManager.getInstance().changeScreen(GameScreen.GAME_OVER);
         }
->>>>>>> master
     }
 
     @Override

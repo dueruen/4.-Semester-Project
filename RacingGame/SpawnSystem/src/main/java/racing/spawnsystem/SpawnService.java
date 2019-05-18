@@ -21,12 +21,12 @@ import racing.common.services.ISpawnService;
  * Control system for the lap system.
  */
 public class SpawnService implements ISpawnService {
-    
+
     /**
      * AISPI
      */
     private static AISPI ai;
-    
+
     /**
      * MapSPI
      */
@@ -63,9 +63,11 @@ public class SpawnService implements ISpawnService {
         PositionPart po = p.getPart(PositionPart.class);
         PositionPart pl = positionsParts.pop();
         po.setPosition(pl.getX(), pl.getY());
-        
+
         //Initialize the ai
-        ai.startAI();
+        if (ai != null) {
+            ai.startAI();
+        }
 
         NPC[] npcs = npc.create(gameData, world, positionsParts.size());
 
@@ -74,6 +76,11 @@ public class SpawnService implements ISpawnService {
             po = npcs[i].getPart(PositionPart.class);
             po.setPosition(pp.getX(), pp.getY());
             i++;
+            NPC[] nnn = npc.create(gameData, world, 1);
+            PositionPart pk = nnn[0].getPart(PositionPart.class);
+            pk.setPosition(pp.getX(), pp.getY());
+            nnn[0].getImage().setHeight(5);
+            nnn[0].getImage().setWidth(5);
         }
     }
 
@@ -95,6 +102,7 @@ public class SpawnService implements ISpawnService {
     public void removeAIService(AISPI ai) {
         this.ai = null;
     }
+
     /**
      * Declarative service set map service
      *

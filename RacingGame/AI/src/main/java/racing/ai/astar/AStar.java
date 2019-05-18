@@ -84,7 +84,7 @@ public class AStar  {
         return nextPosition;
     }
     
-    private List<AStarNode> findPath() {
+    public List<AStarNode> findPath() {
         openList.add(initialNode);
         while (!isEmpty(openList)) {
             AStarNode currentNode = openList.poll();
@@ -251,6 +251,12 @@ public class AStar  {
     public void setSourceNode(AStarNode source) { 
         setInitialNode(source);
         setFinalNode(getFinalNode());
+        setNodes();
+   }
+    
+    public void setSourceAndTargetNode(AStarNode source, AStarNode target) { 
+        setInitialNode(source);
+        setFinalNode(target);
         setNodes();
    }
 

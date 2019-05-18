@@ -1,4 +1,4 @@
-package racing.npc;
+ package racing.npc;
 
 import racing.common.ai.AISPI;
 import racing.common.data.GameData;

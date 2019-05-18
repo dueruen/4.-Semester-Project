@@ -8,7 +8,7 @@ public enum TileType {
     /**
      * Finish line
      */
-    FINISHLINE(0, 1.0, 1.0,"tiles/goal.png", true),
+    FINISHLINE(0, 1.0, 1.0,"tiles/goal.png", false),
     /**
      * Road
      */
@@ -16,12 +16,12 @@ public enum TileType {
     /**
      * Grass
      */
-    GRASS(2, 5.0,1000, "tiles/grass.png", false),
+    GRASS(2, 5.0,10000, "tiles/grass.png", false),
     /**
      * Water
      */
 
-    WATER(3, 10.0, 1500, "tiles/water.png", false),
+    WATER(3, 10.0, 20000, "tiles/water.png", false),
 
 
     /**
@@ -37,7 +37,9 @@ public enum TileType {
     /**
      * Spawn
      */
-    SPAWN(6, 1.0, 1.0,"tiles/spawn.png", false);
+    SPAWN(6, 1.0, 1.0,"tiles/spawn.png", false),
+    CHECKPOINTONE(7, 1.0, 1.0,"tiles/road.png", false),
+    CHECKPOINTTWO(8, 1.0, 1.0,"tiles/road.png", false);
 
  
     /**

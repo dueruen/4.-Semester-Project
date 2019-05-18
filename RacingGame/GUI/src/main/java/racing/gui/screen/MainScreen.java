@@ -99,7 +99,7 @@ public class MainScreen extends BasicScreen {
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        if (GuiManager.getInstance().getScore().isThereAWinner()) {
+        if (GuiManager.getInstance().getScore() != null && GuiManager.getInstance().getScore().isThereAWinner()) {
             GuiManager.getInstance().changeScreen(GameScreen.GAME_OVER);
         }
     }

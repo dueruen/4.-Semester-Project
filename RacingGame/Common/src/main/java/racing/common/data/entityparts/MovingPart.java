@@ -9,7 +9,7 @@ import static java.lang.Math.sqrt;
 /**
  * Part-object deifning physical attributes related to movement of Entity's
  */
-public class MovingPart implements EntityPart {
+ public class MovingPart implements EntityPart {
 
     /**
      * Delta x and y describes a coordinate in time

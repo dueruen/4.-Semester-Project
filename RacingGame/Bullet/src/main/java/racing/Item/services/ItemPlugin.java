@@ -17,16 +17,25 @@ import racing.common.services.IGamePluginService;
 
 
 public class ItemPlugin implements IGamePluginService, ItemSPI {
+    
+    
+    private static Entity item;
+    
+    
 
     @Override
     public void start(GameData gameData, World world) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     if (gameData.isGameRunning()) {
+        
+     }
     }
 
     @Override
     public void stop(GameData gameData, World world) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+      world.removeEntity(item);
     }
+    
+
 
  
   

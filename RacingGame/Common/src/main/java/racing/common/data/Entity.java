@@ -28,6 +28,8 @@ public class Entity implements Serializable {
     private Map<Class, EntityPart> parts;
     
     private boolean hasItem = false;
+    
+    private boolean canShoot = false;
 
     /**
      * No-arg constructor
@@ -80,4 +82,13 @@ public class Entity implements Serializable {
     public void setHasItem(boolean hasItem){
         this.hasItem = hasItem;
     }
+    
+    public void setCanShoot(boolean canShoot){
+        this.canShoot = canShoot;
+    }
+    
+    public boolean getCanShoot(){
+        return canShoot;
+    }
+    
 }

@@ -1,4 +1,4 @@
- package racing.npc;
+package racing.npc;
 
 import racing.common.data.GameData;
 import racing.common.data.Entity;
@@ -15,21 +15,19 @@ import racing.common.services.IGamePluginService;
  *
  * @author Victor Gram & Niclas Johansen
  */
-
 /**
  * NPC Plugin class, handling adding and rmeoving NPC Entitys from the game
  */
 public class NPCPlugin implements IGamePluginService, NPCSPI {
-    
-    
+
     /**
      * Number for amount of npcs
      */
     private static int loadedNPC;
 
-
     /**
      * Creates a number of NPCs and adds it to the world
+     *
      * @param gameData
      * @param world
      */
@@ -42,6 +40,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
 
     /**
      * Removes all NPCs from the world
+     *
      * @param gameData
      * @param world
      */
@@ -56,7 +55,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
      * @param gameData
      * @return created NPC instance
      */
-    private Entity createNPC (GameData gameData, int colorVal) {
+    private Entity createNPC(GameData gameData, int colorVal) {
         float deacceleration = 10;
         float acceleration = 10;
         float maxSpeed = 400;
@@ -64,7 +63,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         float x = (gameData.getDisplayHeight() / 2);
         float y = (gameData.getDisplayWidth() / 2);
         float radians = 0.0f;
-        
+
         Entity npcRacer = new NPC();
         npcRacer.setImage(new GameImage("cars/car" + colorVal + ".png", 100, 50));
         npcRacer.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
@@ -75,6 +74,14 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
 
     }
 
+    /**
+     * Creates all the NPC's in the game
+     *
+     * @param gameData
+     * @param world
+     * @param amount
+     * @return array of NPC's
+     */
     @Override
     public NPC[] create(GameData gameData, World world, int amount) {
         NPC[] npcs = new NPC[amount];
@@ -82,16 +89,22 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         for (int i = 0; i < amount; i++) {
             Entity npc = createNPC(gameData, colorVal);
             colorVal++;
-            if(colorVal == 6) {
+            if (colorVal == 6) {
                 colorVal = 1;
             }
             world.addEntity(npc);
-            npcs[i] = (NPC)npc;
+            npcs[i] = (NPC) npc;
         }
         loadedNPC = amount;
         return npcs;
     }
 
+    /**
+     * Removes all NPCs in the game during unload
+     *
+     * @param gameData
+     * @param world
+     */
     @Override
     public void removeAll(GameData gameData, World world) {
         for (Entity npc : world.getEntities(NPC.class)) {

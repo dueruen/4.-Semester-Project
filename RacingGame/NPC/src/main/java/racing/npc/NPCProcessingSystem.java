@@ -19,8 +19,7 @@ import racing.common.npc.NPC;
 /**
  *
  * @author Victor Gram & Niclas Johansen
- */
-/**
+ *
  * Processing system for NPC entity
  */
 public class NPCProcessingSystem implements IEntityProcessingService {
@@ -29,19 +28,16 @@ public class NPCProcessingSystem implements IEntityProcessingService {
      * AISPI, handling access to AI functions
      */
     private AISPI ai;
-    
+
     /**
      * MapSPIinstance, handling acces sto map functionality
      */
     private MapSPI map;
-    
 
     /**
      * Map containing the NPC and their current path
      */
     private Map<Entity, ArrayList<PositionPart>> pathMap = new HashMap<>();
-
-    
 
     @Override
     public void process(GameData gameData, World world) {
@@ -49,8 +45,11 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             PositionPart positionPart = NPC.getPart(PositionPart.class);
             MovingPart movingPart = NPC.getPart(MovingPart.class);
 
+            //If NPC is currently not present in pathMap
             if (!pathMap.containsKey(NPC)) {
+                //Set new spurce node
                 ai.setSourceNode(NPC, world, 0);
+                //Add NPC along with path to pathMap
                 pathMap.put(NPC, ai.getPath());
 
             }
@@ -60,34 +59,47 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             TilePart atp = t.getPart(TilePart.class);
 
             ArrayList<PositionPart> path = pathMap.get(NPC);
-            //System.out.println("Processing path: " + path.size());
+
+            //If only position left in current path
             if (path.size() == 1) {
-                //System.out.println(atp.getType());
+                //If currently on Tile of type CheckpointOne
                 if (atp.getType() == TileType.CHECKPOINTONE) {
+                    //Reset AI
                     ai.startAI();
+                    //Set new source node and target, chackpoint counter = 1
                     ai.setSourceNode(NPC, world, 1);
+                    //Retrieve new paht to replace the old one
                     pathMap.put(NPC, ai.getPath());
                 }
+                //If currently on Tile of Type CheckpointTwo
                 if (atp.getType() == TileType.CHECKPOINTTWO) {
+                    //Reset AI
                     ai.startAI();
+                    //Set new source node and target, chackpoint counter = 2
                     ai.setSourceNode(NPC, world, 2);
                     pathMap.put(NPC, ai.getPath());
-                    //System.out.println(ai.getPath().size());
+
                 }
 
+                //If currently on Tile of type Finishline
                 if (atp.getType() == TileType.FINISHLINE) {
+                    //Reset AI
                     ai.startAI();
+                    //Set new source node and target, chackpoint counter = 0
                     ai.setSourceNode(NPC, world, 0);
+                    //Retrieve new paht to replace the old one
                     pathMap.put(NPC, ai.getPath());
                 }
+                //Replace path with the new one in the Map
                 path = pathMap.get(NPC);
 
             }
 
+            //Get next position to travel towards
             PositionPart pp = path.get(0);
 
             double carAng = Math.toDegrees(positionPart.getRadians());
-           // carAng = Math.abs(carAng);
+            // carAng = Math.abs(carAng);
 
 //            double angle = Math.atan2((pp.getY() - positionPart.getY()), (pp.getX() - positionPart.getX()))
 //                    * 180.0d / Math.PI;
@@ -110,9 +122,11 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                 movingPart.setUp(true);
             }
 
+            //If NPC overlaps with target position
             if (isOverlapping(tp, positionPart)) {
-
+                //If target position is still in path
                 if (path.contains(tp)) {
+                    //Remove from path
                     path.remove(tp);
                 }
             }
@@ -128,7 +142,8 @@ public class NPCProcessingSystem implements IEntityProcessingService {
     }
 
     /**
-     * Calculates  angle betweens points
+     * Calculates angle betweens points
+     *
      * @param source
      * @param target
      * @return angle between two points
@@ -144,7 +159,8 @@ public class NPCProcessingSystem implements IEntityProcessingService {
     }
 
     /**
-     * Checks if there's an overlap between  the NPC and the position 
+     * Checks if there's an overlap between the NPC and the position
+     *
      * @param tilePos
      * @param npcPos
      * @return boolean describing overlap or not

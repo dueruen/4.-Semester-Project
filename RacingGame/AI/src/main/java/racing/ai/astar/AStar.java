@@ -65,20 +65,6 @@ public class AStar  {
         }
     }
 
-    
-    public PositionPart findNextPosition() { 
-        List<AStarNode> path = findPath();
-        int positionIndex = 1;
-        if(path.size() == 1) { 
-            positionIndex = 0;
-        }
-        AStarNode nextPositionNode = path.get(positionIndex);
-        float x = nextPositionNode.getRow();
-        float y = nextPositionNode.getCol();
-        PositionPart nextPosition = new PositionPart(x, y, (3.1415f / 2));
-        return nextPosition;
-    }
-    
     public List<AStarNode> findPath() {
         openList.add(initialNode);
         while (!isEmpty(openList)) {

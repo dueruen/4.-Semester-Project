@@ -19,17 +19,27 @@ import racing.common.data.entityparts.TilePart;
  * @author Victor Gram & Niclas Johansen
  */
 public class AIPlugin implements IGamePluginService, AISPI {
-    
+
     /**
      * MapSPI
      */
     private MapSPI mapSPI;
 
+    /**
+     * Instance of AStar
+     */
     private AStar ai;
-    
+
+    /**
+     * Map currently being worked on
+     */
     private Tile[][] map;
-    
-    AStarNode[][] nodes;
+
+    /**
+     * Two-dimensional array of AStarNodes in the map
+     */
+    private AStarNode[][] nodes;
+
     /**
      * Declarative service set map service
      *
@@ -55,137 +65,126 @@ public class AIPlugin implements IGamePluginService, AISPI {
     @Override
     public void stop(GameData gameData, World world) {
     }
-    
+
+    /**
+     * Method that activates the AI Created aside from start method, to maintain
+     * control of when it's called
+     */
     @Override
     public void startAI() {
         initializeAI();
     }
-    
+
+    /**
+     * Initialises the AI by traversing map, and instantiating a two-dimensional
+     * array of AStarNodes, that the AStar can work with
+     */
     private void initializeAI() {
         map = mapSPI.getLoadedMap();
         int r = map.length;
         int c = map[0].length;
-        
+
         nodes = new AStarNode[r][c];
-        
-        for(int i = 0; i < r; i++) { 
-            for(int j = 0; j < c; j++) { 
+
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
                 Tile pp = map[i][j];
                 TilePart tp = pp.getPart(TilePart.class);
                 int[] coordinates = mapSPI.getTileXandY(pp);
                 AStarNode node = new AStarNode(coordinates[0], coordinates[1]);
                 node.setW((int) tp.getType().getWeight());
-                if(tp.getType().isIsStatic()) {
-                    node.setBlock(true);
-                }
-                if(tp.getType() == TileType.TREE) { 
+                if (tp.getType().isIsStatic()) {
                     node.setBlock(true);
                 }
                 nodes[i][j] = node;
             }
         }
-        
-        AStarNode initNode = new AStarNode((r/2), (c/2));
+
+        AStarNode initNode = new AStarNode((r / 2), (c / 2));
         AStarNode finalNode = findNextTarget(0);
         ai = new AStar(r, c, initNode, finalNode);
         ai.setSearchArea(nodes);
 
-        
-        
     }
 
-    @Override
-    public PositionPart findNextPosition() {
-        PositionPart pp = ai.findNextPosition();
-        Tile[][]map = mapSPI.getLoadedMap();
-        int x = Math.round(pp.getX());
-        int y = Math.round(pp.getY());
-        Tile gt = map[x][y];
-        return gt.getPart(PositionPart.class);
-        
-    }
-
+    /**
+     * Sets the source node, and calculates the target
+     *
+     * @param p
+     * @param world
+     * @param checkpointCount
+     */
     @Override
     public void setSourceNode(Entity p, World world, int checkpointCount) {
         Tile t = mapSPI.getTile(p, world);
         int[] coordinates = mapSPI.getTileXandY(t);
         int x = Math.round(coordinates[0]);
         int y = Math.round(coordinates[1]);
-        
-        AStarNode source = new AStarNode(x,y);
+
+        AStarNode source = new AStarNode(x, y);
         ai.setSourceAndTargetNode(source, findNextTarget(checkpointCount));
     }
-  
-    
-    
-    private AStarNode findNextTarget(int type) { 
-        TileType tt = null;
-        switch (type) { 
-            case 0: 
-                tt = TileType.CHECKPOINTONE;
+
+    /**
+     * Calculates what the next target is gonna be, based on how many
+     * chackpoints are checked
+     *
+     * @param type
+     * @return Next target node
+     */
+    private AStarNode findNextTarget(int type) {
+        TileType tileType = null;
+        switch (type) {
+            case 0:
+                tileType = TileType.CHECKPOINTONE;
                 break;
-            case 1: 
-                tt = TileType.CHECKPOINTTWO;
+            case 1:
+                tileType = TileType.CHECKPOINTTWO;
                 break;
-            case 2: 
-                tt = TileType.FINISHLINE;
+            case 2:
+                tileType = TileType.FINISHLINE;
                 break;
             default:
                 break;
         }
         AStarNode target = null;
-        for(int i = 0; i < map.length; i++){
-          for(int j = 0; j < map[0].length; j++){
-            TilePart tp = map[i][j].getPart(TilePart.class);
-               //System.out.println("tp: " + tp);
-              //System.out.println("tt: " + tt);
-            TileType ett = tp.getType();
-              //System.out.println("ett:" + ett);
-            
-            if(ett == tt){
-              int[] newGoalTile = mapSPI.getTileXandY(map[i][j]);
-              target = new AStarNode(newGoalTile[0],newGoalTile[1]);
-                System.out.println(target);
-              return target;
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                TilePart tp = map[i][j].getPart(TilePart.class);
+                TileType entityTileType = tp.getType();
+
+                if (entityTileType == tileType) {
+                    int[] newGoalTile = mapSPI.getTileXandY(map[i][j]);
+                    target = new AStarNode(newGoalTile[0], newGoalTile[1]);
+                    return target;
+                }
             }
-          }
         }
         return target;
     }
-  
-    
-    
 
+    /**
+     * Returns the path from source to target, as list of PositionParts
+     *
+     * @return list of positions - the path
+     */
     @Override
     public ArrayList<PositionPart> getPath() {
-        ai.setSearchArea(nodes);
+        //Gets path from AStar
         ArrayList<AStarNode> nodePath = (ArrayList<AStarNode>) ai.findPath();
-        System.out.println(nodePath.size());
+        //List to be populated and returned
         ArrayList<PositionPart> path = new ArrayList<>();
-        for(AStarNode node: nodePath) {
-            //System.out.println("Nodepath size: " +nodePath.size());
-            Tile[][]map = mapSPI.getLoadedMap();
+        for (AStarNode node : nodePath) {
+            Tile[][] map = mapSPI.getLoadedMap();
             float x = node.getRow();
             float y = node.getCol();
             PositionPart pp = new PositionPart(x, y, (3.1415f / 2));
-            
+
             int xp = Math.round(pp.getX());
             int xy = Math.round(pp.getY());
             Tile gt = map[xp][xy];
             path.add(gt.getPart(PositionPart.class));
         }
-        //System.out.println("Final path size: " +path.size());
         return path;
-        
-    }
-
-    @Override
-    public PositionPart getTilePosition(Entity p, World world) {
-        Tile t = mapSPI.getTile(p, world);
-        int[] coordinates = mapSPI.getTileXandY(t);
-        int x = Math.round(coordinates[0]);
-        int y = Math.round(coordinates[1]);
-        
-        return new PositionPart(x, y, (3.1415f / 2));
     }
 }

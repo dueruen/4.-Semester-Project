@@ -76,11 +76,6 @@ public class SpawnService implements ISpawnService {
             po = npcs[i].getPart(PositionPart.class);
             po.setPosition(pp.getX(), pp.getY());
             i++;
-            NPC[] nnn = npc.create(gameData, world, 1);
-            PositionPart pk = nnn[0].getPart(PositionPart.class);
-            pk.setPosition(pp.getX(), pp.getY());
-            nnn[0].getImage().setHeight(5);
-            nnn[0].getImage().setWidth(5);
         }
     }
 

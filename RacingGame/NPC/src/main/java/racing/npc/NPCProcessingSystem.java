@@ -23,9 +23,8 @@ import racing.common.npc.NPC;
  *
  * @author Victor Gram & Niclas Johansen
  */
-
 /**
- *Processing system for NPC entity
+ * Processing system for NPC entity
  */
 public class NPCProcessingSystem implements IEntityProcessingService {
 
@@ -38,81 +37,79 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 
     private MapSPI map;
 
-
     @Override
     public void process(GameData gameData, World world) {
-          for (Entity NPC : world.getEntities(NPC.class)) {
+        for (Entity NPC : world.getEntities(NPC.class)) {
             PositionPart positionPart = NPC.getPart(PositionPart.class);
             MovingPart movingPart = NPC.getPart(MovingPart.class);
 
+            if (!pathMap.containsKey(NPC)) {
+                ai.setSourceNode(NPC, world, 0);
+                pathMap.put(NPC, ai.getPath());
 
-
-              if(!pathMap.containsKey(NPC)) {
-                  ai.setSourceNode(NPC, world, 0);
-                  pathMap.put(NPC, ai.getPath());
-
-              }
-
-
+            }
 
             Tile t = map.getTile(NPC, world);
             PositionPart tp = t.getPart(PositionPart.class);
             TilePart atp = t.getPart(TilePart.class);
 
-
             ArrayList<PositionPart> path = pathMap.get(NPC);
-              //System.out.println("Processing path: " + path.size());
-            if(path.size() == 1) {
-                System.out.println(atp.getType());
-                    if(atp.getType() == TileType.CHECKPOINTONE) {
+            //System.out.println("Processing path: " + path.size());
+            if (path.size() == 1) {
+                //System.out.println(atp.getType());
+                if (atp.getType() == TileType.CHECKPOINTONE) {
+                    ai.startAI();
                     ai.setSourceNode(NPC, world, 1);
                     pathMap.put(NPC, ai.getPath());
-                    }
-                    if(atp.getType() == TileType.CHECKPOINTTWO) {
+                }
+                if (atp.getType() == TileType.CHECKPOINTTWO) {
+                    ai.startAI();
                     ai.setSourceNode(NPC, world, 2);
                     pathMap.put(NPC, ai.getPath());
-                        //System.out.println(ai.getPath().size());
-                    }
+                    //System.out.println(ai.getPath().size());
+                }
 
-                    if(atp.getType() == TileType.FINISHLINE) {
+                if (atp.getType() == TileType.FINISHLINE) {
+                    ai.startAI();
                     ai.setSourceNode(NPC, world, 0);
                     pathMap.put(NPC, ai.getPath());
-                    }
-                    path = pathMap.get(NPC);
-
                 }
+                path = pathMap.get(NPC);
+
+            }
 
             PositionPart pp = path.get(0);
 
-
             double carAng = Math.toDegrees(positionPart.getRadians());
+           // carAng = Math.abs(carAng);
 
-            double angle = Math.atan2((pp.getY() - positionPart.getY()),(pp.getX() - positionPart.getX()) )
-                    *180.0d / Math.PI;
+//            double angle = Math.atan2((pp.getY() - positionPart.getY()), (pp.getX() - positionPart.getX()))
+//                    * 180.0d / Math.PI;
+//            angle = Math.abs(angle);
+double angle = getAngle(positionPart, pp);
 
+            System.out.println("carAng: " + carAng + " angle: " + angle);
+            if (carAng > angle - 4 && carAng < angle + 4) {
+                System.out.println("up");
+                movingPart.setUp(true);
+            }
+            if (carAng < angle - 4) {
+                System.out.println("left");
+                movingPart.setLeft(true);
+            }
+            if (carAng > angle + 4) {
+                System.out.println("right");
+                movingPart.setRight(true);
+            } else {
+                movingPart.setUp(true);
+            }
 
-              if(carAng > angle-4 && carAng< angle+4) {
-                  movingPart.setUp(true);
-              }
-              if(carAng < angle -4) {
-                  movingPart.setLeft(true);
-              }
-              if(carAng > angle + 4) {
-                  movingPart.setRight(true);
-              }
-              else {
-                  movingPart.setUp(true);
-              }
+            if (isOverlapping(tp, positionPart)) {
 
-
-            if(isOverlapping(tp, positionPart)) {
-
-                if(path.contains(tp)){
+                if (path.contains(tp)) {
                     path.remove(tp);
                 }
             }
-
-
 
             movingPart.process(gameData, NPC);
             positionPart.process(gameData, NPC);
@@ -121,13 +118,22 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             movingPart.setLeft(false);
             movingPart.setUp(false);
 
-
         }
+    }
+
+    public double getAngle(PositionPart source, PositionPart target) {
+        double angle = (double) Math.toDegrees(Math.atan2(target.getY() - source.getY(), target.getX() - source.getX()));
+
+        if (angle < 0) {
+            angle += 360;
+        }
+
+        return angle;
     }
 
     private boolean isOverlapping(PositionPart tilePos, PositionPart npcPos) {
         int tileSize = 200;
-        int half = tileSize/2;
+        int half = tileSize / 2;
         if (tilePos.getX() - half > npcPos.getX() + 35 || tilePos.getX() + half < npcPos.getX()) {
             return false;
         }
@@ -137,7 +143,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
         return true;
     }
 
-     /**
+    /**
      * Declarative service set AI service
      *
      * @param ai AI service

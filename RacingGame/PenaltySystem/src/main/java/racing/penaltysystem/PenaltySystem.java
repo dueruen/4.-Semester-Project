@@ -23,13 +23,13 @@ public class PenaltySystem implements IPostEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity player : world.getEntities(Player.class)) {
-            intersects(player, world);
-        }
-
-        for (Entity npc : world.getEntities(NPC.class)) {
-            intersects(npc, world);
-        }
+//        for (Entity player : world.getEntities(Player.class)) {
+//            intersects(player, world);
+//        }
+//
+//        for (Entity npc : world.getEntities(NPC.class)) {
+//            intersects(npc, world);
+//        }
     }
 
     /**
@@ -39,38 +39,38 @@ public class PenaltySystem implements IPostEntityProcessingService {
      * @param world
      */
     private void intersects(Entity entity, World world) {
-        MovingPart entityMovingPart = entity.getPart(MovingPart.class);
+        //MovingPart entityMovingPart = entity.getPart(MovingPart.class);
 
-        for (Entity tileEntity : world.getEntities(Tile.class)) {
-            TilePart tilePart = tileEntity.getPart(TilePart.class);
-            PositionPart tilePosition = tileEntity.getPart(PositionPart.class);
-            
-            PositionPart entityPosition = entity.getPart(PositionPart.class);
-
-            AffineTransform transform = new AffineTransform();
-            transform.rotate(
-                entityPosition.getRadians(),
-                entityPosition.getX() + entity.getImage().getWidth()/2,
-                entityPosition.getY() + entity.getImage().getHeight()/2
-            );
-            
-            Shape car = transform.createTransformedShape(new Rectangle(
-                Math.round(entityPosition.getX()),
-                Math.round(entityPosition.getY()),
-                Math.round(entity.getImage().getWidth()),
-                Math.round(entity.getImage().getHeight())
-            ));
-
-            Rectangle staticTile = new Rectangle(
-                Math.round(tilePosition.getX()),
-                Math.round(tilePosition.getY()),
-                Math.round(tileEntity.getImage().getWidth()),
-                Math.round(tileEntity.getImage().getHeight())
-            );
-
-            if (car.intersects(staticTile)) {
-                entityMovingPart.setPenalty(Math.round(tilePart.getType().getPenalty()));
-            } 
-        }
+//        for (Entity tileEntity : world.getEntities(Tile.class)) {
+//            TilePart tilePart = tileEntity.getPart(TilePart.class);
+//            PositionPart tilePosition = tileEntity.getPart(PositionPart.class);
+//            
+//            PositionPart entityPosition = entity.getPart(PositionPart.class);
+//
+//            AffineTransform transform = new AffineTransform();
+//            transform.rotate(
+//                entityPosition.getRadians(),
+//                entityPosition.getX() + entity.getImage().getWidth()/2,
+//                entityPosition.getY() + entity.getImage().getHeight()/2
+//            );
+//            
+//            Shape car = transform.createTransformedShape(new Rectangle(
+//                Math.round(entityPosition.getX()),
+//                Math.round(entityPosition.getY()),
+//                Math.round(entity.getImage().getWidth()),
+//                Math.round(entity.getImage().getHeight())
+//            ));
+//
+//            Rectangle staticTile = new Rectangle(
+//                Math.round(tilePosition.getX()),
+//                Math.round(tilePosition.getY()),
+//                Math.round(tileEntity.getImage().getWidth()),
+//                Math.round(tileEntity.getImage().getHeight())
+//            );
+//
+//            if (car.intersects(staticTile)) {
+//                entityMovingPart.setPenalty(Math.round(tilePart.getType().getPenalty()));
+//            } 
+//        }
     }
 }

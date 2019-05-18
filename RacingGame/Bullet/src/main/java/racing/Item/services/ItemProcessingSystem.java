@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package racing.Item.services;
+package racing.item.services;
 
 import racing.common.data.Entity;
 import racing.common.data.GameData;
@@ -20,7 +20,7 @@ import racing.common.item.Item;
  */
 public class ItemProcessingSystem implements IEntityProcessingService {
 
-    
+    @Override
     public void process(GameData gameData, World world) {
         for (Entity bullet : world.getEntities(Item.class)) {
             PositionPart positionPart = bullet.getPart(PositionPart.class);

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package racing.Item.services;
+package racing.item.services;
 
 import racing.common.data.Entity;
 import racing.common.data.GameData;

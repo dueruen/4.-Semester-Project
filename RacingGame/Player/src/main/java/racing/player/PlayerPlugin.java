@@ -9,6 +9,7 @@ import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
 import java.util.UUID;
+import racing.common.item.*;
 import racing.common.data.entityparts.ScorePart;
 import racing.common.data.entityparts.TilePart;
 import racing.common.player.PlayerSPI;
@@ -68,9 +69,6 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         for (Entity tileEntity : world.getEntities()) {
             TilePart tilePart = tileEntity.getPart(TilePart.class);
 
-            if (tilePart.getType().Item == tilePart.getType()) {
-
-            }
 
         }
     }

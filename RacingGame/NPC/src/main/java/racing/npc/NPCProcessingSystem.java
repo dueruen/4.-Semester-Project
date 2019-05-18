@@ -1,11 +1,8 @@
 package racing.npc;
 
-import com.badlogic.gdx.math.Vector2;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
-
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.entityparts.PositionPart;
@@ -29,13 +26,22 @@ import racing.common.npc.NPC;
 public class NPCProcessingSystem implements IEntityProcessingService {
 
     /**
-     * AISPI
+     * AISPI, handling access to AI functions
      */
     private AISPI ai;
+    
+    /**
+     * MapSPIinstance, handling acces sto map functionality
+     */
+    private MapSPI map;
+    
 
+    /**
+     * Map containing the NPC and their current path
+     */
     private Map<Entity, ArrayList<PositionPart>> pathMap = new HashMap<>();
 
-    private MapSPI map;
+    
 
     @Override
     public void process(GameData gameData, World world) {
@@ -86,7 +92,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 //            double angle = Math.atan2((pp.getY() - positionPart.getY()), (pp.getX() - positionPart.getX()))
 //                    * 180.0d / Math.PI;
 //            angle = Math.abs(angle);
-double angle = getAngle(positionPart, pp);
+            double angle = getAngle(positionPart, pp);
 
             System.out.println("carAng: " + carAng + " angle: " + angle);
             if (carAng > angle - 4 && carAng < angle + 4) {
@@ -121,6 +127,12 @@ double angle = getAngle(positionPart, pp);
         }
     }
 
+    /**
+     * Calculates  angle betweens points
+     * @param source
+     * @param target
+     * @return angle between two points
+     */
     public double getAngle(PositionPart source, PositionPart target) {
         double angle = (double) Math.toDegrees(Math.atan2(target.getY() - source.getY(), target.getX() - source.getX()));
 
@@ -131,6 +143,12 @@ double angle = getAngle(positionPart, pp);
         return angle;
     }
 
+    /**
+     * Checks if there's an overlap between  the NPC and the position 
+     * @param tilePos
+     * @param npcPos
+     * @return boolean describing overlap or not
+     */
     private boolean isOverlapping(PositionPart tilePos, PositionPart npcPos) {
         int tileSize = 200;
         int half = tileSize / 2;
@@ -162,15 +180,20 @@ double angle = getAngle(positionPart, pp);
         this.ai = null;
     }
 
+    /**
+     * Declarative service set map service
+     *
+     * @param map map service
+     */
     public void setMapService(MapSPI map) {
         this.map = map;
 
     }
 
     /**
-     * Declarative service remove AI service
+     * Declarative service remove map service
      *
-     * @param ai AI service
+     * @param map map service
      */
     public void removeMapService(MapSPI map) {
         this.map = null;

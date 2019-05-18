@@ -92,6 +92,7 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
 
     @Override
     public void removeAll(GameData gameData, World world) {
+        this.player = null;
         for (Entity npc : world.getEntities(Player.class)) {
             world.removeEntity(npc);
         }

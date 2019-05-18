@@ -7,6 +7,7 @@ package racing.Item.services;
 
 import racing.common.data.Entity;
 import racing.common.data.GameData;
+import racing.common.data.GameKeys;
 import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
@@ -24,8 +25,16 @@ public class ItemProcessingSystem implements IEntityProcessingService {
         for (Entity bullet : world.getEntities(Item.class)) {
             PositionPart positionPart = bullet.getPart(PositionPart.class);
             MovingPart movingPart = bullet.getPart(MovingPart.class);
+            
+            movingPart.setUp(gameData.getKeys().isDown(GameKeys.SPACE));
+            
+            movingPart.process(gameData, bullet);
+            positionPart.process(gameData, bullet);
+                
+                
+            }
         } 
         
     }
     
-}
+

@@ -95,7 +95,7 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         return null;
     }
 
-    @Override
+    
     public Player create(GameData gameData, World world) {
         Entity player = createPlayerCar(gameData);
         world.addEntity(player);
@@ -103,15 +103,11 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         return (Player) player;
     }
 
-    @Override
+    
     public void removeAll(GameData gameData, World world) {
         for (Entity npc : world.getEntities(Player.class)) {
             world.removeEntity(npc);
         }
     }
-
-    @Override
-    public boolean hasItem() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

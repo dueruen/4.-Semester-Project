@@ -35,6 +35,7 @@
     <module>PenaltySystem</module>
     <module>SpawnSystem</module>
     <module>racing.build_Bullet_bundle_1.0-SNAPSHOT</module>
+    <module>CommonItem</module>
   </modules>
 
   <build>

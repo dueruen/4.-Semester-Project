@@ -20,7 +20,7 @@ public enum TileType {
     /**
      * Item
      */
-    Item(1, 0.0, "tiles/Item.png", false),
+    Item(7, 1.0, "tiles/Item.png", false),
 
     /**
      * Water

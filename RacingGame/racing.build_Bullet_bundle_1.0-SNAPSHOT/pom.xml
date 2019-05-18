@@ -9,7 +9,7 @@
   </parent>
 
   <properties>
-    <bundle.symbolicName>racing.map</bundle.symbolicName>
+    <bundle.symbolicName>racing.item</bundle.symbolicName>
     <bundle.namespace>racing</bundle.namespace>
   </properties>
 

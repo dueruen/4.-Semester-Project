@@ -17,11 +17,7 @@ public enum TileType {
      * Grass
      */
     GRASS(2, 3.0, "tiles/grass.png", false),
-    /**
-     * Item
-     */
-    Item(7, 1.0, "tiles/Item.png", false),
-
+   
     /**
      * Water
      */
@@ -41,8 +37,14 @@ public enum TileType {
     /**
      * Spawn
      */
-    SPAWN(6, 1.0, "tiles/spawn.png", false);
+    SPAWN(6, 1.0, "tiles/spawn.png", false),
 
+     /**
+     * Item
+     */
+    ITEM(7, 1.0, "tiles/item.png", false);
+    
+    
     /**
      * Used to identify the tile type
      */

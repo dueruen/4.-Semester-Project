@@ -15,10 +15,7 @@ import racing.common.item.Item;
 import racing.common.item.ItemSPI;
 import racing.common.services.IGamePluginService;
 
-/**
- *
- * @author jeppe
- */
+
 public class ItemPlugin implements IGamePluginService, ItemSPI {
 
     @Override

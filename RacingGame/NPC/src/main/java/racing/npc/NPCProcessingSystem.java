@@ -1,7 +1,5 @@
 package racing.npc;
 
-import com.badlogic.gdx.math.Vector2;
-import java.util.Random;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.entityparts.PositionPart;
@@ -10,6 +8,11 @@ import racing.common.data.entityparts.MovingPart;
 import racing.common.services.IEntityProcessingService;
 import racing.common.ai.AISPI;
 import racing.common.npc.NPC;
+
+/**
+ *
+ * @author Victor Gram & Niclas Johansen
+ */
 
 /**
  *Processing system for NPC entity

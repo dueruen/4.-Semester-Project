@@ -1,6 +1,5 @@
 package racing.npc;
 
-import racing.common.ai.AISPI;
 import racing.common.data.GameData;
 import racing.common.data.Entity;
 import racing.common.data.GameImage;
@@ -11,6 +10,11 @@ import racing.common.data.entityparts.ScorePart;
 import racing.common.npc.NPC;
 import racing.common.npc.NPCSPI;
 import racing.common.services.IGamePluginService;
+
+/**
+ *
+ * @author Victor Gram & Niclas Johansen
+ */
 
 /**
  * NPC Plugin class, handling adding and rmeoving NPC Entitys from the game

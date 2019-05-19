@@ -3,5 +3,6 @@
     <implementation class="racing.item.services.ItemProcessingSystem"/>
     <service>
         <provide interface="racing.common.services.IEntityProcessingService"/>
+        <provide interface="racing.common.item.ItemSPI"/>
     </service>
 </scr:component>

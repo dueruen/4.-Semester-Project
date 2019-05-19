@@ -1,1 +1,3 @@
-Export-Package: racing.common.item
+Bundle-SymbolicName: Bullet
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/entityprocessing.xml 

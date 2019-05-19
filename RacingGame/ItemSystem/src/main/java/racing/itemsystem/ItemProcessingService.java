@@ -24,6 +24,9 @@ public class ItemProcessingService implements IPostEntityProcessingService, Item
      */
     private static MapSPI map;
 
+    /**
+     * list of ItemSPI
+     */
     private static List<ItemSPI> items;
 
     @Override

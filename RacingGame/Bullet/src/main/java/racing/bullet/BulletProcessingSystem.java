@@ -71,7 +71,6 @@ public class BulletProcessingSystem implements IEntityProcessingService, ItemSPI
 
     @Override
     public void addItemToEntity(Entity e) {
-        System.out.println("ADD ITEM BULLET");
         ItemPart itemPart = e.getPart(ItemPart.class);
         itemPart.setChargesLeft(3);
         itemPart.setDelay(30);

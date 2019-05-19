@@ -25,10 +25,9 @@ public class ItemPlugin implements IGamePluginService, ItemSPI {
 
     @Override
     public void start(GameData gameData, World world) {
-     if (gameData.isGameRunning()) {
         
      }
-    }
+    
 
     @Override
     public void stop(GameData gameData, World world) {

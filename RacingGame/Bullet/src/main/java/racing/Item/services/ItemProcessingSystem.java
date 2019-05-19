@@ -30,7 +30,8 @@ public class ItemProcessingSystem implements IEntityProcessingService {
                 world.addEntity(createItem(player, gameData));
             }
             
-                
+             movingPart.process(gameData, player);
+             positionPart.process(gameData, player);
   
             
                          

@@ -43,8 +43,6 @@ public class ItemProcessingService implements IPostEntityProcessingService, Item
         if (items == null) {
             items = new HashMap<>();
         }
-        System.out.println("ItemSPI class: " + item.getClass());
-        System.out.println("Set item class: " + item.getItemClass());
         items.put(item.getItemClass(), item);
     }
 

@@ -4,6 +4,7 @@ import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameKeys;
 import racing.common.data.World;
+import racing.common.data.entityparts.ItemPart;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.player.Player;
@@ -22,12 +23,13 @@ public class PlayerControlSystem implements IEntityProcessingService {
         for (Entity player : world.getEntities(Player.class)) {
             PositionPart positionPart = player.getPart(PositionPart.class);
             MovingPart movingPart = player.getPart(MovingPart.class);
+            ItemPart itemPart = player.getPart(ItemPart.class);
             
-            
-            if (player.getHasItem() && player.getCanShoot() == false && gameData.getKeys().isDown(GameKeys.SPACE)){
-               player.setCanShoot(true);
-                
-            }
+            itemPart.setIsUsing(gameData.getKeys().isDown(GameKeys.SPACE));
+//            if (player.getHasItem() && player.getCanShoot() == false && gameData.getKeys().isDown(GameKeys.SPACE)){
+//               player.setCanShoot(true);
+//                
+//            }
    
             movingPart.setLeft(gameData.getKeys().isDown(GameKeys.LEFT));
             movingPart.setRight(gameData.getKeys().isDown(GameKeys.RIGHT));

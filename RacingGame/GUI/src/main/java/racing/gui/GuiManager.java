@@ -248,6 +248,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         assetManager.load("tiles/spawn_sel.png", Texture.class);
         assetManager.load("tiles/item_sel.png", Texture.class);
         
+        assetManager.load("items/bullet.png", Texture.class);
     }
 
     public AssetManager getAssetManager() {

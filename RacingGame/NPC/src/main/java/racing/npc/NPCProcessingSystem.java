@@ -38,6 +38,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
      * Map containing the NPC and their current path
      */
     private Map<Entity, ArrayList<PositionPart>> pathMap = new HashMap<>();
+    private Map<Entity, Integer> checkpointCount = new HashMap<>();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -51,6 +52,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                 ai.setSourceNode(NPC, world, 0);
                 //Add NPC along with path to pathMap
                 pathMap.put(NPC, ai.getPath());
+                checkpointCount.put(NPC, 0);
 
             }
 
@@ -66,17 +68,20 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                 if (atp.getType() == TileType.CHECKPOINTONE) {
                     //Reset AI
                     ai.startAI();
-                    //Set new source node and target, chackpoint counter = 1
+                    //Set new source node and target, checkpoint counter = 1
                     ai.setSourceNode(NPC, world, 1);
+                    checkpointCount.put(NPC, 1);
                     //Retrieve new paht to replace the old one
                     pathMap.put(NPC, ai.getPath());
+
                 }
                 //If currently on Tile of Type CheckpointTwo
                 if (atp.getType() == TileType.CHECKPOINTTWO) {
                     //Reset AI
                     ai.startAI();
-                    //Set new source node and target, chackpoint counter = 2
+                    //Set new source node and target, checkpoint counter = 2
                     ai.setSourceNode(NPC, world, 2);
+                    checkpointCount.put(NPC, 2);
                     pathMap.put(NPC, ai.getPath());
 
                 }
@@ -85,10 +90,12 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                 if (atp.getType() == TileType.FINISHLINE) {
                     //Reset AI
                     ai.startAI();
-                    //Set new source node and target, chackpoint counter = 0
+                    //Set new source node and target, checkpoint counter = 0
                     ai.setSourceNode(NPC, world, 0);
+                    checkpointCount.put(NPC, 0);
                     //Retrieve new paht to replace the old one
                     pathMap.put(NPC, ai.getPath());
+
                 }
                 //Replace path with the new one in the Map
                 path = pathMap.get(NPC);
@@ -97,23 +104,44 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 
             //Get next position to travel towards
             PositionPart pp = path.get(0);
+            //System.out.println("Pathsize before surpassing: " + path.size()  );
 
             double carAng = Math.abs(Math.toDegrees(positionPart.getRadians() * 1));
-            
+
             double angle = getAngle(positionPart, pp);
-            
+
+            //If the NPC surpasses it's target, recalculate route baed on current
+            //position
+            if (Math.abs((angle - carAng)) > 95) {
+                PositionPart missedPP = pp;
+                System.out.println("surpassed");
+                if (path.contains(missedPP)) {
+                    System.out.println("recalculating");
+                    ai.startAI();
+                    ai.setSourceNode(NPC, world, checkpointCount.get(NPC));
+                    System.out.println(checkpointCount.get(NPC));
+                    pathMap.put(NPC, ai.getPath());
+                    path = pathMap.get(NPC);
+                    //System.out.println("Pathsize after surpassing: " + path.size());
+                    pp = path.get(1);
+                    angle = getAngle(positionPart, pp);
+
+                }
+
+            }
+
             //System.out.println("carAng: " + carAng + " angle: " + angle);
             if (carAng > angle - 4 && carAng < angle + 4) {
                 movingPart.setUp(true);
             }
-            if (carAng < angle - 4 || Math.abs(carAng - angle) > 330 ) {
-               // System.out.println("left");
+            if (carAng < angle - 4 || Math.abs(carAng - angle) > 330) {
+                // System.out.println("left");
                 movingPart.setLeft(true);
             }
             if (carAng > angle + 4 && Math.abs(carAng - angle) < 330) {
                 //System.out.println("right");
                 movingPart.setRight(true);
-            } 
+            }
 
             //If NPC overlaps with target position
             if (isOverlapping(tp, positionPart)) {

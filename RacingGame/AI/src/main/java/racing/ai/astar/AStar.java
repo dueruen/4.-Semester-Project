@@ -6,11 +6,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Set;
-import racing.common.data.entityparts.PositionPart;
 
 /**
- *
- * @author Victor Gram & Niclas Johansen
+ * @author Marcelo Surriabre
+ * https://github.com/marcelo-s/A-Star-Java-Implementation
+ * modifications by Victor Gram & Niclas Johansen
  */
 public class AStar  {
     private static int DEFAULT_HV_COST = 10; // Horizontal - Vertical Cost

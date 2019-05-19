@@ -43,7 +43,7 @@ public enum TileType {
      /**
      * Item
      */
-    ITEM(9, 1.0, 1,0 "tiles/item.png", false);
+    ITEM(9, 1.0, 1.0, "tiles/item.png", false);
 
 
     /**

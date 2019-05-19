@@ -49,33 +49,6 @@ public class CollisionSystem implements IPostEntityProcessingService {
             Class eClass = e.getClass();
             boolean isItem = e instanceof Item;
 
-            PositionPart entityPosition = entity.getPart(PositionPart.class);
-
-            AffineTransform transform = new AffineTransform();
-            transform.rotate(
-                entityPosition.getRadians(),
-                entityPosition.getX() + entity.getImage().getWidth()/2,
-                entityPosition.getY() + entity.getImage().getHeight()/2
-            );
-
-            Shape car = transform.createTransformedShape(new Rectangle(
-                Math.round(entityPosition.getX()),
-                Math.round(entityPosition.getY()),
-                Math.round(entity.getImage().getWidth()),
-                Math.round(entity.getImage().getHeight())
-            ));
-
-            PositionPart tilePosition = tileEntity.getPart(PositionPart.class);
-            Rectangle staticTile = new Rectangle(
-                Math.round(tilePosition.getX() + 20),
-                Math.round(tilePosition.getY() + 20),
-                Math.round(tileEntity.getImage().getWidth()) - 40,
-                Math.round(tileEntity.getImage().getHeight()) - 40
-            );
-
-            if (!car.intersects(staticTile)) {
-                continue;
-            }
             if (isItem || eClass == Tile.class) {
 
                 if (eClass == Tile.class) {

@@ -1,6 +1,7 @@
 package racing.ai.services;
 
 import java.util.ArrayList;
+import java.util.Random;
 import racing.ai.astar.AStar;
 import racing.ai.astar.AStarNode;
 import racing.common.data.Entity;
@@ -41,6 +42,20 @@ public class AIPlugin implements IGamePluginService, AISPI {
     private AStarNode[][] nodes;
 
     /**
+     * List of nodes of the Checkpoint One type
+     */
+    private ArrayList<AStarNode> checkOneList;
+
+    /**
+     * List of nodes of Checkpoint Two type
+     */
+    private ArrayList<AStarNode> checkTwoList;
+    /**
+     * List of nodes of FInishline type
+     */
+    private ArrayList<AStarNode> goalList;
+
+    /**
      * Declarative service set map service
      *
      * @param map map service
@@ -72,7 +87,12 @@ public class AIPlugin implements IGamePluginService, AISPI {
      */
     @Override
     public void startAI() {
+        checkOneList = new ArrayList<>();
+        checkTwoList = new ArrayList<>();
+        goalList = new ArrayList<>();
+
         initializeAI();
+
     }
 
     /**
@@ -95,6 +115,15 @@ public class AIPlugin implements IGamePluginService, AISPI {
                 node.setW((int) tp.getType().getWeight());
                 if (tp.getType().isIsStatic()) {
                     node.setBlock(true);
+                }
+                if (tp.getType() == TileType.CHECKPOINTONE) {
+                    checkOneList.add(node);
+                }
+                if (tp.getType() == TileType.CHECKPOINTTWO) {
+                    checkTwoList.add(node);
+                }
+                if (tp.getType() == TileType.FINISHLINE) {
+                    goalList.add(node);
                 }
                 nodes[i][j] = node;
             }
@@ -127,39 +156,31 @@ public class AIPlugin implements IGamePluginService, AISPI {
 
     /**
      * Calculates what the next target is gonna be, based on how many
-     * chackpoints are checked
+     * checkpoints are checked, and one a random variable, for more natural
+     * movement
      *
      * @param type
      * @return Next target node
      */
     private AStarNode findNextTarget(int type) {
-        TileType tileType = null;
+        ArrayList<AStarNode> targetList = null;
         switch (type) {
             case 0:
-                tileType = TileType.CHECKPOINTONE;
+                targetList = checkOneList;
                 break;
             case 1:
-                tileType = TileType.CHECKPOINTTWO;
+                targetList = checkTwoList;
                 break;
             case 2:
-                tileType = TileType.FINISHLINE;
+                targetList = goalList;
                 break;
             default:
                 break;
         }
-        AStarNode target = null;
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                TilePart tp = map[i][j].getPart(TilePart.class);
-                TileType entityTileType = tp.getType();
 
-                if (entityTileType == tileType) {
-                    int[] newGoalTile = mapSPI.getTileXandY(map[i][j]);
-                    target = new AStarNode(newGoalTile[0], newGoalTile[1]);
-                    return target;
-                }
-            }
-        }
+        Random r = new Random();
+        int targetVal = r.nextInt(targetList.size());
+        AStarNode target = targetList.get(targetVal);
         return target;
     }
 

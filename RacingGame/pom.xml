@@ -36,6 +36,7 @@
     <module>SpawnSystem</module>
     <module>CommonItem</module>
     <module>Bullet</module>
+    <module>ItemSystem</module>
   </modules>
 
   <build>

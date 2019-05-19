@@ -7,7 +7,6 @@ import java.awt.geom.AffineTransform;
 import java.lang.Math;
 import racing.common.player.Player;
 import racing.common.npc.NPC;
-import racing.common.map.Tile;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
@@ -17,6 +16,7 @@ import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.TilePart;
 import racing.common.services.IPostEntityProcessingService;
 import java.util.UUID;
+import racing.common.map.Tile;
 
 
 public class CollisionSystem implements IPostEntityProcessingService {
@@ -42,12 +42,6 @@ public class CollisionSystem implements IPostEntityProcessingService {
 
         for (Entity tileEntity : world.getEntities(Tile.class)) {
             TilePart tilePart = tileEntity.getPart(TilePart.class);
-
-            if (tilePart.getType().ITEM == tilePart.getType()) {
-                entity.setHasItem(Boolean.TRUE);
-                
-                continue;
-            }
             
             if (!tilePart.getType().isIsStatic()) {
                 continue;

@@ -26,10 +26,6 @@ public class Entity implements Serializable {
      * A map of all entity parts assigned to the entity 
      */
     private Map<Class, EntityPart> parts;
-    
-    private boolean hasItem = false;
-    
-    private boolean canShoot = false;
 
     /**
      * No-arg constructor
@@ -75,20 +71,4 @@ public class Entity implements Serializable {
     public void setImage(GameImage image) {
         this.image = image;
     }
-    
-    public boolean getHasItem(){
-        return hasItem;
-    }
-    public void setHasItem(boolean hasItem){
-        this.hasItem = hasItem;
-    }
-    
-    public void setCanShoot(boolean canShoot){
-        this.canShoot = canShoot;
-    }
-    
-    public boolean getCanShoot(){
-        return canShoot;
-    }
-    
 }

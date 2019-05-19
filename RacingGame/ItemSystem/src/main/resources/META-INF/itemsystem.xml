@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="racing.itemsystem.ItemProcessingService">
+    <implementation class="racing.itemsystem.ItemProcessingService"/>
+    <service>
+        <provide interface="racing.common.services.IPostEntityProcessingService"/>
+        <provide interface="racing.common.item.ItemHandler"/>
+    </service>
+    <reference bind="setItemService" cardinality="0..n"
+               interface="racing.common.item.ItemSPI"
+               name="ItemService" policy="dynamic" unbind="removeItemService"/>
+    <reference bind="setMapService" cardinality="0..1"
+               interface="racing.common.map.MapSPI"
+               name="MapService" policy="dynamic" unbind="removeMapService"/>
+</scr:component>

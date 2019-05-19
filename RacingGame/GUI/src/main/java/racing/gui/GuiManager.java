@@ -25,8 +25,10 @@ import racing.common.map.Tile;
 import racing.common.npc.NPCSPI;
 import racing.common.player.PlayerSPI;
 import racing.common.services.IGamePluginService;
+import racing.common.services.IScoreService;
 import racing.gui.screen.*;
 import static racing.gui.screen.GameScreen.GAME;
+import static racing.gui.screen.GameScreen.GAME_OVER;
 import static racing.gui.screen.GameScreen.MAP_EDITOR;
 import static racing.gui.screen.GameScreen.MENU;
 import static racing.gui.screen.GameScreen.START_GAME;
@@ -75,6 +77,11 @@ public class GuiManager extends Game implements IGamePluginService { //implement
      * PlayerSPI
      */
     private static PlayerSPI player;
+
+    /**
+     * IScoreService
+     */
+    private static IScoreService score;
 
     /**
      * GuiManager
@@ -183,6 +190,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
      * @param screen value representing the screen
      */
     public void changeScreen(GameScreen screen) {
+        Core.getInstance().getGameData().getKeys().reset();
         switch (screen) {
             case MENU:
                 if (gameScreens.get(MENU) == null) {
@@ -190,6 +198,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
                 }
                 Core.getInstance().getGameData().setGameRunning(false);
                 this.setScreen(gameScreens.get(MENU));
+                reset();
                 break;
             case MAP_EDITOR:
                 if (gameScreens.get(MAP_EDITOR) == null) {
@@ -212,7 +221,24 @@ public class GuiManager extends Game implements IGamePluginService { //implement
                 Core.getInstance().getGameData().setGameRunning(false);
                 this.setScreen(gameScreens.get(START_GAME));
                 break;
+            case GAME_OVER:
+                if (gameScreens.get(GAME_OVER) == null) {
+                    gameScreens.put(GAME_OVER, new GameOverScreen());
+                }
+                Core.getInstance().getGameData().setGameRunning(false);
+                this.setScreen(gameScreens.get(GAME_OVER));
+                break;
         }
+    }
+
+    /**
+     * Stops player, enemy and map
+     */
+    public void reset() {
+        score.reset();
+        player.removeAll(Core.getInstance().getGameData(), Core.getInstance().getWorld());
+        npc.removeAll(Core.getInstance().getGameData(), Core.getInstance().getWorld());
+        map.removeAll(Core.getInstance().getWorld());
     }
 
     /**
@@ -279,6 +305,10 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         return player;
     }
 
+    public IScoreService getScore() {
+        return score;
+    }
+
     @Override
     public void start(GameData gameData, World world) {
     }
@@ -340,5 +370,23 @@ public class GuiManager extends Game implements IGamePluginService { //implement
      */
     public void removePlayerService(PlayerSPI player) {
         this.player = null;
+    }
+
+    /**
+     * Declarative service set score service
+     *
+     * @param score score service
+     */
+    public void setScoreService(IScoreService score) {
+        this.score = score;
+    }
+
+    /**
+     * Declarative service remove score service
+     *
+     * @param score score service
+     */
+    public void removeScoreService(IScoreService score) {
+        this.score = null;
     }
 }

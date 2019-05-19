@@ -9,4 +9,6 @@ import racing.common.data.World;
  */
 public interface IScoreService {
     List<Entity> getScores(World world);
+    boolean isThereAWinner();
+    void reset();
 }

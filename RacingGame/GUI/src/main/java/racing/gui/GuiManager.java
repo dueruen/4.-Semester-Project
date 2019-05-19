@@ -263,6 +263,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         assetManager.load("tiles/goal.png", Texture.class);
         assetManager.load("tiles/tree.png", Texture.class);
         assetManager.load("tiles/spawn.png", Texture.class);
+        assetManager.load("tiles/item.png",Texture.class);
 
         assetManager.load("tiles/road_sel.png", Texture.class);
         assetManager.load("tiles/start_sel.png", Texture.class);
@@ -271,6 +272,10 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         assetManager.load("tiles/goal_sel.png", Texture.class);
         assetManager.load("tiles/tree_sel.png", Texture.class);
         assetManager.load("tiles/spawn_sel.png", Texture.class);
+        assetManager.load("tiles/item_sel.png", Texture.class);
+        
+        assetManager.load("items/bullet.png", Texture.class);
+        assetManager.load("items/bomb.png", Texture.class);
     }
 
     public AssetManager getAssetManager() {

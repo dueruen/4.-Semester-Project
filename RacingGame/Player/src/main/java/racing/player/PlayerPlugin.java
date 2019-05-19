@@ -9,7 +9,10 @@ import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
 import java.util.UUID;
+import racing.common.data.entityparts.ItemPart;
+import racing.common.item.*;
 import racing.common.data.entityparts.ScorePart;
+import racing.common.data.entityparts.TilePart;
 import racing.common.player.PlayerSPI;
 
 public class PlayerPlugin implements IGamePluginService, PlayerSPI {
@@ -31,6 +34,9 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         if (gameData.isGameRunning()) {
             create(gameData, world);
         }
+        // // Add entities to the world
+        // player = createPlayerCar(gameData);
+        // world.addEntity(player);
     }
 
     /**
@@ -54,9 +60,18 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         playerCar.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         playerCar.add(new PositionPart(x, y, radians));
         playerCar.add(new ScorePart());
-        UUID uuid = UUID.randomUUID();
+        playerCar.add(new ItemPart());
 
         return playerCar;
+    }
+
+    public void checkForItem(Entity entity, World world) {
+        MovingPart entityMovingPart = entity.getPart(MovingPart.class);
+
+        for (Entity tileEntity : world.getEntities()) {
+            TilePart tilePart = tileEntity.getPart(TilePart.class);
+
+        }
     }
 
     /**
@@ -79,19 +94,18 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         return null;
     }
 
-    @Override
     public Player create(GameData gameData, World world) {
         Entity player = createPlayerCar(gameData);
         world.addEntity(player);
         this.player = player;
-        return (Player)player;
+        return (Player) player;
     }
 
-    @Override
     public void removeAll(GameData gameData, World world) {
         this.player = null;
         for (Entity npc : world.getEntities(Player.class)) {
             world.removeEntity(npc);
         }
     }
+
 }

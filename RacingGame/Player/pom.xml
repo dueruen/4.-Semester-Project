@@ -37,5 +37,10 @@
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>CommonItem</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

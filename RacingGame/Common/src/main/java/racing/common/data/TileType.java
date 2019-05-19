@@ -23,7 +23,6 @@ public enum TileType {
 
     WATER(3, 10.0, 20000, "tiles/water.png", false),
 
-
     /**
      * Tree
      */
@@ -39,9 +38,14 @@ public enum TileType {
      */
     SPAWN(6, 1.0, 1.0,"tiles/spawn.png", false),
     CHECKPOINTONE(7, 1.0, 1.0,"tiles/road.png", false),
-    CHECKPOINTTWO(8, 1.0, 1.0,"tiles/road.png", false);
+    CHECKPOINTTWO(8, 1.0, 1.0,"tiles/road.png", false),
 
- 
+     /**
+     * Item
+     */
+    ITEM(9, 1.0, 1,0 "tiles/item.png", false);
+
+
     /**
      * Used to identify the tile type
      */
@@ -51,11 +55,11 @@ public enum TileType {
      * The type penalty
      */
     private double penalty;
-    
+
     /**
      * The type weight
      */
-    
+
     private double weight;
 
     /**
@@ -84,8 +88,8 @@ public enum TileType {
     public double getPenalty() {
         return penalty;
     }
-    
-    public double getWeight() { 
+
+    public double getWeight() {
         return weight;
     }
 

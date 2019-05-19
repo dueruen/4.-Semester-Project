@@ -35,6 +35,8 @@ public class MovingPart implements EntityPart {
      */
     private boolean left, right, up, down, moving, reversing;
 
+    private int pauseTimer = 0;
+
     /**
      * Create a new instance of a moving part
      *
@@ -104,7 +106,7 @@ public class MovingPart implements EntityPart {
         this.currentSpeed = speed;
     }
 
-      /**
+    /**
      * Set penalty
      *
      * @param penalty
@@ -167,7 +169,7 @@ public class MovingPart implements EntityPart {
         this.moving = moving;
     }
 
-     /**
+    /**
      * Set reversing
      *
      * @param moving
@@ -175,6 +177,23 @@ public class MovingPart implements EntityPart {
     public void setReversing(boolean reversing) {
         this.reversing = reversing;
     }
+
+    /**
+     * Get speed
+     *
+     */
+    public float getSpeed() {
+        return this.currentSpeed;
+    }
+
+    public int getPauseTimer() {
+        return pauseTimer;
+    }
+
+    public void setPauseTimer(int pauseTimer) {
+        this.pauseTimer = pauseTimer;
+    }
+
     /**
      * Process the MovingPart behaviour
      *
@@ -183,76 +202,80 @@ public class MovingPart implements EntityPart {
      */
     @Override
     public void process(GameData gameData, Entity entity) {
-        PositionPart positionPart = entity.getPart(PositionPart.class);
-        float x = positionPart.getX();
-        float y = positionPart.getY();
-        float radians = positionPart.getRadians();
-        float dt = gameData.getDelta();
-        float actualMaxSpeed = maxSpeed / penalty;
+        if (pauseTimer > 0) {
+            pauseTimer--;
+        } else {
+            PositionPart positionPart = entity.getPart(PositionPart.class);
+            float x = positionPart.getX();
+            float y = positionPart.getY();
+            float radians = positionPart.getRadians();
+            float dt = gameData.getDelta();
+            float actualMaxSpeed = maxSpeed / penalty;
 
-        if (actualMaxSpeed < currentSpeed && penalty > 1) {
-            setSpeed(Math.min(currentSpeed, actualMaxSpeed));
-        }
-        
-        if(currentSpeed < 0 && penalty > 1) {
-            setSpeed(Math.max(currentSpeed, -actualMaxSpeed));
-        }
-
-        // turning
-        if (left) {
-            radians += rotationSpeed * dt;
-        }
-
-        if (right) {
-            radians -= rotationSpeed * dt;
-        }
-
-        // accelerating
-        if (up) {
-            setReversing(false);
-            if (currentSpeed <= actualMaxSpeed) {
-                currentSpeed += acceleration;
+            if (actualMaxSpeed < currentSpeed && penalty > 1) {
+                setSpeed(Math.min(currentSpeed, actualMaxSpeed));
             }
-            x += cos(radians) * currentSpeed * dt;
-            y += sin(radians) * currentSpeed * dt;
-            setMoving(true);
-        }
 
-        //continuos movement forward with decay in speed
-        if (moving && !up) {
-            if (currentSpeed > 0) {
-                currentSpeed -= deceleration / 10;
+            if (currentSpeed < 0 && penalty > 1) {
+                setSpeed(Math.max(currentSpeed, -actualMaxSpeed));
             }
-            x += cos(radians) * currentSpeed * dt;
-            y += sin(radians) * currentSpeed * dt;
-        }
 
-        //Deaccelerating or reversing
-        if (down) {
-           if (currentSpeed > (0 - actualMaxSpeed)) {
-                currentSpeed -= deceleration;
+            // turning
+            if (left) {
+                radians += rotationSpeed * dt;
             }
-            x += cos(radians) * currentSpeed * dt;
-            y += sin(radians) * currentSpeed * dt;
-            setMoving(false);
-            setReversing(true);
+
+            if (right) {
+                radians -= rotationSpeed * dt;
+            }
+
+            // accelerating
+            if (up) {
+                setReversing(false);
+                if (currentSpeed <= actualMaxSpeed) {
+                    currentSpeed += acceleration;
+                }
+                x += cos(radians) * currentSpeed * dt;
+                y += sin(radians) * currentSpeed * dt;
+                setMoving(true);
+            }
+
+            //continuos movement forward with decay in speed
+            if (moving && !up) {
+                if (currentSpeed > 0) {
+                    currentSpeed -= deceleration / 10;
+                }
+                x += cos(radians) * currentSpeed * dt;
+                y += sin(radians) * currentSpeed * dt;
+            }
+
+            //Deaccelerating or reversing
+            if (down) {
+                if (currentSpeed > (0 - actualMaxSpeed)) {
+                    currentSpeed -= deceleration;
+                }
+                x += cos(radians) * currentSpeed * dt;
+                y += sin(radians) * currentSpeed * dt;
+                setMoving(false);
+                setReversing(true);
+            }
+
+            //continuous movement backwards with decay in speed
+            if (!down && reversing) {
+                currentSpeed += acceleration / 10;
+                x += cos(radians) * currentSpeed * dt;
+                y += sin(radians) * currentSpeed * dt;
+            }
+
+            // set position
+            x += dx * dt;
+            y += dy * dt;
+
+            positionPart.setX(x);
+            positionPart.setY(y);
+
+            positionPart.setRadians(radians);
         }
-
-        //continuous movement backwards with decay in speed
-        if(!down && reversing) {
-            currentSpeed += acceleration / 10;
-            x += cos(radians) * currentSpeed * dt;
-            y += sin(radians) * currentSpeed *dt;
-        }
-
-        // set position
-        x += dx * dt;
-        y += dy * dt;
-
-        positionPart.setX(x);
-        positionPart.setY(y);
-
-        positionPart.setRadians(radians);
     }
 
 }

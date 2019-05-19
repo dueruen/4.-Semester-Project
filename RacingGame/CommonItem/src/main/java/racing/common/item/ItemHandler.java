@@ -8,7 +8,7 @@ import racing.common.data.Entity;
  */
 public interface ItemHandler {
 
-    List<ItemSPI> getActiveItemSPI();
-
     void addRandomItemToEntity(Entity e);
+
+    void affectEntity(Entity e, Class itemClass);
 }

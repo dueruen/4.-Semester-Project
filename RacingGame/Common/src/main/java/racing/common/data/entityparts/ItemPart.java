@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package racing.common.data.entityparts;
 
 import racing.common.data.Entity;
@@ -15,7 +10,6 @@ public class ItemPart implements EntityPart {
     private Class itemClass;
     private int delay;
     private int pauseTimer;
-    //private String ID;
 
     public ItemPart() {
         itemClass = null;
@@ -29,7 +23,7 @@ public class ItemPart implements EntityPart {
         }
         pauseTimer = delay;
     }
-    
+
     public boolean readyToUse(Class c) {
         if (c == itemClass && isUsing && chargesLeft > 0 && pauseTimer == 0) {
             return true;

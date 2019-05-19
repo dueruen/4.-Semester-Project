@@ -60,8 +60,8 @@ public class BulletProcessingSystem implements IEntityProcessingService, ItemSPI
         GameImage img = new GameImage("items/bullet.png", 10, 10);
         bullet.setImage(img);
 
-        float bx = (float) (x + (image.getWidth() / 2) * cos(radians));
-        float by = (float) (y + (image.getWidth() / 2) * sin(radians));
+        float bx = (float) (x + (image.getWidth() / 2 + 15) * cos(radians));
+        float by = (float) (y + (image.getWidth() / 2 + 15) * sin(radians));
 
         bullet.add(new PositionPart(bx + (image.getWidth() / 2), by + (image.getHeight() / 2), radians));
         bullet.add(new MovingPart(0, 150, speed, 5));
@@ -72,8 +72,20 @@ public class BulletProcessingSystem implements IEntityProcessingService, ItemSPI
     @Override
     public void addItemToEntity(Entity e) {
         ItemPart itemPart = e.getPart(ItemPart.class);
-        itemPart.setChargesLeft(3);
-        itemPart.setDelay(30);
+        itemPart.setChargesLeft(300);
+        //itemPart.setDelay(30);
         itemPart.setItemClass(Bullet.class);
+    }
+
+    @Override
+    public void affectEntity(Entity e) {
+        MovingPart movingPart = e.getPart(MovingPart.class);
+        movingPart.setSpeed(0);
+        movingPart.setPauseTimer(15);
+    }
+
+    @Override
+    public Class getItemClass() {
+        return Bullet.class;
     }
 }

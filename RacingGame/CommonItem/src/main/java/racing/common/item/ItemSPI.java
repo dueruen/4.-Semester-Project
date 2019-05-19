@@ -8,6 +8,8 @@ public interface ItemSPI {
     Entity createItem(Entity e, GameData gameData);
 
     void addItemToEntity(Entity e);
-    
+
     void affectEntity(Entity e);
+
+    Class getItemClass();
 }

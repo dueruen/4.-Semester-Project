@@ -1,25 +1,27 @@
 package racing.collision;
 
-import java.awt.geom.Area;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
-import java.lang.Math;
 import racing.common.player.Player;
 import racing.common.npc.NPC;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
-import racing.common.data.GameImage;
 import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.TilePart;
 import racing.common.services.IPostEntityProcessingService;
-import java.util.UUID;
+import racing.common.item.Item;
+import racing.common.item.ItemHandler;
 import racing.common.map.Tile;
 
-
 public class CollisionSystem implements IPostEntityProcessingService {
+
+    /**
+     * MapSPI
+     */
+    private static ItemHandler itemHandler;
 
     @Override
     public void process(GameData gameData, World world) {
@@ -33,49 +35,82 @@ public class CollisionSystem implements IPostEntityProcessingService {
     }
 
     /**
-     * Check if entity intersects with statis tiles
+     * Check if entity intersects with static tiles
+     *
      * @param entity
      * @param world
      */
     private void intersects(Entity entity, World world) {
         MovingPart entityMovingPart = entity.getPart(MovingPart.class);
-
-        for (Entity tileEntity : world.getEntities(Tile.class)) {
-            TilePart tilePart = tileEntity.getPart(TilePart.class);
-            
-            if (!tilePart.getType().isIsStatic()) {
+        for (Entity e : world.getEntities()) {
+            if (e == entity) {
                 continue;
             }
+            Class eClass = e.getClass();
+            boolean isItem = e instanceof Item;
 
-            PositionPart entityPosition = entity.getPart(PositionPart.class);
+            if (isItem || eClass == Tile.class) {
 
-            AffineTransform transform = new AffineTransform();
-            transform.rotate(
-                entityPosition.getRadians(),
-                entityPosition.getX() + entity.getImage().getWidth()/2,
-                entityPosition.getY() + entity.getImage().getHeight()/2
-            );
+                if (eClass == Tile.class) {
+                    TilePart tilePart = e.getPart(TilePart.class);
+                    if (!tilePart.getType().isIsStatic()) {
+                        continue;
+                    }
+                }
 
-            Shape car = transform.createTransformedShape(new Rectangle(
-                Math.round(entityPosition.getX()),
-                Math.round(entityPosition.getY()),
-                Math.round(entity.getImage().getWidth()),
-                Math.round(entity.getImage().getHeight())
-            ));
+                PositionPart entityPosition = entity.getPart(PositionPart.class);
 
-            PositionPart tilePosition = tileEntity.getPart(PositionPart.class);
-            Rectangle staticTile = new Rectangle(
-                Math.round(tilePosition.getX()),
-                Math.round(tilePosition.getY()),
-                Math.round(tileEntity.getImage().getWidth()),
-                Math.round(tileEntity.getImage().getHeight())
-            );
+                AffineTransform transform = new AffineTransform();
+                transform.rotate(
+                        entityPosition.getRadians(),
+                        entityPosition.getX() + entity.getImage().getWidth() / 2,
+                        entityPosition.getY() + entity.getImage().getHeight() / 2
+                );
 
-            if (!car.intersects(staticTile)) {
-                continue;
+                Shape car = transform.createTransformedShape(new Rectangle(
+                        Math.round(entityPosition.getX()),
+                        Math.round(entityPosition.getY()),
+                        Math.round(entity.getImage().getWidth()),
+                        Math.round(entity.getImage().getHeight())
+                ));
+
+                PositionPart checkPosition = e.getPart(PositionPart.class);
+                Rectangle staticTile = new Rectangle(
+                        Math.round(checkPosition.getX()),
+                        Math.round(checkPosition.getY()),
+                        Math.round(e.getImage().getWidth()),
+                        Math.round(e.getImage().getHeight())
+                );
+
+                if (!car.intersects(staticTile)) {
+                    continue;
+                }
+
+                if (eClass == Tile.class) {
+                    entityMovingPart.setSpeed(0);
+                } else if (isItem && itemHandler != null) {
+                    itemHandler.affectEntity(entity, eClass);
+
+                }
             }
-
-            entityMovingPart.setSpeed(0);
         }
+    }
+
+    /**
+     * Declarative service set itemHandler service
+     *
+     * @param itemHandler itemHandler service
+     */
+    public void setItemService(ItemHandler itemHandler) {
+        this.itemHandler = itemHandler;
+    }
+
+    /**
+     * Declarative service remove itemHandler service
+     *
+     * @param itemHandler itemHandler service
+     */
+    public void removeItemService(ItemHandler itemHandler) {
+        this.itemHandler = null;
     }
 }

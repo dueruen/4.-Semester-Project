@@ -98,29 +98,22 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             //Get next position to travel towards
             PositionPart pp = path.get(0);
 
-            double carAng = Math.toDegrees(positionPart.getRadians());
-            // carAng = Math.abs(carAng);
-
-//            double angle = Math.atan2((pp.getY() - positionPart.getY()), (pp.getX() - positionPart.getX()))
-//                    * 180.0d / Math.PI;
-//            angle = Math.abs(angle);
+            double carAng = Math.abs(Math.toDegrees(positionPart.getRadians() * 1));
+            
             double angle = getAngle(positionPart, pp);
-
-            System.out.println("carAng: " + carAng + " angle: " + angle);
+            
+            //System.out.println("carAng: " + carAng + " angle: " + angle);
             if (carAng > angle - 4 && carAng < angle + 4) {
-                System.out.println("up");
                 movingPart.setUp(true);
             }
-            if (carAng < angle - 4) {
-                System.out.println("left");
+            if (carAng < angle - 4 || Math.abs(carAng - angle) > 330 ) {
+               // System.out.println("left");
                 movingPart.setLeft(true);
             }
-            if (carAng > angle + 4) {
-                System.out.println("right");
+            if (carAng > angle + 4 && Math.abs(carAng - angle) < 330) {
+                //System.out.println("right");
                 movingPart.setRight(true);
-            } else {
-                movingPart.setUp(true);
-            }
+            } 
 
             //If NPC overlaps with target position
             if (isOverlapping(tp, positionPart)) {

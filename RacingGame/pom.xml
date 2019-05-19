@@ -37,6 +37,7 @@
     <module>CommonItem</module>
     <module>Bullet</module>
     <module>ItemSystem</module>
+    <module>Bomb</module>
   </modules>
 
   <build>

@@ -87,6 +87,9 @@ public class AIPlugin implements IGamePluginService, AISPI {
      */
     @Override
     public void startAI() {
+        checkOneList.clear();
+        checkTwoList.clear();
+        goalList.clear();
         initializeAI(); 
     }
 

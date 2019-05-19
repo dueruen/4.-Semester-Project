@@ -34,6 +34,9 @@
     <module>LabSystem</module>
     <module>PenaltySystem</module>
     <module>SpawnSystem</module>
+    <module>CommonItem</module>
+    <module>Bullet</module>
+    <module>ItemSystem</module>
   </modules>
 
   <build>

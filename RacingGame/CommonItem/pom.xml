@@ -14,10 +14,10 @@
   </properties>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>CommonPlayer</artifactId>
+  <artifactId>CommonItem</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>CommonPlayer</name>
+  <name>CommonItem</name>
 
   <packaging>bundle</packaging>
 
@@ -25,8 +25,7 @@
         <dependency>
             <groupId>racing.build</groupId>
             <artifactId>Common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
+            <version>${project.version}</version>
         </dependency>
   </dependencies>
 

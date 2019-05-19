@@ -1,0 +1,3 @@
+Bundle-SymbolicName: Bomb
+Bundle-ActivationPolicy: lazy
+Service-Component: META-INF/entityprocessing.xml

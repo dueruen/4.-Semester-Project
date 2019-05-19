@@ -44,16 +44,16 @@ public class AIPlugin implements IGamePluginService, AISPI {
     /**
      * List of nodes of the Checkpoint One type
      */
-    private ArrayList<AStarNode> checkOneList;
+    private ArrayList<AStarNode> checkOneList = new ArrayList<>();
 
     /**
      * List of nodes of Checkpoint Two type
      */
-    private ArrayList<AStarNode> checkTwoList;
+    private ArrayList<AStarNode> checkTwoList = new ArrayList<>();
     /**
      * List of nodes of FInishline type
      */
-    private ArrayList<AStarNode> goalList;
+    private ArrayList<AStarNode> goalList = new ArrayList<>();
 
     /**
      * Declarative service set map service
@@ -87,12 +87,7 @@ public class AIPlugin implements IGamePluginService, AISPI {
      */
     @Override
     public void startAI() {
-        checkOneList = new ArrayList<>();
-        checkTwoList = new ArrayList<>();
-        goalList = new ArrayList<>();
-
-        initializeAI();
-
+        initializeAI(); 
     }
 
     /**

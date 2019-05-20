@@ -16,8 +16,7 @@ import racing.common.data.TileType;
 import racing.common.data.entityparts.TilePart;
 
 /**
- *
- * @author Victor Gram & Niclas Johansen
+ * Plugin handling the addition and removal of the plugin from the system
  */
 public class AIPlugin implements IGamePluginService, AISPI {
 

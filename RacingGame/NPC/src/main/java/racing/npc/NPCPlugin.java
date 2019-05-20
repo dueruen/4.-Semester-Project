@@ -13,11 +13,7 @@ import racing.common.npc.NPCSPI;
 import racing.common.services.IGamePluginService;
 
 /**
- *
- * @author Victor Gram & Niclas Johansen
- */
-/**
- * NPC Plugin class, handling adding and rmeoving NPC Entitys from the game
+ * NPC Plugin class, handling adding and removing NPC Entitys from the game
  */
 public class NPCPlugin implements IGamePluginService, NPCSPI {
 

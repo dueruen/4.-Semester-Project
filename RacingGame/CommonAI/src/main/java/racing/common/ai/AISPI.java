@@ -6,8 +6,7 @@ import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
 
 /**
- *
- * @author Victor Gram & Niclas Johansen
+ * SPI for AI 
  */
 public interface AISPI {
     void setSourceNode(Entity p, World world, int checkpointCount);

@@ -18,9 +18,6 @@ import racing.common.map.Tile;
 import racing.common.npc.NPC;
 
 /**
- *
- * @author Victor Gram & Niclas Johansen
- *
  * Processing system for NPC entity
  */
 public class NPCProcessingSystem implements IEntityProcessingService {

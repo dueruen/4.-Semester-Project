@@ -4,8 +4,7 @@ import racing.common.data.GameData;
 import racing.common.data.World;
 
 /**
- *
- * @author Victor Gram & Niclas Johansen
+ * SPI for NPC
  */
 public interface NPCSPI {
   

@@ -17,9 +17,11 @@ import com.badlogic.gdx.utils.Align;
 import racing.Core;
 import racing.common.data.Entity;
 import racing.common.data.GameKeys;
+import racing.common.data.entityparts.ItemPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.ScorePart;
 import racing.common.map.MapSPI;
+import racing.common.player.Player;
 import racing.common.player.PlayerSPI;
 import racing.common.services.IScoreService;
 import racing.gui.input.GameInputProcessor;
@@ -46,12 +48,21 @@ public class MainScreen extends BasicScreen {
      */
     private Table table;
 
+    /**
+     * Item table
+     */
+    private Table itemTable;
+
     @Override
     public void show() {
         stage = new Stage();
         table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
+
+        itemTable = new Table();
+        itemTable.setFillParent(true);
+        stage.addActor(itemTable);
 
         c = new OrthographicCamera(Core.getInstance().getGameData().getDisplayWidth(), Core.getInstance().getGameData().getDisplayHeight());
 
@@ -95,6 +106,19 @@ public class MainScreen extends BasicScreen {
                 table.row();
             }
         }
+
+        itemTable.reset();
+        ItemPart itemPart = ((Player) Core.getInstance().getWorld().getEntities(Player.class).get(0)).getPart(ItemPart.class);
+        String className = "non";
+        if (itemPart != null && itemPart.getItemClass() != null) {
+            String[] sub = itemPart.getItemClass().toString().split("\\.");
+            className = sub[sub.length - 1].toLowerCase();
+        }
+        itemTable.align(Align.topRight);
+        Image itemImage = new Image(new TextureRegionDrawable(new TextureRegion(GuiManager.getInstance().getAssetManager().get("items/" + className + ".png", Texture.class))));
+        itemTable.add(itemImage).size(40);
+        Label l = new Label("Charges: " + itemPart.getChargesLeft(), GuiManager.getInstance().getSkin());
+        itemTable.add(l);
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

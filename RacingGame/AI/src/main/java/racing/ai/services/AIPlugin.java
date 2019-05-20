@@ -5,12 +5,10 @@ import java.util.Random;
 import racing.ai.astar.AStar;
 import racing.ai.astar.AStarNode;
 import racing.common.data.Entity;
-import racing.common.data.GameData;
 import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.map.MapSPI;
 import racing.common.map.Tile;
-import racing.common.services.IGamePluginService;
 import racing.common.ai.AISPI;
 import racing.common.data.TileType;
 import racing.common.data.entityparts.TilePart;
@@ -18,7 +16,7 @@ import racing.common.data.entityparts.TilePart;
 /**
  * Plugin handling the addition and removal of the plugin from the system
  */
-public class AIPlugin implements IGamePluginService, AISPI {
+public class AIPlugin implements AISPI {
 
     /**
      * MapSPI
@@ -70,14 +68,6 @@ public class AIPlugin implements IGamePluginService, AISPI {
      */
     public void removeMapService(MapSPI map) {
         this.mapSPI = null;
-    }
-
-    @Override
-    public void start(GameData gameData, World world) {
-    }
-
-    @Override
-    public void stop(GameData gameData, World world) {
     }
 
     /**

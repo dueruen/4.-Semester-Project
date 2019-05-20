@@ -10,7 +10,7 @@ import java.util.Set;
 /**
  * @author Marcelo Surriabre
  * https://github.com/marcelo-s/A-Star-Java-Implementation
- * modifications by Victor Gram & Niclas Johansen
+ * modifications by Group 9 
  */
 public class AStar  {
     private static int DEFAULT_HV_COST = 10; // Horizontal - Vertical Cost

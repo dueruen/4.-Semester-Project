@@ -3,7 +3,7 @@ package racing.ai.astar;
 /**
  * @author Marcelo Surriabre
  * https://github.com/marcelo-s/A-Star-Java-Implementation
- * modifications by Victor Gram & Niclas Johansen
+ * modifications by Group 9
  */
 public class AStarNode {
 

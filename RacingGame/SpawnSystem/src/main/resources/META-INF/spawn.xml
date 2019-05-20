@@ -13,4 +13,7 @@
     <reference bind="setNPCService" cardinality="0..1"
                interface="racing.common.npc.NPCSPI"
                name="NPCService" policy="dynamic" unbind="removeNPCService"/>
+    <reference bind="setAIService" cardinality="0..1"
+           interface="racing.common.ai.AISPI"
+           name="AIService" policy="dynamic" unbind="removeAIService"/>
 </scr:component>

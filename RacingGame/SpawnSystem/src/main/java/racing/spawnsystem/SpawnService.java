@@ -2,6 +2,7 @@ package racing.spawnsystem;
 
 import java.util.LinkedList;
 import java.util.List;
+import racing.common.ai.AISPI;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.TileType;
@@ -20,6 +21,11 @@ import racing.common.services.ISpawnService;
  * Control system for the lap system.
  */
 public class SpawnService implements ISpawnService {
+
+    /**
+     * AISPI
+     */
+    private static AISPI ai;
 
     /**
      * MapSPI
@@ -57,7 +63,11 @@ public class SpawnService implements ISpawnService {
         PositionPart po = p.getPart(PositionPart.class);
         PositionPart pl = positionsParts.pop();
         po.setPosition(pl.getX(), pl.getY());
-        System.out.println("" + pl.getX() + " " + pl.getY());
+
+        //Initialize the ai
+        if (ai != null) {
+            ai.startAI();
+        }
 
         NPC[] npcs = npc.create(gameData, world, positionsParts.size());
 
@@ -67,6 +77,25 @@ public class SpawnService implements ISpawnService {
             po.setPosition(pp.getX(), pp.getY());
             i++;
         }
+    }
+
+    /**
+     * Declarative service set AI service
+     *
+     * @param ai AI service
+     */
+    public void setAIService(AISPI ai) {
+        this.ai = ai;
+
+    }
+
+    /**
+     * Declarative service remove AI service
+     *
+     * @param ai AI service
+     */
+    public void removeAIService(AISPI ai) {
+        this.ai = null;
     }
 
     /**

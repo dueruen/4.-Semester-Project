@@ -29,6 +29,8 @@
     <module>Map</module>
     <module>NPC</module>
     <module>CommonNPC</module>
+    <module>AI</module>
+    <module>CommonAI</module>
     <module>GUI</module>
     <module>CommonPlayer</module>
     <module>LabSystem</module>

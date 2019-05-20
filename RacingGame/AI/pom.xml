@@ -9,22 +9,22 @@
   </parent>
 
   <properties>
-    <bundle.symbolicName>racing.spawnsystem</bundle.symbolicName>
+    <bundle.symbolicName>racing.ai</bundle.symbolicName>
     <bundle.namespace>racing</bundle.namespace>
   </properties>
 
   <modelVersion>4.0.0</modelVersion>
-  <artifactId>SpawnSystem</artifactId>
+  <artifactId>AI</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>SpawnSystem</name>
+  <name>AI</name>
 
   <packaging>bundle</packaging>
 
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>CommonMap</artifactId>
+      <artifactId>CommonAI</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
@@ -35,19 +35,7 @@
     </dependency>
     <dependency>
       <groupId>racing.build</groupId>
-      <artifactId>CommonNPC</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>racing.build</groupId>
-      <artifactId>CommonPlayer</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <type>jar</type>
-    </dependency>
-    <dependency>
-      <groupId>racing.build</groupId>
-      <artifactId>CommonAI</artifactId>
+      <artifactId>CommonMap</artifactId>
       <version>1.0-SNAPSHOT</version>
       <type>jar</type>
     </dependency>

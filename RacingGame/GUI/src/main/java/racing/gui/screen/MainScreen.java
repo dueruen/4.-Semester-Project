@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import java.util.Collection;
 import racing.Core;
 import racing.common.data.Entity;
 import racing.common.data.GameKeys;
@@ -101,18 +102,21 @@ public class MainScreen extends BasicScreen {
             }
         }
 
+        Collection<Entity> ce = Core.getInstance().getWorld().getEntities(Player.class);
         itemTable.reset();
-        ItemPart itemPart = ((Player) Core.getInstance().getWorld().getEntities(Player.class).get(0)).getPart(ItemPart.class);
-        String className = "non";
-        if (itemPart != null && itemPart.getItemClass() != null) {
-            String[] sub = itemPart.getItemClass().toString().split("\\.");
-            className = sub[sub.length - 1].toLowerCase();
+        if (!ce.isEmpty()) {
+            ItemPart itemPart = ((Player) ce.toArray()[0]).getPart(ItemPart.class);
+            String className = "non";
+            if (itemPart != null && itemPart.getItemClass() != null) {
+                String[] sub = itemPart.getItemClass().toString().split("\\.");
+                className = sub[sub.length - 1].toLowerCase();
+            }
+            itemTable.align(Align.topRight);
+            Image itemImage = new Image(new TextureRegionDrawable(new TextureRegion(GuiManager.getInstance().getAssetManager().get("items/" + className + ".png", Texture.class))));
+            itemTable.add(itemImage).size(40);
+            Label l = new Label("Charges: " + itemPart.getChargesLeft(), GuiManager.getInstance().getSkin());
+            itemTable.add(l);
         }
-        itemTable.align(Align.topRight);
-        Image itemImage = new Image(new TextureRegionDrawable(new TextureRegion(GuiManager.getInstance().getAssetManager().get("items/" + className + ".png", Texture.class))));
-        itemTable.add(itemImage).size(40);
-        Label l = new Label("Charges: " + itemPart.getChargesLeft(), GuiManager.getInstance().getSkin());
-        itemTable.add(l);
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();

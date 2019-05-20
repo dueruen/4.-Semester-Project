@@ -4,11 +4,9 @@ import racing.common.data.GameData;
 import racing.common.data.World;
 
 /**
- * SPI for NPC
+ * Npc spi
  */
 public interface NPCSPI {
-  
     NPC[] create(GameData gameData, World world, int amount);
     void removeAll(GameData gameData, World world);
-    
 }

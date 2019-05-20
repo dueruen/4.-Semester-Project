@@ -8,8 +8,11 @@ import racing.common.data.World;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.services.IGamePluginService;
+import java.util.UUID;
 import racing.common.data.entityparts.ItemPart;
+import racing.common.item.*;
 import racing.common.data.entityparts.ScorePart;
+import racing.common.data.entityparts.TilePart;
 import racing.common.player.PlayerSPI;
 
 public class PlayerPlugin implements IGamePluginService, PlayerSPI {
@@ -42,7 +45,7 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
      * @param gameData
      * @return player
      */
-    private Entity createPlayerCar() {
+    private Entity createPlayerCar(GameData gameData) {
         float deacceleration = 10;
         float acceleration = 10;
         float maxSpeed = 400;
@@ -58,10 +61,18 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         playerCar.add(new PositionPart(x, y, radians));
         playerCar.add(new ScorePart());
         playerCar.add(new ItemPart());
-
+        
         return playerCar;
     }
 
+    public void checkForItem(Entity entity, World world) {
+        MovingPart entityMovingPart = entity.getPart(MovingPart.class);
+
+        for (Entity tileEntity : world.getEntities()) {
+            TilePart tilePart = tileEntity.getPart(TilePart.class);
+
+        }
+    }
 
     /**
      * Remove entity from the world if the bundle is removed
@@ -83,15 +94,13 @@ public class PlayerPlugin implements IGamePluginService, PlayerSPI {
         return null;
     }
 
-    @Override
     public Player create(GameData gameData, World world) {
-        Entity player = createPlayerCar();
+        Entity player = createPlayerCar(gameData);
         world.addEntity(player);
         this.player = player;
         return (Player) player;
     }
 
-    @Override
     public void removeAll(GameData gameData, World world) {
         this.player = null;
         for (Entity npc : world.getEntities(Player.class)) {

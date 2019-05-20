@@ -45,12 +45,6 @@
       <version>1.0-SNAPSHOT</version>
       <type>jar</type>
     </dependency>
-    <dependency>
-      <groupId>racing.build</groupId>
-      <artifactId>CommonAI</artifactId>
-      <version>1.0-SNAPSHOT</version>
-      <type>jar</type>
-    </dependency>
   </dependencies>
 
 </project>

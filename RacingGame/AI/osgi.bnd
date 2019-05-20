@@ -1,3 +1,0 @@
-Bundle-SymbolicName: AI
-Bundle-ActivationPolicy: lazy
-Service-Component: META-INF/gameplugin.xml

@@ -62,14 +62,14 @@ public class PenaltySystem implements IPostEntityProcessingService {
             ));
 
             Rectangle staticTile = new Rectangle(
-                Math.round(tilePosition.getX() + 20),
-                Math.round(tilePosition.getY() + 20),
-                Math.round(tileEntity.getImage().getWidth() - 20),
-                Math.round(tileEntity.getImage().getHeight() -  20)
+                Math.round(tilePosition.getX()),
+                Math.round(tilePosition.getY()),
+                Math.round(tileEntity.getImage().getWidth()),
+                Math.round(tileEntity.getImage().getHeight())
             );
 
             if (car.intersects(staticTile)) {
-                entityMovingPart.setPenalty(Math.round(tilePart.getType().getPenalty()));
+                entityMovingPart.setPenalty(Math.round(tilePart.getType().getWeight()));
             } 
         }
     }

@@ -4,6 +4,7 @@ import racing.common.data.GameData;
 import racing.common.data.Entity;
 import racing.common.data.GameImage;
 import racing.common.data.World;
+import racing.common.data.entityparts.ItemPart;
 import racing.common.data.entityparts.MovingPart;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.ScorePart;
@@ -69,6 +70,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
         npcRacer.add(new MovingPart(deacceleration, acceleration, maxSpeed, rotationSpeed));
         npcRacer.add(new PositionPart(x, y, radians));
         npcRacer.add(new ScorePart());
+        npcRacer.add(new ItemPart());
 
         return npcRacer;
 

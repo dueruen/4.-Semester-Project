@@ -37,7 +37,13 @@ public enum TileType {
      * Spawn
      */
     SPAWN(6, 1.0, 1.0,"tiles/spawn.png", false),
+    /**
+     * Checkpoint one
+     */
     CHECKPOINTONE(7, 1.0, 1.0,"tiles/road.png", false),
+    /**
+     * Checkpoint two
+     */
     CHECKPOINTTWO(8, 1.0, 1.0,"tiles/road.png", false),
 
      /**

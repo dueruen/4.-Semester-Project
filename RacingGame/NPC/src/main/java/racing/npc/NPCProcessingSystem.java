@@ -11,6 +11,7 @@ import racing.common.data.entityparts.MovingPart;
 import racing.common.services.IEntityProcessingService;
 import racing.common.ai.AISPI;
 import racing.common.data.TileType;
+import racing.common.data.entityparts.ItemPart;
 import racing.common.data.entityparts.TilePart;
 import racing.common.map.MapSPI;
 import racing.common.map.Tile;
@@ -38,6 +39,11 @@ public class NPCProcessingSystem implements IEntityProcessingService {
      * Map containing the NPC and their current path
      */
     private Map<Entity, ArrayList<PositionPart>> pathMap = new HashMap<>();
+    
+    /**
+     * Map containing the NPC, and theamount of checkpoint sthey've beeen 
+     * over during their current lap
+     */
     private Map<Entity, Integer> checkpointCount = new HashMap<>();
 
     @Override
@@ -45,6 +51,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
         for (Entity NPC : world.getEntities(NPC.class)) {
             PositionPart positionPart = NPC.getPart(PositionPart.class);
             MovingPart movingPart = NPC.getPart(MovingPart.class);
+            ItemPart itemPart = NPC.getPart(ItemPart.class);
 
             //If NPC is currently not present in pathMap
             if (!pathMap.containsKey(NPC)) {
@@ -104,25 +111,23 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 
             //Get next position to travel towards
             PositionPart pp = path.get(0);
-            //System.out.println("Pathsize before surpassing: " + path.size()  );
+   
 
             double carAng = Math.abs(Math.toDegrees(positionPart.getRadians() * 1));
 
             double angle = getAngle(positionPart, pp);
 
-            //If the NPC surpasses it's target, recalculate route baed on current
+            //If the NPC surpasses it's target, recalculate route based on current
             //position
             if (Math.abs((angle - carAng)) > 95) {
                 PositionPart missedPP = pp;
-                System.out.println("surpassed");
                 if (path.contains(missedPP)) {
-                    System.out.println("recalculating");
                     ai.startAI();
                     ai.setSourceNode(NPC, world, checkpointCount.get(NPC));
-                    System.out.println(checkpointCount.get(NPC));
                     pathMap.put(NPC, ai.getPath());
                     path = pathMap.get(NPC);
-                    //System.out.println("Pathsize after surpassing: " + path.size());
+              
+                    //Give movement system new data
                     pp = path.get(1);
                     angle = getAngle(positionPart, pp);
 
@@ -130,17 +135,19 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 
             }
 
-            //System.out.println("carAng: " + carAng + " angle: " + angle);
             if (carAng > angle - 4 && carAng < angle + 4) {
                 movingPart.setUp(true);
             }
             if (carAng < angle - 4 || Math.abs(carAng - angle) > 330) {
-                // System.out.println("left");
                 movingPart.setLeft(true);
             }
             if (carAng > angle + 4 && Math.abs(carAng - angle) < 330) {
-                //System.out.println("right");
                 movingPart.setRight(true);
+            }
+            
+            //If the NPC has an item, shoot
+            if(itemPart.getChargesLeft() > 0) { 
+                itemPart.setIsUsing(true);
             }
 
             //If NPC overlaps with target position
@@ -154,7 +161,9 @@ public class NPCProcessingSystem implements IEntityProcessingService {
 
             movingPart.process(gameData, NPC);
             positionPart.process(gameData, NPC);
+            itemPart.process(gameData, NPC);
 
+            
             movingPart.setRight(false);
             movingPart.setLeft(false);
             movingPart.setUp(false);

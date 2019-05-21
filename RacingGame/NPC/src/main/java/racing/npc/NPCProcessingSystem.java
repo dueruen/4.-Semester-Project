@@ -40,8 +40,9 @@ public class NPCProcessingSystem implements IEntityProcessingService {
     /**
      * Map containing the NPC, and theamount of checkpoint sthey've beeen 
      * over during their current lap
+     * Static to maintain data when AI is unloaded
      */
-    private Map<Entity, Integer> checkpointCount = new HashMap<>();
+    private static Map<Entity, Integer> checkpointCount = new HashMap<>();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -50,13 +51,20 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             MovingPart movingPart = NPC.getPart(MovingPart.class);
             ItemPart itemPart = NPC.getPart(ItemPart.class);
 
+            
+            //If NPC is currently not present in checkpointMap
+            if(!checkpointCount.containsKey(NPC)) { 
+                checkpointCount.put(NPC, 0);
+            }
+            
             //If NPC is currently not present in pathMap
             if (!pathMap.containsKey(NPC)) {
+                //Initialize AI
+                ai.startAI();
                 //Set new spurce node
-                ai.setSourceNode(NPC, world, 0);
+                ai.setSourceNode(NPC, world, checkpointCount.get(NPC));
                 //Add NPC along with path to pathMap
                 pathMap.put(NPC, ai.getPath());
-                checkpointCount.put(NPC, 0);
 
             }
 
@@ -74,6 +82,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                     ai.startAI();
                     //Set new source node and target, checkpoint counter = 1
                     ai.setSourceNode(NPC, world, 1);
+                    //Update checkpoint map
                     checkpointCount.put(NPC, 1);
                     //Retrieve new paht to replace the old one
                     pathMap.put(NPC, ai.getPath());
@@ -85,7 +94,9 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                     ai.startAI();
                     //Set new source node and target, checkpoint counter = 2
                     ai.setSourceNode(NPC, world, 2);
+                    //Update checkpoint map
                     checkpointCount.put(NPC, 2);
+                    //Retrieve new paht to replace the old one
                     pathMap.put(NPC, ai.getPath());
 
                 }
@@ -96,6 +107,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                     ai.startAI();
                     //Set new source node and target, checkpoint counter = 0
                     ai.setSourceNode(NPC, world, 0);
+                    //Update checkpoint map
                     checkpointCount.put(NPC, 0);
                     //Retrieve new paht to replace the old one
                     pathMap.put(NPC, ai.getPath());

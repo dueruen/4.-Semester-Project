@@ -1,14 +1,11 @@
 package racing.labsystem;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.TileType;
@@ -34,12 +31,12 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
      * MapSPI
      */
     private MapSPI map;
-    
+
     /**
      * Is there a winner
      */
     private boolean winner = false;
-    
+
     /**
      * Laps to win
      */
@@ -76,28 +73,31 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
             }
 
             Wrapper w = entities.get(entity.getID());
-            Tile currentTile = map.getTile(entity, world);
-            if (w.current != null && w.previous != null) {
-                if (currentTile.getID().equals(w.current.getID())) {
-                    continue;
-                }
 
-                TilePart currentPart = w.current.getPart(TilePart.class);
-                TilePart previousPart = w.previous.getPart(TilePart.class);
-                if ((currentPart.getType() == TileType.FINISHLINE && previousPart.getType() == TileType.START)
-                        && (!w.current.getID().equals(currentTile.getID()) && !w.previous.getID().equals(currentTile.getID()))) {
-                    if (w.start) {
-                        w.start = false;
-                    } else {
-                        sp.setLabs(sp.getLabs() + 1);
-                        if (sp.getLabs() == lapsToWin) {
-                            winner = true;
+            if (map != null) {
+                Tile currentTile = map.getTile(entity, world);
+                if (w.current != null && w.previous != null) {
+                    if (currentTile.getID().equals(w.current.getID())) {
+                        continue;
+                    }
+
+                    TilePart currentPart = w.current.getPart(TilePart.class);
+                    TilePart previousPart = w.previous.getPart(TilePart.class);
+                    if ((currentPart.getType() == TileType.FINISHLINE && previousPart.getType() == TileType.START)
+                            && (!w.current.getID().equals(currentTile.getID()) && !w.previous.getID().equals(currentTile.getID()))) {
+                        if (w.start) {
+                            w.start = false;
+                        } else {
+                            sp.setLabs(sp.getLabs() + 1);
+                            if (sp.getLabs() == lapsToWin) {
+                                winner = true;
+                            }
                         }
                     }
                 }
+                w.previous = w.current;
+                w.current = currentTile;
             }
-            w.previous = w.current;
-            w.current = currentTile;
         }
     }
 
@@ -128,7 +128,7 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
             Integer i2 = sp2.getLabs();
             return i2.compareTo(i1);
         }
-        
+
     }
 
     @Override

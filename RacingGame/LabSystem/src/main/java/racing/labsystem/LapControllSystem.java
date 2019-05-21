@@ -40,7 +40,7 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
     /**
      * Laps to win
      */
-    private int lapsToWin = 3;
+    private final int lapsToWin = 3;
 
     /**
      * Declarative service set map service

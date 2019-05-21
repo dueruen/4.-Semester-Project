@@ -10,5 +10,5 @@ public interface ItemHandler {
 
     void addRandomItemToEntity(Entity e);
 
-    void affectEntity(Entity e, Class itemClass);
+    void affectEntity(Entity e, Class itemClass, Entity item);
 }

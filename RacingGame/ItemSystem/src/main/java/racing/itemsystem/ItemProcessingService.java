@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import racing.Core;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.TileType;
@@ -100,8 +101,9 @@ public class ItemProcessingService implements IPostEntityProcessingService, Item
     }
 
     @Override
-    public void affectEntity(Entity e, Class itemClass) {
+    public void affectEntity(Entity e, Class itemClass, Entity item) {
         ItemSPI spi = items.get(itemClass);
         spi.affectEntity(e);
+        Core.getInstance().getWorld().removeEntity(item);
     }
 }

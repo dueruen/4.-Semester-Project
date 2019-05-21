@@ -89,7 +89,7 @@ public class CollisionSystem implements IPostEntityProcessingService {
                 if (eClass == Tile.class) {
                     entityMovingPart.setSpeed(0);
                 } else if (isItem && itemHandler != null) {
-                    itemHandler.affectEntity(entity, eClass);
+                    itemHandler.affectEntity(entity, eClass, e);
 
                 }
             }

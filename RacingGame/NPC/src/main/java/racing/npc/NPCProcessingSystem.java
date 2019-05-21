@@ -53,7 +53,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             
             if(!checkpointCount.containsKey(NPC)) { 
                 checkpointCount.put(NPC, 0);
-                System.out.println(checkpointCount.size());
+                
             }
             //If NPC is currently not present in pathMap
             if (!pathMap.containsKey(NPC)) {
@@ -63,7 +63,6 @@ public class NPCProcessingSystem implements IEntityProcessingService {
                 ai.setSourceNode(NPC, world, checkpointCount.get(NPC));
                 //Add NPC along with path to pathMap
                 pathMap.put(NPC, ai.getPath());
-                System.out.println("restarting");
 
             }
 
@@ -126,13 +125,6 @@ public class NPCProcessingSystem implements IEntityProcessingService {
             if (Math.abs((angle - carAng)) > 95) {
                 PositionPart missedPP = pp;
                 if (path.contains(missedPP)) {
-//                    if(atp.getType() == TileType.CHECKPOINTONE || atp.getType() == TileType.CHECKPOINTTWO 
-//                            || atp.getType() == TileType.FINISHLINE) { 
-//                        System.out.println("I missed a target, oh no");
-//                        int currentCheckpointCount = checkpointCount.get(NPC);
-//                        int updatedCheckpointCount = currentCheckpointCount++;
-//                        checkpointCount.put(NPC, updatedCheckpointCount);
-//                    }
                     ai.startAI();
                     ai.setSourceNode(NPC, world, checkpointCount.get(NPC));
                     pathMap.put(NPC, ai.getPath());

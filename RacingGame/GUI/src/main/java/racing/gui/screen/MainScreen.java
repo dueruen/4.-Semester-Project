@@ -1,6 +1,7 @@
 package racing.gui.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -47,7 +48,17 @@ public class MainScreen extends BasicScreen {
      * Item table
      */
     private Table itemTable;
-
+    
+    /**
+     * Gun sound
+     */
+    private Sound shootSound = Gdx.audio.newSound(Gdx.files.internal("sound/gun.mp3"));
+    
+    /**
+     * Bomb sound
+     */
+    private Sound bombSound = Gdx.audio.newSound(Gdx.files.internal("sound/bomb.mp3"));
+    
     @Override
     public void show() {
         stage = new Stage();
@@ -110,6 +121,16 @@ public class MainScreen extends BasicScreen {
             if (itemPart != null && itemPart.getItemClass() != null) {
                 String[] sub = itemPart.getItemClass().toString().split("\\.");
                 className = sub[sub.length - 1].toLowerCase();
+                
+                if(Core.getInstance().getGameData().getKeys().isDown(GameKeys.SPACE)){
+                   if(className.equals("bullet")){
+                       shootSound.play();
+                   } else if(className.equals("bomb")){
+                       bombSound.play();
+                   }
+                   
+                }
+                
             }
             itemTable.align(Align.topRight);
             Image itemImage = new Image(new TextureRegionDrawable(new TextureRegion(GuiManager.getInstance().getAssetManager().get("items/" + className + ".png", Texture.class))));

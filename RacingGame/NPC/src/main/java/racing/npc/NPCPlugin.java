@@ -20,7 +20,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     /**
      * Number for amount of npcs
      */
-    private static int loadedNPC;
+    private static int loadedNPCs;
 
     /**
      * Creates a number of NPCs and adds it to the world
@@ -31,7 +31,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
     @Override
     public void start(GameData gameData, World world) {
         if (gameData.isGameRunning()) {
-            create(gameData, world, loadedNPC);
+            create(gameData, world, loadedNPCs);
         }
     }
 
@@ -93,7 +93,7 @@ public class NPCPlugin implements IGamePluginService, NPCSPI {
             world.addEntity(npc);
             npcs[i] = (NPC) npc;
         }
-        loadedNPC = amount;
+        loadedNPCs = amount;
         return npcs;
     }
 

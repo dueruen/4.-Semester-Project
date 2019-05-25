@@ -135,8 +135,8 @@ public class AIPlugin implements AISPI {
     public void setSourceNode(Entity p, World world, int checkpointCount) {
         Tile t = mapSPI.getTile(p, world);
         int[] coordinates = mapSPI.getTileXandY(t);
-        int x = Math.round(coordinates[0]);
-        int y = Math.round(coordinates[1]);
+        int x = coordinates[0];
+        int y = coordinates[1];
 
         AStarNode source = new AStarNode(x, y);
         ai.setSourceAndTargetNode(source, findNextTarget(checkpointCount));
@@ -183,8 +183,8 @@ public class AIPlugin implements AISPI {
         ArrayList<AStarNode> nodePath = (ArrayList<AStarNode>) ai.findPath();
         //List to be populated and returned
         ArrayList<PositionPart> path = new ArrayList<>();
+ 
         for (AStarNode node : nodePath) {
-            Tile[][] map = mapSPI.getLoadedMap();
             int x = node.getRow();
             int y = node.getCol();
 

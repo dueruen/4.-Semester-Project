@@ -187,7 +187,7 @@ public class NPCProcessingSystem implements IEntityProcessingService {
      * @param target
      * @return angle between two points
      */
-    public double getAngle(PositionPart source, PositionPart target) {
+    private double getAngle(PositionPart source, PositionPart target) {
         double angle = (double) Math.toDegrees(Math.atan2(target.getY() - source.getY(), target.getX() - source.getX()));
 
         if (angle < 0) {

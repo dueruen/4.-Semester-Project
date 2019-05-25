@@ -22,14 +22,6 @@ public class AStarNode {
         this.col = col;
     }
 
-  public int getW() {
-    return w;
-  }
-
-  public void setW(int w) {
-    this.w = w;
-  }
-
     public void calculateHeuristic(AStarNode finalNode) {
         this.h = Math.abs(finalNode.getRow() - getRow()) + Math.abs(finalNode.getCol() - getCol());
     }
@@ -120,5 +112,13 @@ public class AStarNode {
 
     public void setCol(int col) {
         this.col = col;
+    }
+    
+    public int getW() {
+      return w;
+    }
+
+    public void setW(int w) {
+      this.w = w;
     }
 }

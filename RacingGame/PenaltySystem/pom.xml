@@ -14,7 +14,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>PenaltySystem</artifactId>
     <packaging>bundle</packaging>
-    <name>PenaltySystemn</name>
+    <name>PenaltySystem</name>
     <dependencies>
         <dependency>
             <groupId>org.osgi</groupId>

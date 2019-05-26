@@ -53,13 +53,13 @@ public class ItemProcessingService implements IPostEntityProcessingService, Item
      * @param item item service
      */
     public void removeItemService(ItemSPI item) {
-        items.remove(item.getClass());
+        items.remove(item.getItemClass());
     }
 
     @Override
     public void addRandomItemToEntity(Entity e) {
         ItemPart ip = e.getPart(ItemPart.class);
-        if (ip.getItemClass() == null) {
+        if (ip.getItemClass() == null && !items.isEmpty()) {
             int randomNum = (int) (Math.random() * items.size());
             Object[] values = items.values().toArray();
             ((ItemSPI)values[generator.nextInt(values.length)]).addItemToEntity(e);

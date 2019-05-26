@@ -1,4 +1,4 @@
-package racing.labsystem;
+package racing.LapSystem;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +20,7 @@ import racing.common.services.IScoreService;
 /**
  * Control system for the lap system.
  */
-public class LapControllSystem implements IPostEntityProcessingService, IScoreService {
+public class LapControlSystem implements IPostEntityProcessingService, IScoreService {
 
     /**
      * Wrapper map

@@ -96,9 +96,6 @@ public class LapControlSystemTest {
 
         world.addEntity(npc1);
         world.addEntity(npc2);
-        System.out.println(gameData);
-        System.out.println(world);
-        System.out.println(map);
 
         //Act
         lcs.process(gameData, world);
@@ -188,9 +185,6 @@ public class LapControlSystemTest {
 
         world.addEntity(npc1);
         world.addEntity(npc2);
-        System.out.println(gameData);
-        System.out.println(world);
-        System.out.println(map);
 
         //Act
         lcs.process(gameData, world);
@@ -239,9 +233,6 @@ public class LapControlSystemTest {
 
         world.addEntity(npc1);
         world.addEntity(npc2);
-        System.out.println(gameData);
-        System.out.println(world);
-        System.out.println(map);
 
         //Act
         lcs.process(gameData, world);

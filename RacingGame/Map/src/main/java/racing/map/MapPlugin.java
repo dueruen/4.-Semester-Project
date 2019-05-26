@@ -103,7 +103,6 @@ public class MapPlugin implements IGamePluginService, MapSPI {
                 shortestDistance = calculateDistance(p, tile);
                 continue;
             }
-
             double nextDistance = calculateDistance(p, tile);
             if (nextDistance < shortestDistance) {
                 closedTile = tile;
@@ -127,7 +126,6 @@ public class MapPlugin implements IGamePluginService, MapSPI {
 
         GameImage i1 = t1.getImage();
         GameImage i2 = t2.getImage();
-
         double x = Math.pow((p2.getX() + (i2.getWidth() / 2)) - (p1.getX() + (i1.getWidth() / 2)), 2);
         double y = Math.pow((p2.getY() + (i2.getHeight() / 2)) - (p1.getY() + (i1.getHeight() / 2)), 2);
         return Math.sqrt(x + y);

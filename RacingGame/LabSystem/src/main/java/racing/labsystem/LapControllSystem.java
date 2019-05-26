@@ -71,16 +71,13 @@ public class LapControllSystem implements IPostEntityProcessingService, IScoreSe
             if (!entities.containsKey(entity.getID())) {
                 entities.put(entity.getID(), new Wrapper());
             }
-
             Wrapper w = entities.get(entity.getID());
-
             if (map != null) {
                 Tile currentTile = map.getTile(entity, world);
                 if (w.current != null && w.previous != null) {
                     if (currentTile.getID().equals(w.current.getID())) {
                         continue;
                     }
-
                     TilePart currentPart = w.current.getPart(TilePart.class);
                     TilePart previousPart = w.previous.getPart(TilePart.class);
                     if ((currentPart.getType() == TileType.FINISHLINE && previousPart.getType() == TileType.START)

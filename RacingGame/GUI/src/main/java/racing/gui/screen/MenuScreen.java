@@ -53,7 +53,7 @@ public class MenuScreen extends BasicScreen {
         TextButton newGame = new TextButton("New Game", GuiManager.getInstance().getSkin());
         TextButton mapEditor = new TextButton("Map editor", GuiManager.getInstance().getSkin());
         TextButton exit = new TextButton("Exit", GuiManager.getInstance().getSkin());
-        Label label = new Label("Welcome to the Racing Game ", GuiManager.getInstance().getSkin());
+        Label label = new Label("Welcome to Woad Wacing", GuiManager.getInstance().getSkin());
         
         sound.play(1.0f);
 

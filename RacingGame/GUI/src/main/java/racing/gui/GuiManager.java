@@ -123,7 +123,7 @@ public class GuiManager extends Game implements IGamePluginService { //implement
         Core.getInstance().getGameData().setDisplayHeight(600);
         Core.getInstance().getGameData().setDisplayWidth(800);
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "RacingGame";
+        cfg.title = "WoadWacing";
         cfg.width = 800;
         cfg.height = 600;
         cfg.useGL30 = false;

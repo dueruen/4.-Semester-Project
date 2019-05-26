@@ -1,4 +1,4 @@
-package racing.labsystem;
+package racing.LapSystem;
 
 import java.util.ArrayList;
 import java.util.Collections;

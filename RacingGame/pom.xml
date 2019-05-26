@@ -33,7 +33,7 @@
     <module>CommonAI</module>
     <module>GUI</module>
     <module>CommonPlayer</module>
-    <module>LabSystem</module>
+    <module>LapSystem</module>
     <module>PenaltySystem</module>
     <module>SpawnSystem</module>
     <module>CommonItem</module>

@@ -1,15 +1,11 @@
 
-import java.util.Map;
+import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
@@ -17,7 +13,6 @@ import racing.common.data.TileType;
 import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.ScorePart;
-import racing.common.map.MapSPI;
 import racing.common.npc.NPC;
 import racing.labsystem.LapControllSystem;
 import racing.map.MapPlugin;
@@ -25,7 +20,6 @@ import racing.map.MapPlugin;
 /**
  * Test class for LapControlSystem
  */
-//@RunWith(MockitoJUnitRunner.class)
 public class LapControlSystemTest {
 
     private World world;
@@ -69,14 +63,27 @@ public class LapControlSystemTest {
         map = new MapPlugin();
         lcs = new LapControllSystem();
 
+        TileType[][] aMap = new TileType[][]{{TileType.START, TileType.FINISHLINE, TileType.ROAD}};
+
+        map.start(gameData, world);
+        map.createMap(aMap, gameData, world);
+        lcs.setMapService(map);
+
     }
 
     @After
     public void tearDown() {
         world = null;
         gameData = null;
+        lcs = null;
+        npc1 = null;
+        npc2 = null;
+        map = null;
     }
 
+    /**
+     * Testing if IsThereAWinner returns true, when there is a winner
+     */
     @Test
     public void test_IsThereAWinner_Succesful_WhenThereisaWinner() {
         //Arrange
@@ -92,12 +99,6 @@ public class LapControlSystemTest {
         System.out.println(gameData);
         System.out.println(world);
         System.out.println(map);
-        
-        TileType[][] aMap = new TileType[][]{{TileType.START, TileType.FINISHLINE,TileType.ROAD}};
-        
-        map.start(gameData, world);
-        map.createMap(aMap, gameData, world);
-        lcs.setMapService(map);
 
         //Act
         lcs.process(gameData, world);
@@ -127,7 +128,10 @@ public class LapControlSystemTest {
         assertTrue(result);
     }
 
-    //@Test
+    /**
+     * Testing if IsThereAWinner returns true, when there is no winner
+     */
+    @Test
     public void test_IsThereAWinner_Failing_WhenThereisNoWinner() {
         //Arrange
         ScorePart scorePart1 = new ScorePart();
@@ -141,6 +145,26 @@ public class LapControlSystemTest {
 
         //Act
         lcs.process(gameData, world);
+
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(0, 0);
+        p2.setPosition(0, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
+        lcs.process(gameData, world);
         boolean result = lcs.isThereAWinner();
 
         //Assert
@@ -148,20 +172,47 @@ public class LapControlSystemTest {
 
     }
 
-    //@Test
+    /**
+     * Testing if reset() resets, when there is a winner
+     */
+    @Test
     public void test_Reset_Succeeding_WhenThereisAWinner() {
+        //Arrange
         //Arrange
         ScorePart scorePart1 = new ScorePart();
         ScorePart scorePart2 = new ScorePart();
-        scorePart1.setLabs(3);
+        scorePart1.setLabs(2);
         scorePart2.setLabs(0);
         npc1.add(scorePart1);
         npc2.add(scorePart2);
-        //mapMock.loadFromFile("DefaultMap.txt", gameData, world);
+
         world.addEntity(npc1);
         world.addEntity(npc2);
+        System.out.println(gameData);
+        System.out.println(world);
+        System.out.println(map);
 
         //Act
+        lcs.process(gameData, world);
+
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(0, 0);
+        p2.setPosition(0, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
         lcs.process(gameData, world);
         boolean result1 = lcs.isThereAWinner();
         lcs.reset();
@@ -173,22 +224,47 @@ public class LapControlSystemTest {
 
     }
 
-    //@Test
+    /**
+     * Testing if reset() resets, when there is no winner
+     */
+    @Test
     public void test_Reset_Succeeding_WhenThereisnoWinner() {
         //Arrange
-        Entity npc1 = new NPC();
-        Entity npc2 = new NPC();
         ScorePart scorePart1 = new ScorePart();
         ScorePart scorePart2 = new ScorePart();
-        scorePart1.setLabs(2);
+        scorePart1.setLabs(0);
         scorePart2.setLabs(0);
         npc1.add(scorePart1);
         npc2.add(scorePart2);
-        //mapMock.loadFromFile("DefaultMap.txt", gameData, world);
+
         world.addEntity(npc1);
         world.addEntity(npc2);
+        System.out.println(gameData);
+        System.out.println(world);
+        System.out.println(map);
 
         //Act
+        lcs.process(gameData, world);
+
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(0, 0);
+        p2.setPosition(0, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
+        lcs.process(gameData, world);
+
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
+        lcs.process(gameData, world);
         lcs.process(gameData, world);
         boolean result1 = lcs.isThereAWinner();
         lcs.reset();
@@ -197,6 +273,33 @@ public class LapControlSystemTest {
         //Assert
         assertFalse(result1);
         assertFalse(result2);
+
+    }
+
+    /**
+     * Testing if getScores returns the scores
+     */
+    @Test
+    public void test_getScores_ReturnsScores() {
+        //Arrange
+        ScorePart scorePart1 = new ScorePart();
+        ScorePart scorePart2 = new ScorePart();
+        scorePart1.setLabs(3);
+        scorePart2.setLabs(2);
+        npc1.add(scorePart1);
+        npc2.add(scorePart2);
+        world.addEntity(npc1);
+        world.addEntity(npc2);
+
+        //Act
+        lcs.process(gameData, world);
+        ArrayList<Entity> scoreList = (ArrayList<Entity>) lcs.getScores(world);
+        ScorePart sp1 = scoreList.get(0).getPart(ScorePart.class);
+        ScorePart sp2 = scoreList.get(1).getPart(ScorePart.class);
+
+        //Assert
+        assertEquals(sp1.getLabs(), 3);
+        assertEquals(sp2.getLabs(), 2);
 
     }
 }

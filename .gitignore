@@ -2,6 +2,5 @@
 *runner/
 .project
 .settings
-*test/
 *assembly/
 *bin/

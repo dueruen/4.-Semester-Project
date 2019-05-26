@@ -71,8 +71,9 @@ public class AIPlugin implements AISPI {
     }
 
     /**
-     * Method that activates the AI Created aside from start method, to maintain
-     * control of when it's called
+     * Method that creates the AI system, by clearing 
+     * datastructures that need to be cleared, and by 
+     * initializing the AI data 
      */
     @Override
     public void startAI() {
@@ -95,9 +96,9 @@ public class AIPlugin implements AISPI {
 
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
-                Tile pp = map[i][j];
-                TilePart tp = pp.getPart(TilePart.class);
-                int[] coordinates = mapSPI.getTileXandY(pp);
+                Tile t = map[i][j];
+                TilePart tp = t.getPart(TilePart.class);
+                int[] coordinates = mapSPI.getTileXandY(t);
                 AStarNode node = new AStarNode(coordinates[0], coordinates[1]);
                 node.setW((int) tp.getType().getWeight());
                 if (tp.getType().isIsStatic()) {
@@ -116,8 +117,8 @@ public class AIPlugin implements AISPI {
             }
         }
 
-        AStarNode initNode = new AStarNode((r / 2), (c / 2));
-        AStarNode finalNode = findNextTarget(0);
+        AStarNode initNode = goalList.get(0);
+        AStarNode finalNode = checkOneList.get(0);
         ai = new AStar(r, c, initNode, finalNode);
         ai.setSearchArea(nodes);
 
@@ -134,8 +135,8 @@ public class AIPlugin implements AISPI {
     public void setSourceNode(Entity p, World world, int checkpointCount) {
         Tile t = mapSPI.getTile(p, world);
         int[] coordinates = mapSPI.getTileXandY(t);
-        int x = Math.round(coordinates[0]);
-        int y = Math.round(coordinates[1]);
+        int x = coordinates[0];
+        int y = coordinates[1];
 
         AStarNode source = new AStarNode(x, y);
         ai.setSourceAndTargetNode(source, findNextTarget(checkpointCount));
@@ -182,15 +183,12 @@ public class AIPlugin implements AISPI {
         ArrayList<AStarNode> nodePath = (ArrayList<AStarNode>) ai.findPath();
         //List to be populated and returned
         ArrayList<PositionPart> path = new ArrayList<>();
+ 
         for (AStarNode node : nodePath) {
-            Tile[][] map = mapSPI.getLoadedMap();
-            float x = node.getRow();
-            float y = node.getCol();
-            PositionPart pp = new PositionPart(x, y, (3.1415f / 2));
+            int x = node.getRow();
+            int y = node.getCol();
 
-            int xp = Math.round(pp.getX());
-            int xy = Math.round(pp.getY());
-            Tile gt = map[xp][xy];
+            Tile gt = map[x][y];
             path.add(gt.getPart(PositionPart.class));
         }
         return path;

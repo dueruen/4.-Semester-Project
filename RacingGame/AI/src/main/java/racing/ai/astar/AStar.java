@@ -57,14 +57,6 @@ public class AStar  {
         }
     }
 
-     public void setBlocks(int[][] blocksArray) {
-        for (int i = 0; i < blocksArray.length; i++) {
-            int row = blocksArray[i][0];
-            int col = blocksArray[i][1];
-            setBlock(row, col);
-        }
-    }
-
     public List<AStarNode> findPath() {
         openList.add(initialNode);
         while (!isEmpty(openList)) {
@@ -228,13 +220,7 @@ public class AStar  {
     private void setDiagonalCost(int diagonalCost) {
         this.diagonalCost = diagonalCost;
     }
-    
-    public void setSourceNode(AStarNode source) { 
-        setInitialNode(source);
-        setFinalNode(getFinalNode());
-        setNodes();
-   }
-    
+        
     public void setSourceAndTargetNode(AStarNode source, AStarNode target) { 
         setInitialNode(source);
         setFinalNode(target);

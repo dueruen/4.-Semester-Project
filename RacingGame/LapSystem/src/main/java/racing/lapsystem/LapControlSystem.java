@@ -40,7 +40,7 @@ public class LapControlSystem implements IPostEntityProcessingService, IScoreSer
     /**
      * Laps to win
      */
-    private int lapsToWin = 3;
+    private final int lapsToWin = 3;
 
     /**
      * Declarative service set map service
@@ -71,16 +71,13 @@ public class LapControlSystem implements IPostEntityProcessingService, IScoreSer
             if (!entities.containsKey(entity.getID())) {
                 entities.put(entity.getID(), new Wrapper());
             }
-
             Wrapper w = entities.get(entity.getID());
-
             if (map != null) {
                 Tile currentTile = map.getTile(entity, world);
                 if (w.current != null && w.previous != null) {
                     if (currentTile.getID().equals(w.current.getID())) {
                         continue;
                     }
-
                     TilePart currentPart = w.current.getPart(TilePart.class);
                     TilePart previousPart = w.previous.getPart(TilePart.class);
                     if ((currentPart.getType() == TileType.FINISHLINE && previousPart.getType() == TileType.START)

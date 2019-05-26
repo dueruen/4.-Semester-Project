@@ -13,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import racing.common.data.Entity;
 import racing.common.data.GameData;
 import racing.common.data.GameImage;
+import racing.common.data.TileType;
 import racing.common.data.World;
 import racing.common.data.entityparts.PositionPart;
 import racing.common.data.entityparts.ScorePart;
@@ -60,8 +61,8 @@ public class LapControlSystemTest {
         npc1.setImage(i1);
         npc2.setImage(i2);
 
-        p1 = new PositionPart(1470, 280, 0);
-        p2 = new PositionPart(1470, 280, 0);
+        p1 = new PositionPart(0, 0, 0);
+        p2 = new PositionPart(0, 0, 0);
         npc1.add(p1);
         npc2.add(p2);
 
@@ -91,31 +92,34 @@ public class LapControlSystemTest {
         System.out.println(gameData);
         System.out.println(world);
         System.out.println(map);
+        
+        TileType[][] aMap = new TileType[][]{{TileType.START, TileType.FINISHLINE,TileType.ROAD}};
+        
         map.start(gameData, world);
-        map.loadFromFile("HEJ.txt", gameData, world);
+        map.createMap(aMap, gameData, world);
         lcs.setMapService(map);
 
         //Act
         lcs.process(gameData, world);
 
-        p1.setPosition(1540, 280);
-        p2.setPosition(1540, 280);
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
         lcs.process(gameData, world);
 
-        p1.setPosition(1610, 280);
-        p2.setPosition(1610, 280);
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
         lcs.process(gameData, world);
 
-        p1.setPosition(1470, 280);
-        p2.setPosition(1470, 280);
+        p1.setPosition(0, 0);
+        p2.setPosition(0, 0);
         lcs.process(gameData, world);
 
-        p1.setPosition(1540, 280);
-        p2.setPosition(1540, 280);
+        p1.setPosition(70, 0);
+        p2.setPosition(70, 0);
         lcs.process(gameData, world);
 
-        p1.setPosition(1610, 280);
-        p2.setPosition(1610, 280);
+        p1.setPosition(140, 0);
+        p2.setPosition(140, 0);
         lcs.process(gameData, world);
         boolean result = lcs.isThereAWinner();
 

@@ -20,7 +20,7 @@ import racing.common.services.IScoreService;
 /**
  * Control system for the lap system.
  */
-public class LapControllSystem implements IPostEntityProcessingService, IScoreService {
+public class LapControlSystem implements IPostEntityProcessingService, IScoreService {
 
     /**
      * Wrapper map
